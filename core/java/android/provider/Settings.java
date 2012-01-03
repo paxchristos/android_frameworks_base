@@ -2136,6 +2136,12 @@ public final class Settings {
          * @hide
          */
         public static final String HIDE_CLOCK = "hide_clock";
+        
+        /**
+         * Setting for using battery percentage drawables
+         * @hide
+         */
+        public static final String BATTERY_PERCENTAGES = "battery_percentages";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
