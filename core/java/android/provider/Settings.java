@@ -2237,12 +2237,6 @@ public final class Settings {
          * @hide
          */
         public static final String PERSIST_MENU = "persist_menu";
-        
-        /**
-         * Setting to always show the ime switcher in the status bar
-         * @hide
-         */
-        public static final String SHOW_STATUSBAR_IME_SWITCHER = "show_statusbar_ime_switcher";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
