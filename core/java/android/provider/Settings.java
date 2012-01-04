@@ -2159,6 +2159,12 @@ public final class Settings {
         * @hide
         */
         public static final String EXPANDED_FLASH_MODE = "expanded_flash_mode";
+
+        /**
+         * Setting to hide the statusbar alarm clock notification
+         * @hide
+         */
+        public static final String STATUSBAR_SHOW_ALARM = "statusbar_show_alarm";
         
         /*
          * 0: hide
