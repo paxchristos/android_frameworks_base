@@ -2187,6 +2187,18 @@ public final class Settings {
          * @hide
          */
         public static final String HIDE_CLOCK = "hide_clock";
+ 
+        /**
+         * Status bar battery percentage text.
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_TEXT = "statusbar_battery_text";
+        
+        /**
+         * Status bar battery percentage text style.
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_TEXT_STYLE = "statusbar_battery_text_style";
         
         /**	
          * Pulse light duration setting.	

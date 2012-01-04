@@ -366,4 +366,5 @@
 
     <!-- Description of the desk dock action that invokes the Android Dreams screen saver feature -->
     <string name="dreams_dock_launcher">Activate screen saver</string>
+    <string name="battery_test">99</string>
 </resources>
