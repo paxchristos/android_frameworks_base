@@ -2221,12 +2221,6 @@ public final class Settings {
         public static final int NOTIFICATION_PULSE_FREQUENCY_FALLBACK = 7000;  // fallback to 7000ms
         
         /**
-         * Setting for using battery percentage drawables
-         * @hide
-         */
-        public static final String BATTERY_PERCENTAGES = "battery_percentages";
-        
-        /**
          * Setting to always show the menu button in navigation bar
          * @hide
          */
