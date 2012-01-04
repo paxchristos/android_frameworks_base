@@ -2539,6 +2539,10 @@ public final class Settings {
         @Deprecated
         public static final String WIFI_WATCHDOG_PING_TIMEOUT_MS =
             Secure.WIFI_WATCHDOG_PING_TIMEOUT_MS;
+
+        public static final String CRT_OFF_ANIMATION = "crt_off_animation";
+
+        public static final String CRT_ON_ANIMATION = "crt_on_animation";
         
         public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
     }
