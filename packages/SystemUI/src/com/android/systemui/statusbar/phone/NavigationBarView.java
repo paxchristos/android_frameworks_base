@@ -22,13 +22,17 @@ import java.io.PrintWriter;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.ContentResolver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.os.Handler;
+import android.os.Handler;
 import android.os.ServiceManager;
+import android.provider.Settings;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Slog;
@@ -55,6 +59,9 @@ public class NavigationBarView extends LinearLayout {
     final static boolean NAVBAR_ALWAYS_AT_RIGHT = true;
 
     final static boolean ANIMATE_HIDE_TRANSITION = false; // turned off because it introduces unsightly delay when videos goes to full screen
+    
+    private boolean mPersistMenu;
+    private Handler mHandler;
 
     protected IStatusBarService mBarService;
     final Display mDisplay;
@@ -160,6 +167,12 @@ public class NavigationBarView extends LinearLayout {
                 Context.WINDOW_SERVICE)).getDefaultDisplay();
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
+        mPersistMenu = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.PERSIST_MENU, 0) == 1);
+
+        mHandler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
 
         final Resources res = mContext.getResources();
         mBarSize = res.getDimensionPixelSize(R.dimen.navigation_bar_size);
@@ -167,6 +180,21 @@ public class NavigationBarView extends LinearLayout {
         mShowMenu = false;
     }
 
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(Settings.System.PERSIST_MENU), false, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+    
     View.OnTouchListener mLightsOutListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent ev) {
@@ -213,9 +241,12 @@ public class NavigationBarView extends LinearLayout {
     }
 
     public void setMenuVisibility(final boolean show, final boolean force) {
-        if (!force && mShowMenu == show) return;
+        if (mPersistMenu) {
+            getMenuButton().setVisibility(View.VISIBLE);
+        } else {
+            if (!force && mShowMenu == show) return;
 
-        mShowMenu = show;
+            mShowMenu = show;
 
         getMenuButton().setVisibility(mShowMenu ? View.VISIBLE : View.GONE);
     }
@@ -394,5 +425,15 @@ public class NavigationBarView extends LinearLayout {
                 + " " + visibilityToString(menu.getVisibility())
                 );
         pw.println("    }");
+    }
+
+    private void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+        mPersistMenu = (Settings.System.getInt(resolver, Settings.System.PERSIST_MENU, 0) == 1);
+        if (mPersistMenu) {
+            getMenuButton().setVisibility(View.VISIBLE);
+        } else {
+            getMenuButton().setVisibility(View.INVISIBLE);
+        }
     }
 }
