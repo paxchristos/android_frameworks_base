@@ -2165,28 +2165,6 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_SHOW_ALARM = "statusbar_show_alarm";
-        
-        /*
-         * 0: hide
-         * 1: show right clock
-         * 2: show center clock
-         * @hide
-         */
-        public static final String STATUS_BAR_CLOCK = "status_bar_clock";
-
-        
-        /**
-         * Display style of AM/PM next to clock in status bar
-         *
-         * @hide
-         */
-        public static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
-
-        /**
-         * Setting to hide clock.
-         * @hide
-         */
-        public static final String HIDE_CLOCK = "hide_clock";
  
         /**
          * Status bar battery percentage text.
@@ -2237,6 +2215,17 @@ public final class Settings {
          * @hide
          */
         public static final String PERSIST_MENU = "persist_menu";
+        
+
+        public static final String STATUSBAR_CLOCK_AM_PM_STYLE = "statusbar_clock_am_pm_style";
+
+
+        public static final String STATUSBAR_CLOCK_STYLE = "statusbar_clock_enabled";
+
+
+        public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
+        
+        public static final String STATUSBAR_CLOCK_LOCKSCREEN_HIDE = "statusbar_clock_lockscreen_hide";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
