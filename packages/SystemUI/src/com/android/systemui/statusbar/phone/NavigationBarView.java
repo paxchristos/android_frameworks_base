@@ -254,7 +254,7 @@ public class NavigationBarView extends LinearLayout {
 
             mShowMenu = show;
 
-            getMenuButton().setVisibility(mShowMenu ? View.VISIBLE : View.GONE);
+            getMenuButton().setVisibility(mShowMenu ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
@@ -442,7 +442,7 @@ public class NavigationBarView extends LinearLayout {
         if (mPersistMenu) {
             getMenuButton().setVisibility(View.VISIBLE);
         } else {
-            getMenuButton().setVisibility(View.GONE);
+            getMenuButton().setVisibility(View.INVISIBLE);
         }
     }
 }
