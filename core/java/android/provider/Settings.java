@@ -2227,6 +2227,8 @@ public final class Settings {
         public static final String LOCKSCREEN_ENABLE_MENU_KEY = "lockscreen_enable_menu_key";
         
         public static final String LOCKSCREEN_QUAD_TARGETS = "lockscreen_quad_targets";
+        
+        public static final String NAVIGATION_BAR_TINT = "navigation_bar_tint";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
