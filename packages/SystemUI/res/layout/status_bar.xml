@@ -94,7 +94,8 @@
             />
     </LinearLayout>
     
-    <LinearLayout	
+    <LinearLayout
+        android:id="@+id/center_clock_layout"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
