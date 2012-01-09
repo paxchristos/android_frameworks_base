@@ -223,12 +223,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         public void onTrigger(View v, int target) {
             if (mQuadTargets) {
-                if (target == 0) { // right Action = Mms
-                    Intent mmsIntent = new Intent(Intent.ACTION_MAIN);
-                    mmsIntent.setClassName("com.android.mms",
-                                           "com.android.mms.ui.ConversationList");
-                    mmsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(mmsIntent);
+                if (target == 0) { // right Action = Phone
+                    Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
+                    phoneIntent.setClassName("com.android.contacts",
+                                             "com.android.contacts.activities.DialtactsActivity");
+                    phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(phoneIntent);
                     mCallback.goToUnlockScreen();
                 } else if (target == 1) { // up Action == Camera/Ring Toggle
                     if (mCameraDisabled) {
@@ -242,12 +242,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         mContext.startActivity(intent);
                         mCallback.goToUnlockScreen();
                     }
-                } else if (target == 2) { // left Action = Phone
-                    Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
-                    phoneIntent.setClassName("com.android.contacts",
-                                             "com.android.contacts.activities.DialtactsActivity");
-                    phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(phoneIntent);
+                } else if (target == 2) { // left Action = Mms
+                    Intent mmsIntent = new Intent(Intent.ACTION_MAIN);
+                    mmsIntent.setClassName("com.android.mms",
+                                           "com.android.mms.ui.ConversationList");
+                    mmsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(mmsIntent);
                     mCallback.goToUnlockScreen();
                 } else if (target == 3) { // left Action = Hidden Unlock
                     mCallback.goToUnlockScreen();
