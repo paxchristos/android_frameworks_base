@@ -107,7 +107,8 @@
             android:paddingLeft="6.0dip"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:background="#ff000000" />
     </LinearLayout>
         
     <LinearLayout android:id="@+id/ticker"
