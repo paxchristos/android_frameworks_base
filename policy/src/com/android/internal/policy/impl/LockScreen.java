@@ -187,27 +187,22 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
             UnlockWidgetCommonMethods {
 
         private final MultiWaveView mMultiWaveView;
-        private boolean mCameraDisabled;
+        private boolean mCameraDisabled = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_DISABLE_CAMERA, 0) == 1); 
 
         MultiWaveViewMethods(MultiWaveView multiWaveView) {
             mMultiWaveView = multiWaveView;
-            final boolean cameraDisabled = mLockPatternUtils.getDevicePolicyManager()
-                    .getCameraDisabled(null);
-            if (cameraDisabled) {
-                Log.v(TAG, "Camera disabled by Device Policy");
-                mCameraDisabled = true;
-            } else {
-                // Camera is enabled if resource is initially defined for MultiWaveView
-                // in the lockscreen layout file
-                mCameraDisabled = mMultiWaveView.getTargetResourceId()
-                        != R.array.lockscreen_targets_with_camera;
-            }
         }
 
         public void updateResources() {
             int resId;
             if (mQuadTargets) {
-                resId = R.array.quad_lockscreen_targets;
+                if (mCameraDisabled) {
+                    resId = mSilentMode ? R.array.soundon_quad_lockscreen_targets
+                        : R.array.silent_quad_lockscreen_targets;
+                } else { 
+                    resId = R.array.quad_lockscreen_targets;
+                }
             } else if (mCameraDisabled) {
                 // Fall back to showing ring/silence if camera is disabled by DPM...
                 resId = mSilentMode ? R.array.lockscreen_targets_when_silent
@@ -236,16 +231,16 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mContext.startActivity(mmsIntent);
                     mCallback.goToUnlockScreen();
                 } else if (target == 1) { // up Action == Camera/Ring Toggle
-                    if (!mCameraDisabled) {
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
                         // Start the Camera
                         Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                         mCallback.goToUnlockScreen();
-                    } else {
-                        toggleRingMode();
-                        mUnlockWidgetMethods.updateResources();
-                        mCallback.pokeWakelock();
                     }
                 } else if (target == 2) { // left Action = Phone
                     Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
@@ -261,16 +256,16 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                 if (target == 0 || target == 1) { // 0 = unlock/portrait, 1 = unlock/landscape
                     mCallback.goToUnlockScreen();
                 } else if (target == 2 || target == 3) { // 2 = alt/portrait, 3 = alt/landscape
-                    if (!mCameraDisabled) {
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
                         // Start the Camera
                         Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                         mCallback.goToUnlockScreen();
-                    } else {
-                        toggleRingMode();
-                        mUnlockWidgetMethods.updateResources();
-                        mCallback.pokeWakelock();
                     }
                 }
             }

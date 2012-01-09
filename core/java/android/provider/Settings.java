@@ -2229,6 +2229,8 @@ public final class Settings {
         public static final String LOCKSCREEN_QUAD_TARGETS = "lockscreen_quad_targets";
         
         public static final String NAVIGATION_BAR_TINT = "navigation_bar_tint";
+        
+        public static final String LOCKSCREEN_DISABLE_CAMERA = "lockscreen_disable_camera";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
