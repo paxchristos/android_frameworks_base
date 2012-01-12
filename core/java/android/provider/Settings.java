@@ -2177,7 +2177,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_BATTERY_TEXT_STYLE = "statusbar_battery_text_style";
-        
+
         /**	
          * Pulse light duration setting.	
          * This is an int value which represents the milliseconds the pulse should flash	
