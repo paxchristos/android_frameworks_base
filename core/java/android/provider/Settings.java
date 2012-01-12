@@ -2221,21 +2221,61 @@ public final class Settings {
          * @hide
          */
         public static final String PERSIST_MENU = "persist_menu";
-        
+
+        /**
+         * Setting for AM/PM statusbar clock style
+         * 
+         * @hide
+         */
         public static final String STATUSBAR_CLOCK_AM_PM_STYLE = "statusbar_clock_am_pm_style";
 
+        /**
+         * Setting for statusbar clock layout (right and center)
+         * 
+         * @hide
+         */
         public static final String STATUSBAR_CLOCK_STYLE = "statusbar_clock_enabled";
 
+        /**
+         * Setting for custom statusbar clock colors
+         * 
+         * @hide
+         */
         public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
-        
+
+        /**
+         * Setting for statusbar clock layout (hide)
+         * 
+         * @hide
+         */
         public static final String STATUSBAR_CLOCK_LOCKSCREEN_HIDE = "statusbar_clock_lockscreen_hide";
-        
+
+        /**
+         * Setting to enable/disable menu unlock on the lockscreen
+         * 
+         * @hide
+         */
         public static final String LOCKSCREEN_ENABLE_MENU_KEY = "lockscreen_enable_menu_key";
-        
+
+        /**
+         * Setting to enable/disable menu unlock on the lockscreen
+         * 
+         * @hide
+         */
         public static final String LOCKSCREEN_QUAD_TARGETS = "lockscreen_quad_targets";
-        
+
+        /**
+         * Setting for custom nav bar tint
+         * 
+         * @hide
+         */
         public static final String NAVIGATION_BAR_TINT = "navigation_bar_tint";
-        
+
+        /**
+         * Setting to switch the camera on the lockscreen out for the sound toggle
+         * 
+         * @hide
+         */
         public static final String LOCKSCREEN_DISABLE_CAMERA = "lockscreen_disable_camera";
 
         /**
