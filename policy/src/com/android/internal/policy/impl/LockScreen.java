@@ -75,6 +75,8 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     
     private boolean mQuadTargets = (Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.LOCKSCREEN_QUAD_TARGETS, 0) == 1);
+    private boolean mEightTargets = (Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.LOCKSCREEN_EIGHT_TARGETS, 0) == 1);
 
     private interface UnlockWidgetCommonMethods {
         // Update resources based on phone state
@@ -200,7 +202,14 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         public void updateResources() {
             int resId;
-            if (mQuadTargets) {
+            if (mEightTargets) {
+                if (mCameraDisabled) {
+                    resId = mSilentMode ? R.array.soundon_eight_lockscreen_targets
+                    : R.array.silent_eight_lockscreen_targets;
+                } else { 
+                    resId = R.array.eight_lockscreen_targets;
+                }
+            } else if (mQuadTargets) {
                 if (mCameraDisabled) {
                     resId = mSilentMode ? R.array.soundon_quad_lockscreen_targets
                         : R.array.silent_quad_lockscreen_targets;
@@ -226,7 +235,111 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         }
 
         public void onTrigger(View v, int target) {
-            if (mQuadTargets) {
+            if (mEightTargets) {
+                if (target == 7) { // right Action = Unlock
+                    String intentUri1 = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT);
+                    
+                    if(intentUri1 == null) {                     
+                    } else {
+                        Intent lowerleftIntent;
+                        try {
+                            lowerleftIntent = Intent.parseUri(intentUri1, 0);
+                            lowerleftIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(lowerleftIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 0) { // left Action = Phone
+                    Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
+                    phoneIntent.setClassName("com.android.contacts",
+                                             "com.android.contacts.activities.DialtactsActivity");
+                    phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(phoneIntent);
+                    mCallback.goToUnlockScreen();
+                } else if (target == 5) { // right Action = Unlock
+                    String intentUri2 = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
+                    
+                    if(intentUri2 == null) {
+                    } else {
+                        Intent upperleftIntent;
+                        try {
+                            upperleftIntent = Intent.parseUri(intentUri2, 0);
+                            upperleftIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                                     | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(upperleftIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 2) { // upper right Action == Camera/Ring Toggle
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
+                        // Start the Camera
+                        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        mCallback.goToUnlockScreen();
+                    }
+                } else if (target == 3) { // right Action = Unlock
+                    String intentUri3 = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
+                    
+                    if(intentUri3 == null) {
+                    } else {
+                        Intent upperrightIntent;
+                        try {
+                            upperrightIntent = Intent.parseUri(intentUri3, 0);
+                            upperrightIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                                     | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(upperrightIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 4) { // upper left Action = Mms
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
+                    
+                    if(intentUri == null) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent mmsIntent;
+                        try {
+                            mmsIntent = Intent.parseUri(intentUri, 0);
+                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                               | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(mmsIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 1) { // right Action = Unlock
+                    String intentUri4 = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT);
+                    
+                    if(intentUri4 == null) {
+                    } else {
+                        Intent lowerrightIntent;
+                        try {
+                            lowerrightIntent = Intent.parseUri(intentUri4, 0);
+                            lowerrightIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                                      | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(lowerrightIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 6) { // right Action = Hidden Unlock
+                    mCallback.goToUnlockScreen();
+                }
+            } else if (mQuadTargets) {
                 if (target == 3) { // left Action = Phone
                     Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
                     phoneIntent.setClassName("com.android.contacts",

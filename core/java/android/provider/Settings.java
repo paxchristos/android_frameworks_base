@@ -2258,11 +2258,18 @@ public final class Settings {
         public static final String LOCKSCREEN_ENABLE_MENU_KEY = "lockscreen_enable_menu_key";
 
         /**
-         * Setting to enable/disable menu unlock on the lockscreen
+         * Setting to enable quad target lockscreen
          * 
          * @hide
          */
         public static final String LOCKSCREEN_QUAD_TARGETS = "lockscreen_quad_targets";
+        
+        /**
+         * Setting to enable five target lockscreen
+         * 
+         * @hide
+         */
+        public static final String LOCKSCREEN_EIGHT_TARGETS = "lockscreen_eight_targets";
 
         /**
          * Setting for custom nav bar tint
@@ -2291,6 +2298,34 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_CUSTOM_SMS_INTENT = "lockscreen_custom_sms_intent";
+        
+        /**
+         * launch a custom app for upper right target
+         * 
+         * @hide
+         */
+        public static final String LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT = "lockscreen_custom_upper_right_intent";
+        
+        /**
+         * launch a custom app for upper left target
+         * 
+         * @hide
+         */
+        public static final String LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT = "lockscreen_custom_upper_left_intent";
+        
+        /**
+         * launch a custom app for lower right target
+         * 
+         * @hide
+         */
+        public static final String LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT = "lockscreen_custom_lower_right_intent";
+        
+        /**
+         * launch a custom app for lower left target
+         * 
+         * @hide
+         */
+        public static final String LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT = "lockscreen_custom_lower_left_intent";
         
         /**
          * Whether volume up/down can be long pressed to skip tracks
