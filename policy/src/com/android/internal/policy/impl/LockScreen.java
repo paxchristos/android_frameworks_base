@@ -227,14 +227,14 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         public void onTrigger(View v, int target) {
             if (mQuadTargets) {
-                if (target == 0) { // right Action = Phone
+                if (target == 3) { // left Action = Phone
                     Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
                     phoneIntent.setClassName("com.android.contacts",
                                              "com.android.contacts.activities.DialtactsActivity");
                     phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(phoneIntent);
                     mCallback.goToUnlockScreen();
-                } else if (target == 1) { // up Action == Camera/Ring Toggle
+                } else if (target == 1) { // upper right Action == Camera/Ring Toggle
                     if (mCameraDisabled) {
                         toggleRingMode();
                         mUnlockWidgetMethods.updateResources();
@@ -246,7 +246,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         mContext.startActivity(intent);
                         mCallback.goToUnlockScreen();
                     }
-                } else if (target == 2) { // left Action = Mms
+                } else if (target == 2) { // upper left Action = Mms
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
 
                     if(intentUri == null) {
@@ -267,7 +267,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         }
                     }
                     mCallback.goToUnlockScreen();
-                } else if (target == 3) { // left Action = Hidden Unlock
+                } else if (target == 0) { // right Action = Hidden Unlock
                     mCallback.goToUnlockScreen();
                 }
             } else {
