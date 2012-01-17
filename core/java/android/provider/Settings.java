@@ -2258,11 +2258,11 @@ public final class Settings {
         public static final String LOCKSCREEN_ENABLE_MENU_KEY = "lockscreen_enable_menu_key";
 
         /**
-         * Setting to enable quad target lockscreen
+         * Setting to enable six target lockscreen
          * 
          * @hide
          */
-        public static final String LOCKSCREEN_QUAD_TARGETS = "lockscreen_quad_targets";
+        public static final String LOCKSCREEN_SIX_TARGETS = "lockscreen_six_targets";
         
         /**
          * Setting to enable five target lockscreen
