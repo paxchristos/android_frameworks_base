@@ -2258,18 +2258,11 @@ public final class Settings {
         public static final String LOCKSCREEN_ENABLE_MENU_KEY = "lockscreen_enable_menu_key";
 
         /**
-         * Setting to enable six target lockscreen
-         * 
+         *
+         * 0 = stock 1 = six 2 = eight 3 = eight unhidden
          * @hide
          */
-        public static final String LOCKSCREEN_SIX_TARGETS = "lockscreen_six_targets";
-        
-        /**
-         * Setting to enable five target lockscreen
-         * 
-         * @hide
-         */
-        public static final String LOCKSCREEN_EIGHT_TARGETS = "lockscreen_eight_targets";
+        public static final String LOCKSCREEN_LAYOUT = "lockscreen_layout";
 
         /**
          * Setting for custom nav bar tint

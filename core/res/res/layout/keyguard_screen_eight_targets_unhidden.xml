@@ -88,6 +88,8 @@
             />
 
     </LinearLayout>
+    
+    <Space android:layout_gravity="fill" />
 
     <TextView
         android:id="@+id/status1"
@@ -98,8 +100,6 @@
         android:textSize="@dimen/keyguard_lockscreen_status_line_font_size"
         android:drawablePadding="4dip"
         />
-
-    <Space android:layout_gravity="fill" />
 
     <!-- emergency call button shown when sim is PUKd and tab_selector is hidden -->
     <Button
@@ -117,7 +117,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="302dip">
+        android:layout_height="384dip">
 
         <com.android.internal.widget.multiwaveview.MultiWaveView
             android:id="@+id/unlock_widget"
@@ -134,9 +134,9 @@
             android:outerRadius="@dimen/multiwaveview_target_placement_radius"
             android:snapMargin="@dimen/multiwaveview_snap_margin"
             android:hitRadius="@dimen/multiwaveview_hit_radius"
-            android:rightChevronDrawable="@drawable/ic_lockscreen_chevron_right"
+            android:bottomChevronDrawable="@drawable/ic_lockscreen_chevron_down"
             android:horizontalOffset="0dip"
-            android:verticalOffset="60dip"
+            android:verticalOffset="0dip"
             android:feedbackCount="3"
             android:vibrationDuration="20"
             />
@@ -146,7 +146,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="12dip"
+            android:layout_marginBottom="6dip"
             android:gravity="center_horizontal"
             android:singleLine="true"
             android:ellipsize="marquee"
