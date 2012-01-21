@@ -2259,7 +2259,7 @@ public final class Settings {
 
         /**
          *
-         * 0 = stock 1 = six 2 = eight 3 = eight unhidden
+         * 0 = stock 1 = four 2 = four unlock 3 = six 4 = eight 5 = eight unhidden
          * @hide
          */
         public static final String LOCKSCREEN_LAYOUT = "lockscreen_layout";
