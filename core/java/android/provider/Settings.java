@@ -604,7 +604,7 @@ public final class Settings {
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_ANDERSON_SETTINGS =
-        "android.codenamedroid.NOTIFICATION_PULSE_SETTINGS";
+        "android.settings.ANDERSON_SETTINGS";
 
     // End of Intent actions for Settings
 
