@@ -341,12 +341,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
                         mContext.startActivity(intent);
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -369,12 +369,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     
                     if(intentUri == null) {
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -396,12 +396,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     
                     if(intentUri == null) {
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -439,12 +439,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     if(intentUri == null) {
                     mCallback.goToUnlockScreen();
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                     | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -461,12 +461,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     
                     if(intentUri == null) {
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                      | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -488,12 +488,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     
                     if(intentUri == null) {
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                      | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -524,12 +524,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     
                     if(intentUri == null) {
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                       | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -545,12 +545,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     if(intentUri == null) {
                         mCallback.goToUnlockScreen();
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -567,12 +567,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     
                     if(intentUri == null) {
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -594,12 +594,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     
                     if(intentUri == null) {
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
@@ -630,12 +630,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     
                     if(intentUri == null) {
                     } else {
-                        Intent mmsIntent;
+                        Intent intent;
                         try {
-                            mmsIntent = Intent.parseUri(intentUri, 0);
-                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                            mContext.startActivity(mmsIntent);
+                            mContext.startActivity(intent);
                         } catch (URISyntaxException e) {
                         }
                     }
