@@ -589,22 +589,6 @@ public final class Settings {
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_NFCSHARING_SETTINGS =
         "android.settings.NFCSHARING_SETTINGS";
-    
-    /**
-     * Activity Action: Show Anderson settings.
-     * <p>
-     * In some cases, a matching Activity may not exist, so ensure you
-     * safeguard against this.
-     * <p>
-     * Input: Nothing.
-     * <p>
-     * Output: Nothing
-     * 
-     * @hide
-     */
-    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    public static final String ACTION_ANDERSON_SETTINGS =
-        "android.settings.ANDERSON_SETTINGS";
 
     // End of Intent actions for Settings
 
@@ -2049,22 +2033,6 @@ public final class Settings {
          * @hide
          */
         public static final String POINTER_SPEED = "pointer_speed";
-        
-        /**
-         * Pulse light color setting.
-         * This is an int value which represents the color of the pulse light
-         * 
-         * @hide
-         */
-        public static final String NOTIFICATION_PULSE_COLOR = "notification_pulse_color";
-        
-        /**
-         * Pulse light color fallback setting.
-         * This is an int value which represents the color of the pulse light if no setting is found
-         * 
-         * @hide
-         */
-        public static final int NOTIFICATION_PULSE_COLOR_FALLBACK = -1;  // fallback to white if no other color set
 
         /**
          * Use the Notification Power Widget? (Who wouldn't!)
@@ -2178,38 +2146,6 @@ public final class Settings {
          */
         public static final String STATUSBAR_BATTERY_TEXT_STYLE = "statusbar_battery_text_style";
 
-        /**	
-         * Pulse light duration setting.	
-         * This is an int value which represents the milliseconds the pulse should flash	
-         * 	
-         * @hide	
-         */	
-        public static final String NOTIFICATION_PULSE_DURATION = "notification_pulse_duration";	
-        	
-        /**
-         * Pulse light duration fallback setting.	
-         * This is an int value which represents the milliseconds the pulse should flash
-         * 	
-         * @hide	
-         */	
-        public static final int NOTIFICATION_PULSE_DURATION_FALLBACK = 500;  // fallback to 500ms	
-        
-        /**	
-         * Pulse light frequency setting.
-         * This is an int value which represents the milliseconds between pulses	
-         * 	
-         * @hide
-         */	
-        public static final String NOTIFICATION_PULSE_FREQUENCY = "notification_pulse_frequency";	
-        
-        /**
-         * Pulse light duration fallback setting.
-         * This is an int value which represents the milliseconds between pulses
-         * 
-         * @hide
-         */
-        public static final int NOTIFICATION_PULSE_FREQUENCY_FALLBACK = 7000;  // fallback to 7000ms
-        
         /**
          * Setting for using battery percentage drawables
          * @hide
@@ -2259,7 +2195,7 @@ public final class Settings {
 
         /**
          *
-         * 0 = stock 1 = six 2 = eight 3 = eight unhidden
+         * 0 = stock 1 = four 2 = four unlock 3 = six 4 = eight 5 = eight unhidden
          * @hide
          */
         public static final String LOCKSCREEN_LAYOUT = "lockscreen_layout";
@@ -2337,6 +2273,25 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_COLOR = "statusbar_battery_bar_color";
+        
+        /**
+         * @hide
+         */
+        public static final String NOTIFICATION_LIGHT_COLOR = "notification_light_color";
+        
+        /**
+         * How long to keep the notification LED on (in milliseconds)
+         * 
+         * @hide
+         */
+        public static final String NOTIFICATION_LIGHT_ON = "notification_light_on";
+        
+        /**
+         * How long to keep the notification LED off (in milliseconds)
+         * 
+         * @hide
+         */
+        public static final String NOTIFICATION_LIGHT_OFF = "notification_light_off";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -2407,7 +2362,6 @@ public final class Settings {
             SIP_CALL_OPTIONS,
             SIP_RECEIVE_CALLS,
             POINTER_SPEED,
-            NOTIFICATION_PULSE_COLOR,
         };
 
         // Settings moved to Settings.Secure
