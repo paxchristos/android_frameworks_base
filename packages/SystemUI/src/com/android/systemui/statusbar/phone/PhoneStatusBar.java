@@ -318,10 +318,7 @@ public class PhoneStatusBar extends StatusBar {
         } catch (RemoteException ex) {
             // no window manager? good luck with that
         }
-    
-        
-        NavPanelObserver settingsObserver = new NavPanelObserver(new Handler());
-        settingsObserver.observe();
+
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;
         mStatusIcons = (LinearLayout)sb.findViewById(R.id.statusIcons);

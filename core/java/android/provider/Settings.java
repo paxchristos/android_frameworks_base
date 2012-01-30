@@ -2292,6 +2292,8 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_LIGHT_OFF = "notification_light_off";
+        
+        public static final String MENU_VISIBILITY = "menu_visibility";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -2593,6 +2595,8 @@ public final class Settings {
         @Deprecated
         public static final String WIFI_WATCHDOG_PING_TIMEOUT_MS =
             Secure.WIFI_WATCHDOG_PING_TIMEOUT_MS;
+        
+        public static final String MENU_LOCATION = "menu_location";
 
         public static final String CRT_OFF_ANIMATION = "crt_off_animation";
 

@@ -42,12 +42,15 @@
             >
 
             <!-- navigation controls -->
-            <View
+            <com.android.systemui.statusbar.policy.KeyButtonView android:id="@+id/menu_left"
                 android:layout_width="15dp"
-                android:layout_height="match_parent"
+                android:layout_height="match_parent"            
+                android:src="@drawable/ic_sysbar_menu"
+                systemui:keyCode="82"
                 android:layout_weight="2"
-                android:visibility="invisible"
-                />
+                android:visibility="invisible"            
+                android:contentDescription="@string/accessibility_menu"
+                systemui:glowBackground="@drawable/ic_sysbar_highlight" />
             <com.android.systemui.statusbar.policy.KeyButtonView android:id="@+id/one"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
@@ -259,12 +262,15 @@
                 android:layout_weight="0"
                 systemui:glowBackground="@drawable/ic_sysbar_highlight_land"
                 />
-            <View
+            <com.android.systemui.statusbar.policy.KeyButtonView android:id="@+id/menu_left"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:src="@drawable/ic_sysbar_menu_land"
+                systemui:keyCode="82"
                 android:layout_weight="1"
                 android:visibility="invisible"
-                />
+                android:contentDescription="@string/accessibility_menu"
+                systemui:glowBackground="@drawable/ic_sysbar_highlight_land" />
         </LinearLayout>
 
         <!-- lights out layout to match exactly -->

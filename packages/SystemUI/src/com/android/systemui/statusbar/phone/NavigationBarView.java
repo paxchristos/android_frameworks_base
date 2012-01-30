@@ -24,16 +24,9 @@ import java.util.List;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.ContentObserver;
-import android.graphics.Rect;
-import android.os.Handler;
-import android.os.Handler;
-import android.os.ServiceManager;
-import android.provider.Settings;
 import android.graphics.Rect;
 import android.os.ServiceManager;
 import android.provider.Settings;
@@ -47,6 +40,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.internal.statusbar.IStatusBarService;
@@ -62,9 +56,6 @@ public class NavigationBarView extends LinearLayout {
     final static boolean NAVBAR_ALWAYS_AT_RIGHT = true;
 
     final static boolean ANIMATE_HIDE_TRANSITION = false; // turned off because it introduces unsightly delay when videos goes to full screen
-    
-    private boolean mPersistMenu;
-    private Handler mHandler;
 
     protected IStatusBarService mBarService;
     final Display mDisplay;
@@ -76,6 +67,14 @@ public class NavigationBarView extends LinearLayout {
 
     boolean mHidden, mLowProfile, mShowMenu, mHideSearch;
     int mDisabledFlags = 0;
+    
+    public final static int SHOW_LEFT_MENU = 1;
+    public final static int SHOW_RIGHT_MENU = 0;
+    public final static int SHOW_BOTH_MENU = 2;
+        
+    public final static int VISIBILITY_SYSTEM = 0;
+    public final static int VISIBILITY_NEVER = 1;
+    public final static int VISIBILITY_ALWAYS = 2;
 
     public void updateButtons() {
         String saved = Settings.System.getString(mContext.getContentResolver(), Settings.System.NAV_BUTTONS);
@@ -147,8 +146,12 @@ public class NavigationBarView extends LinearLayout {
     public View getRecentsButton() {
         return mCurrentView.findViewWithTag("recent");
     }
+    
+    public View getLeftMenuButton() {
+        return mCurrentView.findViewById(R.id.menu_left);
+    }
 
-    public View getMenuButton() {
+    public View getRightMenuButton() {
         return mCurrentView.findViewById(R.id.menu);
     }
 
@@ -173,12 +176,6 @@ public class NavigationBarView extends LinearLayout {
                 Context.WINDOW_SERVICE)).getDefaultDisplay();
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
-        mPersistMenu = (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PERSIST_MENU, 0) == 1);
-
-        mHandler = new Handler();
-        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
-        settingsObserver.observe();
 
         final Resources res = mContext.getResources();
         mBarSize = res.getDimensionPixelSize(R.dimen.navigation_bar_size);
@@ -186,21 +183,6 @@ public class NavigationBarView extends LinearLayout {
         mShowMenu = false;
     }
 
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(Settings.System.getUriFor(Settings.System.PERSIST_MENU), false, this);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            updateSettings();
-        }
-    }
-    
     View.OnTouchListener mLightsOutListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent ev) {
@@ -247,14 +229,59 @@ public class NavigationBarView extends LinearLayout {
     }
 
     public void setMenuVisibility(final boolean show, final boolean force) {
-        if (mPersistMenu) {
-            getMenuButton().setVisibility(View.VISIBLE);
-        } else {
-            if (!force && mShowMenu == show) return;
+        if (!force && mShowMenu == show) return;
 
-            mShowMenu = show;
+        mShowMenu = show;
+        boolean localShow = show;
 
-            getMenuButton().setVisibility(mShowMenu ? View.VISIBLE : View.INVISIBLE);
+        int currentSetting = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.MENU_LOCATION, SHOW_RIGHT_MENU);
+
+        int currentVisibility = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.MENU_VISIBILITY, VISIBILITY_SYSTEM);
+
+        switch (currentVisibility) {
+            default:
+            case VISIBILITY_SYSTEM:
+                ((ImageView) getLeftMenuButton())
+                        .setImageResource(mVertical ? R.drawable.ic_sysbar_menu_land
+                                : R.drawable.ic_sysbar_menu);
+                ((ImageView) getRightMenuButton())
+                        .setImageResource(mVertical ? R.drawable.ic_sysbar_menu_land
+                                : R.drawable.ic_sysbar_menu);
+                break;
+            case VISIBILITY_ALWAYS:
+                ((ImageView) getLeftMenuButton())
+                        .setImageResource(mVertical ? R.drawable.ic_sysbar_menu_land
+                                : R.drawable.ic_sysbar_menu);
+                ((ImageView) getRightMenuButton())
+                        .setImageResource(mVertical ? R.drawable.ic_sysbar_menu_land
+                                : R.drawable.ic_sysbar_menu);
+                localShow = true;
+                break;
+            case VISIBILITY_NEVER:
+                ((ImageView) getLeftMenuButton())
+                        .setImageResource(R.drawable.ic_sysbar_menu_inviz);
+                ((ImageView) getRightMenuButton())
+                        .setImageResource(R.drawable.ic_sysbar_menu_inviz);
+                localShow = true;
+                break;
+        }
+        
+        switch (currentSetting) {
+            case SHOW_BOTH_MENU:
+                getLeftMenuButton().setVisibility(localShow ? View.VISIBLE : View.INVISIBLE);
+                getRightMenuButton().setVisibility(localShow ? View.VISIBLE : View.INVISIBLE);
+                break;
+            case SHOW_LEFT_MENU:
+                getLeftMenuButton().setVisibility(localShow ? View.VISIBLE : View.INVISIBLE);
+                getRightMenuButton().setVisibility(View.INVISIBLE);
+                break;
+            default:
+            case SHOW_RIGHT_MENU:
+                getLeftMenuButton().setVisibility(View.INVISIBLE);
+                getRightMenuButton().setVisibility(localShow ? View.VISIBLE : View.INVISIBLE);
+                break;
         }
     }
 
@@ -415,7 +442,7 @@ public class NavigationBarView extends LinearLayout {
         final View back = getBackButton();
         final View home = getHomeButton();
         final View recent = getRecentsButton();
-        final View menu = getMenuButton();
+        final View menu = getRightMenuButton();
 
         pw.println("      back: "
                 + PhoneStatusBar.viewInfo(back)
@@ -434,15 +461,5 @@ public class NavigationBarView extends LinearLayout {
                 + " " + visibilityToString(menu.getVisibility())
                 );
         pw.println("    }");
-    }
-
-    private void updateSettings() {
-        ContentResolver resolver = mContext.getContentResolver();
-        mPersistMenu = (Settings.System.getInt(resolver, Settings.System.PERSIST_MENU, 0) == 1);
-        if (mPersistMenu) {
-            getMenuButton().setVisibility(View.VISIBLE);
-        } else {
-            getMenuButton().setVisibility(View.INVISIBLE);
-        }
     }
 }
