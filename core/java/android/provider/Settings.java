@@ -2133,24 +2133,6 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_SHOW_ALARM = "statusbar_show_alarm";
- 
-        /**
-         * Status bar battery percentage text.
-         * @hide
-         */
-        public static final String STATUSBAR_BATTERY_TEXT = "statusbar_battery_text";
-        
-        /**
-         * Status bar battery percentage text style.
-         * @hide
-         */
-        public static final String STATUSBAR_BATTERY_TEXT_STYLE = "statusbar_battery_text_style";
-
-        /**
-         * Setting for using battery percentage drawables
-         * @hide
-         */
-        public static final String BATTERY_PERCENTAGES = "battery_percentages";
         
         /**
          * Setting to always show the menu button in navigation bar
@@ -2261,18 +2243,6 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_MUSIC_CONTROLS = "volume_music_controls";
-
-        /**
-         * Whether to show the battery bar
-         * 
-         * @hide
-         */
-        public static final String STATUSBAR_BATTERY_BAR = "statusbar_battery_bar";
-
-        /**
-         * @hide
-         */
-        public static final String STATUSBAR_BATTERY_BAR_COLOR = "statusbar_battery_bar_color";
         
         /**
          * @hide
@@ -2292,6 +2262,53 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_LIGHT_OFF = "notification_light_off";
+        
+        /**
+         * Whether to show the battery bar
+         * 
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR = "statusbar_battery_bar";
+
+        /**
+         * Style of the battery icon
+         * 
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_ICON = "statusbar_battery_icon";
+        
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_COLOR = "statusbar_battery_bar_color";
+        
+        /**
+         * Last state of the quick toggles, to restore on boot
+         * @hide
+         */
+        public static final String STATUSBAR_TOGGLES_VISIBILITY = "statusbar_toggles_visibility";
+        
+        /**
+         * thickness of the batteyr bar (in dp)
+         * 
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_THICKNESS = "statusbar_battery_bar_thickness";
+
+        /**
+         * 0 = regular
+         * 1 = mirrored from center
+         * 
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_STYLE = "statusbar_battery_bar_style";	
+	
+        /**
+         * whether to show charging animation
+         * 
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
         
         public static final String MENU_VISIBILITY = "menu_visibility";
 
