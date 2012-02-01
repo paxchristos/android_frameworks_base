@@ -416,6 +416,9 @@ public class PhoneStatusBar extends StatusBar {
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.NAV_BUTTONS),
                             false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.SWITCH_WITH_SEARCH), 
+                            false, this);
             onChange(true);
         }
 

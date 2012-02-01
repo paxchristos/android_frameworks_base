@@ -64,6 +64,8 @@ public class NavigationBarView extends LinearLayout {
 
     int mBarSize;
     boolean mVertical;
+    
+    private boolean mSwitchWithSearch; 
 
     boolean mHidden, mLowProfile, mShowMenu, mHideSearch;
     int mDisabledFlags = 0;
@@ -87,6 +89,7 @@ public class NavigationBarView extends LinearLayout {
             Collections.reverse(ids);
         }
         mHideSearch = saved.contains("search0");
+        mSwitchWithSearch = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SWITCH_WITH_SEARCH, 0) == 1);
         int cc =0;
         //Reset all paddings to invisible
         ViewGroup navPanel = ((ViewGroup) mCurrentView.findViewById(R.id.nav_buttons));
@@ -216,8 +219,14 @@ public class NavigationBarView extends LinearLayout {
 
         getBackButton()   .setVisibility(disableBack       ? View.INVISIBLE : View.VISIBLE);
         getHomeButton()   .setVisibility(disableHome       ? View.INVISIBLE : View.VISIBLE);
-        getRecentsButton().setVisibility(disableRecent     ? View.INVISIBLE : View.VISIBLE);
-        if (!mHideSearch) {
+
+        if (mSwitchWithSearch) {
+            getRecentsButton().setVisibility(View.GONE);
+        } else {
+            getRecentsButton().setVisibility(disableRecent ? View.INVISIBLE : View.VISIBLE);
+        }
+
+        if (!mHideSearch || mSwitchWithSearch) {
             getSearchButton() .setVisibility(disableRecent ? View.INVISIBLE : View.VISIBLE);
         } else {
             getSearchButton() .setVisibility(View.GONE);

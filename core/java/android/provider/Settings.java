@@ -2312,6 +2312,8 @@ public final class Settings {
         
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
         
+        public static final String SWITCH_WITH_SEARCH = "switch_with_search";
+        
         public static final String MENU_VISIBILITY = "menu_visibility";
 
         /**
