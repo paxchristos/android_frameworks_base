@@ -2310,6 +2310,8 @@ public final class Settings {
          */
         public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
         
+        public static final LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control"
+        
         public static final String MENU_VISIBILITY = "menu_visibility";
 
         /**
