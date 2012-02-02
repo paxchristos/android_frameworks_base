@@ -84,6 +84,7 @@ public class NavigationBarView extends LinearLayout {
             saved = "back|home|recent|search0";
         }
         boolean isPortrait = mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        boolean isLandscape = mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         List<Integer> ids = Arrays.asList(R.id.one,R.id.two,R.id.three,R.id.four);
         if (!isPortrait) {
             Collections.reverse(ids);
@@ -126,6 +127,12 @@ public class NavigationBarView extends LinearLayout {
                     cView.setImageResource(R.drawable.ic_sysbar_recent);
                 } else {
                     cView.setImageResource(R.drawable.ic_sysbar_recent_land);
+                }
+                //Hide recents button padding
+                if (mSwitchWithSearch & isLandscape) {
+                    navPanel.getChildAt(navPanel.indexOfChild(cView) - 1).setVisibility(View.GONE);
+                } else if (mSwitchWithSearch & isPortrait) {
+                    navPanel.getChildAt(navPanel.indexOfChild(cView) - 1).setVisibility(View.VISIBLE);
                 }
             } else {
                 cView.setTag("search");
