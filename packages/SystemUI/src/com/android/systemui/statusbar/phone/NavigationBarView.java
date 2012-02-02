@@ -243,10 +243,10 @@ public class NavigationBarView extends LinearLayout {
         mShowMenu = show;
         boolean localShow = show;
 
-        int currentSetting = Settings.System.getInt(getContext().getContentResolver(),
+        int currentSetting = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.MENU_LOCATION, SHOW_RIGHT_MENU);
 
-        int currentVisibility = Settings.System.getInt(getContext().getContentResolver(),
+        int currentVisibility = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.MENU_VISIBILITY, VISIBILITY_SYSTEM);
 
         switch (currentVisibility) {
