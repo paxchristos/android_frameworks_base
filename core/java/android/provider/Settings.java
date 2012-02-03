@@ -2177,10 +2177,15 @@ public final class Settings {
 
         /**
          *
-         * 0 = stock 1 = four 2 = four unlock 3 = six 4 = eight 5 = eight unhidden
          * @hide
          */
         public static final String LOCKSCREEN_LAYOUT = "lockscreen_layout";
+        
+        /**
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_TARGETS = "lockscreen_targets";
 
         /**
          * Setting for custom nav bar tint

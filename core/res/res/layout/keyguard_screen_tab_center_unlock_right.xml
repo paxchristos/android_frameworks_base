@@ -31,7 +31,9 @@
     <com.android.internal.widget.DigitalClock android:id="@+id/time"
         android:layout_marginTop="@dimen/keyguard_lockscreen_status_line_clockfont_top_margin"
         android:layout_marginBottom="12dip"
-        android:layout_gravity="center_horizontal">
+        android:layout_marginRight="@dimen/keyguard_lockscreen_status_line_font_right_margin"
+        android:layout_gravity="right">
+
 
         <!-- Because we can't have multi-tone fonts, we render two TextViews, one on
         top of the other. Hence the redundant layout... -->
@@ -41,7 +43,7 @@
             android:singleLine="true"
             android:ellipsize="none"
             android:textSize="@dimen/keyguard_lockscreen_clock_font_size"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginBottom="6dip"
             android:textColor="@color/lockscreen_clock_background"
             />
@@ -52,7 +54,7 @@
             android:singleLine="true"
             android:ellipsize="none"
             android:textSize="@dimen/keyguard_lockscreen_clock_font_size"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginBottom="6dip"
             android:textColor="@color/lockscreen_clock_foreground"
             android:layout_alignLeft="@id/timeDisplayBackground"
@@ -63,7 +65,8 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/keyguard_lockscreen_status_line_font_right_margin">
 
         <TextView
             android:id="@+id/date"
@@ -88,10 +91,13 @@
             />
 
     </LinearLayout>
+    
+    <Space android:layout_gravity="fill" />
 
     <TextView
         android:id="@+id/status1"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/keyguard_lockscreen_status_line_font_right_margin"
         android:singleLine="true"
         android:ellipsize="marquee"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -99,15 +105,14 @@
         android:drawablePadding="4dip"
         />
 
-    <Space android:layout_gravity="fill" />
-
     <!-- emergency call button shown when sim is PUKd and tab_selector is hidden -->
     <Button
         android:id="@+id/emergencyCallButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dip"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="16dip"
+        android:layout_gravity="right"
         android:drawableLeft="@*android:drawable/lockscreen_emergency_button"
         style="?android:attr/buttonBarButtonStyle"
         android:drawablePadding="4dip"
@@ -117,7 +122,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="302dip">
+        android:layout_height="384dip">
 
         <com.android.internal.widget.multiwaveview.MultiWaveView
             android:id="@+id/unlock_widget"
@@ -134,9 +139,9 @@
             android:outerRadius="@dimen/multiwaveview_target_placement_radius"
             android:snapMargin="@dimen/multiwaveview_snap_margin"
             android:hitRadius="@dimen/multiwaveview_hit_radius"
-            android:bottomChevronDrawable="@drawable/ic_lockscreen_chevron_down"
+            android:rightChevronDrawable="@drawable/ic_lockscreen_chevron_right"
             android:horizontalOffset="0dip"
-            android:verticalOffset="60dip"
+            android:verticalOffset="0dip"
             android:feedbackCount="3"
             android:vibrationDuration="20"
             />
@@ -146,7 +151,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="12dip"
+            android:layout_marginBottom="6dip"
             android:gravity="center_horizontal"
             android:singleLine="true"
             android:ellipsize="marquee"
