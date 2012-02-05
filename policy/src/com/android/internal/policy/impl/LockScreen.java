@@ -651,7 +651,22 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                 }
             }
             if (mLockscreenTargets == EIGHT_TARGETS_UNLOCK_RIGHT) {
-                if (target == 5) { // lower left Action = Empty
+                if (target == 5) { // lower left Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT);
+                    
+                    if(intentUri == null) {
+                        mCallback.goToUnlockScreen();
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
                 } else if (target == 6) { // bottom Action = Phone
                     Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
                     phoneIntent.setClassName("com.android.contacts",
@@ -674,7 +689,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         }
                     }
                     mCallback.goToUnlockScreen();
-                } else if (target == 2) { // up Action == Camera/Ring Toggle
+                } else if (target == 2) { // top Action == Camera/Ring Toggle
                     if (mCameraDisabled) {
                         toggleRingMode();
                         mUnlockWidgetMethods.updateResources();
@@ -686,7 +701,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         mContext.startActivity(intent);
                         mCallback.goToUnlockScreen();
                     }
-                } else if (target == 1) { // upper right Action = Unlock
+                } else if (target == 1) { // upper right Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
                     
                     if(intentUri == null) {
@@ -722,10 +737,24 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         }
                     }
                     mCallback.goToUnlockScreen();
-                } else if (target == 7) { // lower right Action = Empty
-                } else if (target == 0) { // right Action = Unlock
+                } else if (target == 7) { // lower right Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT);
+                    
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
                     mCallback.goToUnlockScreen();
-                }           
+                } else if (target == 0) { // right Action = Hidden Unlock
+                    mCallback.goToUnlockScreen();
+                }
             }
         }
 
