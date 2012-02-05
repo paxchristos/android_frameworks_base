@@ -321,11 +321,25 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         mCallback.goToUnlockScreen();
                     }
                 } else if (target == 2) { // left Action = Mms
-                    Intent mmsIntent = new Intent(Intent.ACTION_MAIN);
-                    mmsIntent.setClassName("com.android.mms",
-                                           "com.android.mms.ui.ConversationList");
-                    mmsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(mmsIntent);
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
+                    
+                    if(intentUri == null) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
                     mCallback.goToUnlockScreen();
                 } else if (target == 3) { // left Action = Hidden Unlock
                     mCallback.goToUnlockScreen();
