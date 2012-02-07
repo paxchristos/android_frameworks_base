@@ -24,10 +24,13 @@ import java.util.List;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.os.ServiceManager;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -64,10 +67,8 @@ public class NavigationBarView extends LinearLayout {
 
     int mBarSize;
     boolean mVertical;
-    
-    private boolean mSwitchWithSearch; 
 
-    boolean mHidden, mLowProfile, mShowMenu, mHideSearch;
+    boolean mHidden, mLowProfile, mShowMenu;
     int mDisabledFlags = 0;
     
     public final static int SHOW_LEFT_MENU = 1;
@@ -77,6 +78,12 @@ public class NavigationBarView extends LinearLayout {
     public final static int VISIBILITY_SYSTEM = 0;
     public final static int VISIBILITY_NEVER = 1;
     public final static int VISIBILITY_ALWAYS = 2;
+    
+    public final static int STOCK_NAV_BUTTONS = 3;
+    public final static int RECENTS_FOR_SEARCH = 4;
+    public final static int ADD_SEARCH_TO_NAV = 5;
+    
+    private int mNavButtons = STOCK_NAV_BUTTONS;
 
     public void updateButtons() {
         String saved = Settings.System.getString(mContext.getContentResolver(), Settings.System.NAV_BUTTONS);
@@ -89,8 +96,10 @@ public class NavigationBarView extends LinearLayout {
         if (!isPortrait) {
             Collections.reverse(ids);
         }
-        mHideSearch = saved.contains("search0");
-        mSwitchWithSearch = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SWITCH_WITH_SEARCH, 0) == 1);
+        
+        SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+        settingsObserver.observe();
+        
         int cc =0;
         //Reset all paddings to invisible
         ViewGroup navPanel = ((ViewGroup) mCurrentView.findViewById(R.id.nav_buttons));
@@ -128,10 +137,12 @@ public class NavigationBarView extends LinearLayout {
                 } else {
                     cView.setImageResource(R.drawable.ic_sysbar_recent_land);
                 }
-                //Hide recents button padding
-                if (mSwitchWithSearch & isLandscape) {
+                //Hide recents button padding }
+                if (mNavButtons == STOCK_NAV_BUTTONS) {
+                    navPanel.getChildAt(navPanel.indexOfChild(cView) - 1).setVisibility(View.VISIBLE);
+                } else if (mNavButtons == RECENTS_FOR_SEARCH) {
                     navPanel.getChildAt(navPanel.indexOfChild(cView) - 1).setVisibility(View.GONE);
-                } else if (mSwitchWithSearch & isPortrait) {
+                } else if (mNavButtons == ADD_SEARCH_TO_NAV) {
                     navPanel.getChildAt(navPanel.indexOfChild(cView) - 1).setVisibility(View.VISIBLE);
                 }
             } else {
@@ -144,8 +155,12 @@ public class NavigationBarView extends LinearLayout {
                     cView.setImageResource(R.drawable.ic_sysbar_search_land);
                 }
                 //Hide search button padding
-                if (mHideSearch) {
+                if (mNavButtons == STOCK_NAV_BUTTONS) {
                     navPanel.getChildAt(navPanel.indexOfChild(cView) - 1).setVisibility(View.GONE);
+                } else if (mNavButtons == RECENTS_FOR_SEARCH) {
+                    navPanel.getChildAt(navPanel.indexOfChild(cView) - 1).setVisibility(View.VISIBLE);
+                } else if (mNavButtons == ADD_SEARCH_TO_NAV) {
+                    navPanel.getChildAt(navPanel.indexOfChild(cView) - 1).setVisibility(View.VISIBLE);
                 }
             }
             cc++;
@@ -227,16 +242,17 @@ public class NavigationBarView extends LinearLayout {
         getBackButton()   .setVisibility(disableBack       ? View.INVISIBLE : View.VISIBLE);
         getHomeButton()   .setVisibility(disableHome       ? View.INVISIBLE : View.VISIBLE);
 
-        if (mSwitchWithSearch) {
-            getRecentsButton().setVisibility(View.GONE);
-        } else {
-            getRecentsButton().setVisibility(disableRecent ? View.INVISIBLE : View.VISIBLE);
-        }
-
-        if (!mHideSearch || mSwitchWithSearch) {
-            getSearchButton() .setVisibility(disableRecent ? View.INVISIBLE : View.VISIBLE);
-        } else {
+        if (mNavButtons == STOCK_NAV_BUTTONS) {
+            getRecentsButton().setVisibility(disableRecent     ? View.INVISIBLE : View.VISIBLE);
             getSearchButton() .setVisibility(View.GONE);
+
+        } else if (mNavButtons == RECENTS_FOR_SEARCH) {
+            getRecentsButton().setVisibility(View.GONE);
+            getSearchButton() .setVisibility(disableRecent     ? View.INVISIBLE : View.VISIBLE);
+
+        } else if (mNavButtons == ADD_SEARCH_TO_NAV) {
+            getRecentsButton().setVisibility(disableRecent     ? View.INVISIBLE : View.VISIBLE);
+            getSearchButton() .setVisibility(disableRecent     ? View.INVISIBLE : View.VISIBLE);
         }
     }
 
@@ -315,7 +331,7 @@ public class NavigationBarView extends LinearLayout {
         final View navButtons = mCurrentView.findViewById(R.id.nav_buttons);
         final View lowLights = mCurrentView.findViewById(R.id.lights_out);
 
-        lowLights.findViewById(R.id.extraDot).setVisibility(mHideSearch ? View.GONE : View.VISIBLE);
+        lowLights.findViewById(R.id.extraDot).setVisibility(mNavButtons == STOCK_NAV_BUTTONS ? View.GONE : View.VISIBLE);
 
         // ok, everyone, stop it right there
         navButtons.animate().cancel();
@@ -370,8 +386,8 @@ public class NavigationBarView extends LinearLayout {
         mRotatedViews[Surface.ROTATION_90] = findViewById(R.id.rot90);
         
         mRotatedViews[Surface.ROTATION_270] = NAVBAR_ALWAYS_AT_RIGHT
-                                                ? findViewById(R.id.rot90)
-                                                : findViewById(R.id.rot270);
+                                            ? findViewById(R.id.rot90)
+                                            : findViewById(R.id.rot270);
 
         for (View v : mRotatedViews) {
             // this helps avoid drawing artifacts with glowing navigation keys 
@@ -477,5 +493,32 @@ public class NavigationBarView extends LinearLayout {
                 + " " + visibilityToString(menu.getVisibility())
                 );
         pw.println("    }");
+
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+    
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NAV_BUTTON_CONFIG), false,
+                    this);
+            updateSettings();
+        }
+    
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+
+    protected void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+
+        mNavButtons = Settings.System.getInt(resolver,
+        Settings.System.NAV_BUTTON_CONFIG, STOCK_NAV_BUTTONS);
+
     }
 }

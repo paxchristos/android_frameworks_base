@@ -2326,6 +2326,8 @@ public final class Settings {
                 "navigation_bar_glow_duration_on" 
         };
         
+        public static final String NAV_BUTTON_CONFIG = "nav_button_config";
+        
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
         
         public static final String SWITCH_WITH_SEARCH = "switch_with_search";

@@ -417,7 +417,7 @@ public class PhoneStatusBar extends StatusBar {
                     Settings.System.getUriFor(Settings.System.NAV_BUTTONS),
                             false, this);
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.SWITCH_WITH_SEARCH), 
+                    Settings.System.getUriFor(Settings.System.NAV_BUTTON_CONFIG), 
                             false, this);
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.MENU_LOCATION), 
