@@ -465,63 +465,49 @@
     <array name="lockscreen_targets_when_silent">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@null</item>
-        <item>@null</item>
         <item>@drawable/ic_lockscreen_soundon</item>
         <item>@null</item>
-        <item>@null</item>
     </array>
-
+    
     <array name="lockscreen_target_descriptions_when_silent">
         <item>@string/description_target_unlock</item>
         <item>@null</item>
-        <item>@null</item>
         <item>@string/description_target_soundon</item>
         <item>@null</item>
-        <item>@null</item>
     </array>
-
+    
     <array name="lockscreen_direction_descriptions">
         <item>@string/description_direction_right</item>
         <item>@null</item>
-        <item>@null</item>
         <item>@string/description_direction_left</item>
         <item>@null</item>
-        <item>@null</item>
     </array>
-
+    
     <array name="lockscreen_targets_when_soundon">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@null</item>
-        <item>@null</item>
         <item>@drawable/ic_lockscreen_silent</item>
         <item>@null</item>
-        <item>@null</item>
     </array>
-
+    
     <array name="lockscreen_target_descriptions_when_soundon">
         <item>@string/description_target_unlock</item>
         <item>@null</item>
-        <item>@null</item>
         <item>@string/description_target_silent</item>
         <item>@null</item>
-        <item>@null</item>
     </array>
-
+    
     <array name="lockscreen_targets_with_camera">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@null</item>
-        <item>@null</item>
         <item>@drawable/ic_lockscreen_camera</item>
         <item>@null</item>
-        <item>@null</item>
     </array>
-
+    
     <array name="lockscreen_target_descriptions_with_camera">
         <item>@string/description_target_unlock</item>
         <item>@null</item>
-        <item>@null</item>
         <item>@string/description_target_camera</item>
-        <item>@null</item>
         <item>@null</item>
     </array>
     
@@ -566,58 +552,58 @@
         <item>@string/description_target_sms</item>
         <item>@string/description_target_unlock</item>
     </array>
-
+    
     
     <array name="quad_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
-        <item>@drawable/ic_lockscreen_camera</item>
         <item>@drawable/ic_lockscreen_sms</item>
         <item>@drawable/ic_lockscreen_phone</item>
+        <item>@drawable/ic_lockscreen_camera</item>
         <item>@null</item>
         <item>@null</item>
     </array>
     
     <array name="quad_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
-        <item>@string/description_target_camera</item>
         <item>@string/description_target_sms</item>
         <item>@string/description_target_phone</item>
+        <item>@string/description_target_camera</item>
         <item>@null</item>
         <item>@null</item>
     </array>
     
     <array name="silent_quad_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
-        <item>@drawable/ic_lockscreen_silent</item>
         <item>@drawable/ic_lockscreen_sms</item>
         <item>@drawable/ic_lockscreen_phone</item>
+        <item>@drawable/ic_lockscreen_silent</item>
         <item>@null</item>
         <item>@null</item>
     </array>
     
     <array name="silent_quad_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
-        <item>@string/description_target_silent</item>
         <item>@string/description_target_sms</item>
         <item>@string/description_target_phone</item>
+        <item>@string/description_target_silent</item>
         <item>@null</item>
         <item>@null</item>
     </array>
     
     <array name="soundon_quad_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
-        <item>@drawable/ic_lockscreen_soundon</item>
         <item>@drawable/ic_lockscreen_sms</item>
         <item>@drawable/ic_lockscreen_phone</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
         <item>@null</item>
         <item>@null</item>
     </array>
     
     <array name="soundon_quad_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
-        <item>@string/description_target_soundon</item>
         <item>@string/description_target_sms</item>
         <item>@string/description_target_phone</item>
+        <item>@string/description_target_soundon</item>
         <item>@null</item>
         <item>@null</item>
     </array>
@@ -687,13 +673,13 @@
         <item>@string/description_target_unlock</item>
         <item>@null</item>
     </array>
-
+    
     <array name="six_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@drawable/ic_lockscreen_custom</item>
-        <item>@drawable/ic_lockscreen_camera</item>
-        <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_camera</item>
         <item>@null</item>
         <item>@drawable/ic_lockscreen_phone</item>
         <item>@null</item>
@@ -702,9 +688,9 @@
     <array name="six_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
         <item>@string/description_target_custom</item>
-        <item>@string/description_target_camera</item>
-        <item>@string/description_target_custom</item>
         <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_camera</item>
         <item>@null</item>
         <item>@string/description_target_phone</item>
         <item>@null</item>
@@ -713,9 +699,9 @@
     <array name="silent_six_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@drawable/ic_lockscreen_custom</item>
-        <item>@drawable/ic_lockscreen_silent</item>
-        <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_silent</item>
         <item>@null</item>
         <item>@drawable/ic_lockscreen_phone</item>
         <item>@null</item>
@@ -724,9 +710,9 @@
     <array name="silent_six_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
         <item>@string/description_target_custom</item>
-        <item>@string/description_target_silent</item>
-        <item>@string/description_target_custom</item>
         <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_silent</item>
         <item>@null</item>
         <item>@string/description_target_phone</item>
         <item>@null</item>
@@ -735,9 +721,9 @@
     <array name="soundon_six_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@drawable/ic_lockscreen_custom</item>
-        <item>@drawable/ic_lockscreen_soundon</item>
-        <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
         <item>@null</item>
         <item>@drawable/ic_lockscreen_phone</item>
         <item>@null</item>
@@ -746,9 +732,9 @@
     <array name="soundon_six_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
         <item>@string/description_target_custom</item>
-        <item>@string/description_target_soundon</item>
-        <item>@string/description_target_custom</item>
         <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_soundon</item>
         <item>@null</item>
         <item>@string/description_target_phone</item>
         <item>@null</item>
@@ -823,9 +809,9 @@
     <array name="eight_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@drawable/ic_lockscreen_custom</item>
-        <item>@drawable/ic_lockscreen_camera</item>
-        <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_camera</item>
         <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_phone</item>
         <item>@drawable/ic_lockscreen_custom</item>
@@ -834,9 +820,9 @@
     <array name="eight_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
         <item>@string/description_target_custom</item>
-        <item>@string/description_target_camera</item>
-        <item>@string/description_target_custom</item>
         <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_camera</item>
         <item>@string/description_target_custom</item>
         <item>@string/description_target_phone</item>
         <item>@string/description_target_custom</item>
@@ -845,9 +831,9 @@
     <array name="silent_eight_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@drawable/ic_lockscreen_custom</item>
-        <item>@drawable/ic_lockscreen_silent</item>
-        <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_silent</item>
         <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_phone</item>
         <item>@drawable/ic_lockscreen_custom</item>
@@ -856,9 +842,9 @@
     <array name="silent_eight_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
         <item>@string/description_target_custom</item>
-        <item>@string/description_target_silent</item>
-        <item>@string/description_target_custom</item>
         <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_silent</item>
         <item>@string/description_target_custom</item>
         <item>@string/description_target_phone</item>
         <item>@string/description_target_custom</item>
@@ -867,9 +853,9 @@
     <array name="soundon_eight_unlockright_lockscreen_targets">
         <item>@drawable/ic_lockscreen_unlock</item>
         <item>@drawable/ic_lockscreen_custom</item>
-        <item>@drawable/ic_lockscreen_soundon</item>
-        <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
         <item>@drawable/ic_lockscreen_custom</item>
         <item>@drawable/ic_lockscreen_phone</item>
         <item>@drawable/ic_lockscreen_custom</item>
@@ -878,14 +864,375 @@
     <array name="soundon_eight_unlockright_lockscreen_target_descriptions">
         <item>@string/description_target_unlock</item>
         <item>@string/description_target_custom</item>
-        <item>@string/description_target_soundon</item>
-        <item>@string/description_target_custom</item>
         <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_soundon</item>
         <item>@string/description_target_custom</item>
         <item>@string/description_target_phone</item>
         <item>@string/description_target_custom</item>
     </array>
 
+    <array name="quad_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_camera</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+    </array>
+    
+    <array name="quad_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_camera</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_unlock</item>
+    </array>
+    
+    <array name="silent_quad_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_silent</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+    </array>
+    
+    <array name="silent_quad_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_silent</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_unlock</item>
+    </array>
+    
+    <array name="soundon_quad_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+    </array>
+    
+    <array name="soundon_quad_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_soundon</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_unlock</item>
+    </array>
+    
+    
+    <array name="quad_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_camera</item>
+        <item>@null</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="quad_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_camera</item>
+        <item>@null</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="silent_quad_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_silent</item>
+        <item>@null</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="silent_quad_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_silent</item>
+        <item>@null</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="soundon_quad_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
+        <item>@null</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="soundon_quad_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_soundon</item>
+        <item>@null</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="six_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_camera</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@null</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="six_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_camera</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@null</item>
+        <item>@string/description_target_unlock</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="silent_six_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_silent</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@null</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="silent_six_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_silent</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@null</item>
+        <item>@string/description_target_unlock</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="soundon_six_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@null</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="soundon_six_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_soundon</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@null</item>
+        <item>@string/description_target_unlock</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="six_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_camera</item>
+        <item>@null</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="six_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_camera</item>
+        <item>@null</item>
+        <item>@string/description_target_browser</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="silent_six_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_silent</item>
+        <item>@null</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="silent_six_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_silent</item>
+        <item>@null</item>
+        <item>@string/description_target_browser</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="soundon_six_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
+        <item>@null</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="soundon_six_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_soundon</item>
+        <item>@null</item>
+        <item>@string/description_target_browser</item>
+        <item>@null</item>
+    </array>
+    
+    <array name="eight_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_camera</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+    </array>
+    
+    <array name="eight_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_camera</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+    </array>
+    
+    <array name="silent_eight_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_silent</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+    </array>
+    
+    <array name="silent_eight_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_silent</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+    </array>
+    
+    <array name="soundon_eight_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+    </array>
+    
+    <array name="soundon_eight_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_soundon</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+    </array>
+    
+    <array name="eight_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_camera</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+    </array>
+    
+    <array name="eight_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_camera</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+    </array>
+    
+    <array name="silent_eight_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_silent</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+    </array>
+    
+    <array name="silent_eight_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_silent</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+    </array>
+    
+    <array name="soundon_eight_unlockright_lockscreen_nophone_targets">
+        <item>@drawable/ic_lockscreen_unlock</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_sms</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_soundon</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+        <item>@drawable/ic_lockscreen_browser</item>
+        <item>@drawable/ic_lockscreen_custom</item>
+    </array>
+    
+    <array name="soundon_eight_unlockright_lockscreen_nophone_target_descriptions">
+        <item>@string/description_target_unlock</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_sms</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_soundon</item>
+        <item>@string/description_target_custom</item>
+        <item>@string/description_target_browser</item>
+        <item>@string/description_target_custom</item>
+    </array>
+    
     <!-- Defines the shutdown options shown in the reboot dialog. -->
     <array name="shutdown_reboot_options" translatable="false">
         <item>@string/reboot_reboot</item>
