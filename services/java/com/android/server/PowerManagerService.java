@@ -20,6 +20,7 @@ import com.android.internal.app.IBatteryStats;
 import com.android.internal.app.ShutdownThread;
 import com.android.server.am.BatteryStatsService;
 
+import android.R;
 import android.app.ActivityManagerNative;
 import android.app.IActivityManager;
 import android.content.BroadcastReceiver;
@@ -502,23 +503,16 @@ public class PowerManagerService extends IPowerManager.Stub
                 // recalculate everything
                 setScreenOffTimeoutsLocked();
 
-                // final float windowScale = getFloat(WINDOW_ANIMATION_SCALE, 1.0f);
-                // final float transitionScale = getFloat(TRANSITION_ANIMATION_SCALE, 1.0f);
                 mAnimationSetting = 0;
-                mAnimateCrtOn = getInt(Settings.System.CRT_ON_ANIMATION, 0) == 1;
-                mAnimateCrtOff = getInt(Settings.System.CRT_OFF_ANIMATION, 1) == 1;
-                if (mAnimateCrtOff)
-                    mAnimationSetting |= ANIM_SETTING_OFF;
-                if (mAnimateCrtOn) {
-                    mAnimationSetting |= ANIM_SETTING_ON;
+                if (mContext.getResources().getBoolean(com.android.internal.R.bool.config_enableCrtAnimations)) {
+                    mAnimateCrtOn = getInt(Settings.System.CRT_ON_ANIMATION, 0) == 1;
+                    mAnimateCrtOff = getInt(Settings.System.CRT_OFF_ANIMATION, 1) == 1;
+                    if (mAnimateCrtOff)
+                        mAnimationSetting |= ANIM_SETTING_OFF;
+                    if (mAnimateCrtOn) {
+                        mAnimationSetting |= ANIM_SETTING_ON;
+                    } mAnimationSetting |= ANIM_SETTING_ON;
                 }
-                // if (windowScale > 0.5f) {
-                // mAnimationSetting |= ANIM_SETTING_OFF;
-                // }
-                // if (transitionScale > 0.5f) {
-                // Uncomment this if you want the screen-on animation.
-                // mAnimationSetting |= ANIM_SETTING_ON;
-                // }
             }
         }
     }
