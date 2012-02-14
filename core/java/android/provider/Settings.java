@@ -2250,6 +2250,12 @@ public final class Settings {
         public static final String VOLUME_MUSIC_CONTROLS = "volume_music_controls";
         
         /**
+         * Setting to allow % on lockscreen always showing.
+         * @hide
+         */
+        public static final String LOCKSCREEN_BATTERY = "lockscreen_battery";
+        
+        /**
          * @hide
          */
         public static final String NOTIFICATION_LIGHT_COLOR = "notification_light_color";
