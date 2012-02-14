@@ -67,8 +67,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private static final String TAG = "GlobalActions";
 
-    private static final boolean SHOW_SILENT_TOGGLE = true;
-
     private final Context mContext;
     private final AudioManager mAudioManager;
 
@@ -84,6 +82,10 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mDeviceProvisioned = false;
     private ToggleAction.State mAirplaneState = ToggleAction.State.Off;
     private boolean mIsWaitingForEcmExit = false;
+    private boolean mEnableRebootMenu = true;
+    private boolean mEnableScreenshot = true;
+    private boolean mEnableAirplaneMode = true;
+    private boolean mEnableSilentToggle = true;
 
     /**
      * @param context everything needs a context :(
@@ -112,9 +114,10 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     public void showDialog(boolean keyguardShowing, boolean isDeviceProvisioned) {
         mKeyguardShowing = keyguardShowing;
         mDeviceProvisioned = isDeviceProvisioned;
-        if (mDialog == null) {
-            mDialog = createDialog();
-        }
+
+        //always update the PowerMenu dialog
+        mDialog = createDialog();
+        
         prepareDialog();
 
         mDialog.show();
@@ -126,6 +129,19 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
      * @return A new dialog.
      */
     private AlertDialog createDialog() {
+        
+        mEnableRebootMenu = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_DIALOG_SHOW_REBOOT_MENU, 1) == 1;
+        
+        mEnableScreenshot = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_DIALOG_SHOW_SCREENSHOT, 1) == 1;
+        
+        mEnableAirplaneMode = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_DIALOG_SHOW_AIRPLANE_MODE, 1) == 1;
+        
+        mEnableSilentToggle = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_DIALOG_SHOW_SILENT_TOGGLE, 1) == 1;
+
         mSilentModeAction = new SilentModeAction(mAudioManager, mHandler);
 
         mAirplaneModeOn = new ToggleAction(
@@ -187,44 +203,50 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     return true;
                 }
             });
-        
+
         // next: reboot
-        mItems.add(
-            new SinglePressAction(com.android.internal.R.drawable.ic_lock_reboot, R.string.global_action_reboot) {
-                public void onPress() {
-                    ShutdownThread.reboot(mContext, "null", true);
-                }
+        if (mEnableRebootMenu) {
+            mItems.add(
+                new SinglePressAction(com.android.internal.R.drawable.ic_lock_reboot, R.string.global_action_reboot) {
+                    public void onPress() {
+                        ShutdownThread.reboot(mContext, "null", true);
+                    }
                 
-                public boolean showDuringKeyguard() {
-                    return true;
-                }
+                    public boolean showDuringKeyguard() {
+                        return true;
+                    }
                 
-                public boolean showBeforeProvisioning() {
-                    return true;
-                }
-            });
-        
+                    public boolean showBeforeProvisioning() {
+                        return true;
+                    }
+                });
+        }
+
         // next: screenshot
-        mItems.add(
-            new SinglePressAction(com.android.internal.R.drawable.ic_lock_screenshot, R.string.global_action_screenshot) {
-                public void onPress() {
-                    takeScreenshot();
-                }
+        if (mEnableScreenshot) {
+            mItems.add(
+                new SinglePressAction(com.android.internal.R.drawable.ic_lock_screenshot, R.string.global_action_screenshot) {
+                    public void onPress() {
+                        takeScreenshot();
+                    }
                 
-                public boolean showDuringKeyguard() {
-                    return true;
-                }
+                    public boolean showDuringKeyguard() {
+                        return true;
+                    }
                 
-                public boolean showBeforeProvisioning() {
-                    return true;
-                }
-            });
+                    public boolean showBeforeProvisioning() {
+                        return true;
+                    }
+                });
+        }
 
         // next: airplane mode
-        mItems.add(mAirplaneModeOn);
+        if (mEnableAirplaneMode) {
+            mItems.add(mAirplaneModeOn);
+        }
 
         // last: silent mode
-        if (SHOW_SILENT_TOGGLE) {
+        if (mEnableSilentToggle) {
             mItems.add(mSilentModeAction);
         }
 
@@ -336,7 +358,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         } else {
             mDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
         }
-        if (SHOW_SILENT_TOGGLE) {
+        if (mEnableSilentToggle) {
             IntentFilter filter = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
             mContext.registerReceiver(mRingerModeReceiver, filter);
         }
@@ -345,7 +367,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     /** {@inheritDoc} */
     public void onDismiss(DialogInterface dialog) {
-        if (SHOW_SILENT_TOGGLE) {
+        if (mEnableSilentToggle) {
             mContext.unregisterReceiver(mRingerModeReceiver);
         }
     }

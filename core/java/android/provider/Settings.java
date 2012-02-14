@@ -2375,6 +2375,14 @@ public final class Settings {
          * @hide
          */
         public static final String QUIET_HOURS_DIM = "quiet_hours_dim";
+        
+        public static final String POWER_DIALOG_SHOW_REBOOT_MENU = "power_dialog_reboot_menu";
+
+        public static final String POWER_DIALOG_SHOW_SCREENSHOT = "power_dialog_show_screenshot";
+        
+        public static final String POWER_DIALOG_SHOW_AIRPLANE_MODE = "power_dialog_show_airplane_mode";
+
+        public static final String POWER_DIALOG_SHOW_SILENT_TOGGLE = "power_dialog_show_silent_toggle";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
