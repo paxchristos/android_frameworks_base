@@ -2330,6 +2330,8 @@ public final class Settings {
         public static final String SWITCH_WITH_SEARCH = "switch_with_search";
         
         public static final String MENU_VISIBILITY = "menu_visibility";
+        
+        public static final String HORIZONTAL_RECENTS_TASK_PANEL = "horizontal_recents_task_panel";
 
         /**
          * Whether to enable quiet hours.
