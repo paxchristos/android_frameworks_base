@@ -3434,7 +3434,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 if (sensorRotation != Surface.ROTATION_180
                         || mAllowAllRotations == 1
-                        || orientation == ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR
                         || orientation == ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR) {
                     preferredRotation = sensorRotation;
                 } else {

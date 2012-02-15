@@ -82,8 +82,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mDeviceProvisioned = false;
     private ToggleAction.State mAirplaneState = ToggleAction.State.Off;
     private boolean mIsWaitingForEcmExit = false;
-    private boolean mEnableRebootMenu = true;
-    private boolean mEnableScreenshot = true;
+    private boolean mEnableRebootMenu = false;
+    private boolean mEnableScreenshot = false;
     private boolean mEnableAirplaneMode = true;
     private boolean mEnableSilentToggle = true;
 
@@ -131,10 +131,10 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private AlertDialog createDialog() {
         
         mEnableRebootMenu = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.POWER_DIALOG_SHOW_REBOOT_MENU, 1) == 1;
+                Settings.System.POWER_DIALOG_SHOW_REBOOT_MENU, 0) == 1;
         
         mEnableScreenshot = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.POWER_DIALOG_SHOW_SCREENSHOT, 1) == 1;
+                Settings.System.POWER_DIALOG_SHOW_SCREENSHOT, 0) == 1;
         
         mEnableAirplaneMode = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.POWER_DIALOG_SHOW_AIRPLANE_MODE, 1) == 1;
