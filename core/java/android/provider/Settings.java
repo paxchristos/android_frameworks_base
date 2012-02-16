@@ -2114,10 +2114,23 @@ public final class Settings {
         * @hide
         */
         public static final String EXPANDED_FLASH_MODE = "expanded_flash_mode";
+        
+        /**
+         * Notification Power Widget - Torch State
+         * @hide
+         */
+        public static final String TORCH_STATE = "torch_state";
+        
+        /**
+         * Whether to enable torch by long pressing power from a screen-off state
+         * 	
+         * @hide
+         */
+        public static final String ENABLE_FAST_TORCH = "enable_fast_torch";
 
-	/**
-	 */
-	public static final String COMBINED_BAR_AUTO_HIDE = "combined_bar_auto_hide";
+        /**
+         */
+        public static final String COMBINED_BAR_AUTO_HIDE = "combined_bar_auto_hide";
 
         /**
          * Setting to hide the statusbar alarm clock notification

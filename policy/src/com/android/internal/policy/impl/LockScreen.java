@@ -1041,14 +1041,6 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         return mAudioManager.getRingerMode() != AudioManager.RINGER_MODE_NORMAL;
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_MENU && mEnableMenuKeyInLockScreen) {
-            mCallback.goToUnlockScreen();
-        }
-        return false;
-    }
-
     void updateConfiguration() {
         Configuration newConfig = getResources().getConfiguration();
         if (newConfig.orientation != mCreationOrientation) {
