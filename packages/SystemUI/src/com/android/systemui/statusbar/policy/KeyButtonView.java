@@ -51,7 +51,7 @@ public class KeyButtonView extends ImageView {
     private static final String TAG = "StatusBar.KeyButtonView";
 
     final float GLOW_MAX_SCALE_FACTOR = 1.8f;
-    final float BUTTON_QUIESCENT_ALPHA = 0.6f;
+    final float BUTTON_QUIESCENT_ALPHA = 1f;
 
     IWindowManager mWindowManager;
     long mDownTime;
@@ -128,6 +128,13 @@ public class KeyButtonView extends ImageView {
         super.onDraw(canvas);
         if (mGlowBG != null) {
             canvas.restore();
+        }
+    }
+
+    public void setGlowBackground(int id) {
+        mGlowBG = getResources().getDrawable(id);
+        if (mGlowBG != null) {
+            mDrawingAlpha = BUTTON_QUIESCENT_ALPHA;
         }
     }
 
@@ -311,6 +318,8 @@ public class KeyButtonView extends ImageView {
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_GLOW_DURATION[0]), false,
                     this);
+            setAlpha(Settings.System.getFloat(resolver, Settings.System.NAVIGATION_BAR_BUTTON_ALPHA,
+                    0.6f));
             updateSettings();
         }	
     

@@ -2336,14 +2336,40 @@ public final class Settings {
                 "navigation_bar_glow_duration_on" 
         };
         
+        /**
+         * 
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_BUTTON_ALPHA = "navigation_bar_button_alpha";
+
+        /**
+         * 
+         * @hide
+         */
         public static final String NAV_BUTTON_CONFIG = "nav_button_config";
-        
+
+        /**
+         * 
+         * @hide
+         */
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
-        
+
+        /**
+         * 
+         * @hide
+         */
         public static final String SWITCH_WITH_SEARCH = "switch_with_search";
-        
+
+        /**
+         * 
+         * @hide
+         */
         public static final String MENU_VISIBILITY = "menu_visibility";
-        
+
+        /**
+         * 
+         * @hide
+         */
         public static final String HORIZONTAL_RECENTS_TASK_PANEL = "horizontal_recents_task_panel";
 
         /**
