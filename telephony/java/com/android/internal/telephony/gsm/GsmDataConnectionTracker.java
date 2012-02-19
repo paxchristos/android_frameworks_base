@@ -95,6 +95,7 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
     //***** Instance Variables
 
     private boolean mReregisterOnReconnectFailure = false;
+    private boolean mUtmsEverestRadio = false;
     private ContentResolver mResolver;
 
     // Recovery action taken in case of data stall
@@ -198,6 +199,8 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
 
         mDataConnectionTracker = this;
         mResolver = mPhone.getContext().getContentResolver();
+        mUtmsEverestRadio = p.getContext().getResources()
+                .getBoolean(com.android.internal.R.bool.config_utmsEverestRadio);
 
         mApnObserver = new ApnChangeObserver();
         p.getContext().getContentResolver().registerContentObserver(
@@ -1236,7 +1239,8 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
                     // Its active so update the DataConnections link properties
                     UpdateLinkPropertyResult result =
                         dcac.updateLinkPropertiesDataCallStateSync(newState);
-                    if (result.oldLp.equals(result.newLp)) {
+                    if ((mUtmsEverestRadio && newState.active == 2)
+                            || result.oldLp.equals(result.newLp)) {
                         if (DBG) log("onDataStateChanged(ar): no change");
                     } else {
                         if (result.oldLp.isIdenticalInterfaceName(result.newLp)) {

@@ -763,4 +763,7 @@
          [bootmode]:[original USB mode]:[USB mode used]-->
     <integer-array translatable="false" name="config_oemUsbModeOverride">
     </integer-array>
+
+    <!-- Utms Everest RIL hacks -->
+    <bool name="config_utmsEverestRadio">false</bool>
 </resources>
