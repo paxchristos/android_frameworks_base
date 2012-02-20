@@ -766,4 +766,8 @@
 
     <!-- Utms Everest RIL hacks -->
     <bool name="config_utmsEverestRadio">false</bool>
+
+    <!-- Use legacy USB device manager. -->
+    <bool name="config_usesLegacyUsbDeviceManager">false</bool>
+
 </resources>
