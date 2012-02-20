@@ -206,6 +206,11 @@ public:
      *  current list */
     virtual void onRemoved() { };
     
+#ifdef QCOM_HARDWARE
+    /** Called from surfaceFlinger to update the layer */
+    virtual void setIsUpdating(bool isUpdating) { };
+#endif
+
     /** always call base class first */
     virtual void dump(String8& result, char* scratch, size_t size) const;
     virtual void shortDump(String8& result, char* scratch, size_t size) const;
