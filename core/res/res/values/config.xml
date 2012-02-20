@@ -746,6 +746,10 @@
          movement threshold where scrolling should begin. -->
     <dimen name="config_viewConfigurationTouchSlop">8dp</dimen>
     
+    <!-- Whether to even allow system settings for crt animations
+        setting this to false will completely disable them -->
+    <bool name="config_enableCrtAnimations">true</bool>
+    
     <!-- Always show the mobile signal drawables -->
     <bool name="config_hideMobileSignalOnWifi">false</bool>
 
