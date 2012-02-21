@@ -750,6 +750,7 @@
     <bool name="config_enableCrtAnimations">true</bool>
     <!-- Name of screensaver components to look for if none has been chosen by the user -->
     <string name="config_defaultDreamComponent">com.google.android.deskclock/com.android.deskclock.Screensaver</string>
+    
     <!-- Always show the mobile signal drawables -->
     <bool name="config_hideMobileSignalOnWifi">false</bool>
     <!-- Utms Everest RIL hacks -->
