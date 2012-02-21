@@ -750,4 +750,6 @@
     <bool name="config_enableCrtAnimations">true</bool>
     <!-- Name of screensaver components to look for if none has been chosen by the user -->
     <string name="config_defaultDreamComponent">com.google.android.deskclock/com.android.deskclock.Screensaver</string>
+    <!-- Utms Everest RIL hacks -->
+    <bool name="config_utmsEverestRadio">false</bool>
 </resources>
