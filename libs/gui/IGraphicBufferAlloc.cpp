@@ -66,7 +66,7 @@ public:
         *error = result;
         return graphicBuffer;
     }
-    
+
 #ifdef QCOM_HARDWARE
     virtual void freeAllGraphicBuffersExcept(int bufIdx) {
         Parcel data, reply;
