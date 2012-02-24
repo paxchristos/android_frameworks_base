@@ -75,6 +75,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private SilentModeAction mSilentModeAction;
     private ToggleAction mAirplaneModeOn;
+    private ToggleAction mTorchToggle;
 
     private MyAdapter mAdapter;
 
@@ -86,8 +87,12 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mEnableScreenshot = false;
     private boolean mEnableAirplaneMode = true;
     private boolean mEnableSilentToggle = true;
+    private boolean mEnableTorchToggle = true;
     private boolean mReceiverRegistered = false;
 
+    public static final String INTENT_TORCH_ON = "com.android.systemui.INTENT_TORCH_ON";
+    public static final String INTENT_TORCH_OFF = "com.android.systemui.INTENT_TORCH_OFF";
+    
     /**
      * @param context everything needs a context :(
      */
@@ -146,6 +151,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         
         mEnableSilentToggle = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.POWER_DIALOG_SHOW_SILENT_TOGGLE, 1) == 1;
+        
+        mEnableTorchToggle = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_DIALOG_SHOW_TORCH_TOGGLE, 0) == 1;
 
         mSilentModeAction = new SilentModeAction(mAudioManager, mHandler);
 
@@ -189,6 +197,36 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             }
         };
 
+        mTorchToggle = new ToggleAction(
+                R.drawable.ic_lock_torch,
+                R.drawable.ic_lock_torch,
+                R.string.global_actions_toggle_torch,
+                R.string.global_actions_torch_on_status,
+                R.string.global_actions_torch_off_status) {
+
+            void onToggle(boolean on) {
+                if (on) {
+                    Intent i = new Intent(INTENT_TORCH_ON);
+                    i.setAction(INTENT_TORCH_ON);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(i);
+                } else {
+                    Intent i = new Intent(INTENT_TORCH_OFF);
+                    i.setAction(INTENT_TORCH_OFF);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(i);
+                }
+            }
+
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            public boolean showBeforeProvisioning() {
+                return false;
+            }
+        };
+        
         mItems = new ArrayList<Action>();
 
         // first: power off
@@ -248,6 +286,11 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         // next: airplane mode
         if (mEnableAirplaneMode) {
             mItems.add(mAirplaneModeOn);
+        }
+        
+        // next: torch mode
+        if(mEnableTorchToggle) {
+            mItems.add(mTorchToggle); 
         }
 
         // last: silent mode

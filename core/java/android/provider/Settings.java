@@ -2387,13 +2387,30 @@ public final class Settings {
          * @hide
          */
         public static final String QUIET_HOURS_DIM = "quiet_hours_dim";
-        
-        public static final String POWER_DIALOG_SHOW_REBOOT_MENU = "power_dialog_reboot_menu";
 
-        public static final String POWER_DIALOG_SHOW_SCREENSHOT = "power_dialog_show_screenshot";
+        /**
+         * @hide
+         */
+        public static final String POWER_DIALOG_SHOW_REBOOT_MENU = "power_dialog_reboot_menu";
         
+        /**
+         * @hide
+         */
+        public static final String POWER_DIALOG_SHOW_TORCH_TOGGLE = "power_dialog_show_torch_toggle";
+
+        /**
+         * @hide
+         */
+        public static final String POWER_DIALOG_SHOW_SCREENSHOT = "power_dialog_show_screenshot";
+
+        /**
+         * @hide
+         */
         public static final String POWER_DIALOG_SHOW_AIRPLANE_MODE = "power_dialog_show_airplane_mode";
 
+        /**
+         * @hide
+         */
         public static final String POWER_DIALOG_SHOW_SILENT_TOGGLE = "power_dialog_show_silent_toggle";
         
         public static final String  WM_LEGAL_ROTATION = "wm_legal_rotation";
