@@ -86,6 +86,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mEnableScreenshot = false;
     private boolean mEnableAirplaneMode = true;
     private boolean mEnableSilentToggle = true;
+    private boolean mReceiverRegistered = false;
 
     /**
      * @param context everything needs a context :(
@@ -115,6 +116,10 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         mKeyguardShowing = keyguardShowing;
         mDeviceProvisioned = isDeviceProvisioned;
 
+        if(mDialog != null) {
+            mReceiverRegistered = false;
+            mDialog.cancel();
+        }
         //always update the PowerMenu dialog
         mDialog = createDialog();
         
@@ -361,6 +366,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         if (mEnableSilentToggle) {
             IntentFilter filter = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
             mContext.registerReceiver(mRingerModeReceiver, filter);
+            mReceiverRegistered = true;
         }
     }
 
@@ -368,7 +374,10 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     /** {@inheritDoc} */
     public void onDismiss(DialogInterface dialog) {
         if (mEnableSilentToggle) {
-            mContext.unregisterReceiver(mRingerModeReceiver);
+            if(mReceiverRegistered) {
+                mContext.unregisterReceiver(mRingerModeReceiver);
+                mReceiverRegistered = false;
+            }
         }
     }
 
