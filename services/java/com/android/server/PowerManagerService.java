@@ -505,17 +505,20 @@ public class PowerManagerService extends IPowerManager.Stub
                 // recalculate everything
                 setScreenOffTimeoutsLocked();
 
-                mElectronBeamAnimationOn = Settings.System.getInt(mContext.getContentResolver(),
+                if (mContext.getResources().getBoolean(com.android.internal.R.bool.config_enableCrtAnimations)) {
+                
+                    mElectronBeamAnimationOn = Settings.System.getInt(mContext.getContentResolver(),
                         ELECTRON_BEAM_ANIMATION_ON, 0) != 0;
-                mElectronBeamAnimationOff = Settings.System.getInt(mContext.getContentResolver(),
+                    mElectronBeamAnimationOff = Settings.System.getInt(mContext.getContentResolver(),
                         ELECTRON_BEAM_ANIMATION_OFF, 1) != 0;
 
-                mAnimationSetting = 0;
-                if (mElectronBeamAnimationOff) {
-                    mAnimationSetting |= ANIM_SETTING_OFF;
-                }
-                if (mElectronBeamAnimationOn) {
-                    mAnimationSetting |= ANIM_SETTING_ON;
+                    mAnimationSetting = 0;
+                    if (mElectronBeamAnimationOff) {
+                        mAnimationSetting |= ANIM_SETTING_OFF;
+                    }
+                    if (mElectronBeamAnimationOn) {
+                        mAnimationSetting |= ANIM_SETTING_ON;
+                    }
                 }
             }
         }

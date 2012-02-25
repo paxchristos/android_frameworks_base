@@ -748,6 +748,9 @@
     <!-- Base "touch slop" value used by ViewConfiguration as a
          movement threshold where scrolling should begin. -->
     <dimen name="config_viewConfigurationTouchSlop">8dp</dimen>
+    <!-- Whether to even allow system settings for crt animations
+        setting this to false will completely disable them -->
+    <bool name="config_enableCrtAnimations">true</bool>
     <!-- Name of screensaver components to look for if none has been chosen by the user -->
     <string name="config_defaultDreamComponent">com.google.android.deskclock/com.android.deskclock.Screensaver</string>
     
