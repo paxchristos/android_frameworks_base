@@ -200,7 +200,7 @@ public:
         remote()->transact(BnSurfaceComposer::SET_ACTIONSAFE_HEIGHT_RATIO, data, &reply);
     }
 #endif
-    
+
 };
 
 IMPLEMENT_META_INTERFACE(SurfaceComposer, "android.ui.ISurfaceComposer");

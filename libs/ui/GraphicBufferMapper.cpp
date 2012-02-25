@@ -79,12 +79,12 @@ status_t GraphicBufferMapper::lock(buffer_handle_t handle,
             vaddr);
 #ifdef MISSING_GRALLOC_BUFFERS
     while (err && tries) {
-  usleep(1000);
+	usleep(1000);
         err = mAllocMod->unlock(mAllocMod, handle);
         err = mAllocMod->lock(mAllocMod, handle, usage,
             bounds.left, bounds.top, bounds.width(), bounds.height(),
             vaddr);
-  tries--;
+	tries--;
     }
 #endif
 

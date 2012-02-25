@@ -105,7 +105,7 @@ public:
     virtual status_t setScalingMode(int mode);
 
     virtual int query(int what, int* value);
-    
+
 #ifdef QCOM_HARDWARE
     virtual int performQcomOperation(int operation, int arg1, int arg2, int arg3);
 #endif

@@ -57,7 +57,7 @@ public:
     FramebufferNativeWindow(); 
 
     framebuffer_device_t const * getDevice() const { return fbDev; } 
-    
+
 #ifdef QCOM_HDMI_OUT
     void orientationChanged(int orientation) {
         if (fbDev->orientationChanged)

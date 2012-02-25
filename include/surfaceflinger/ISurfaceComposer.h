@@ -131,14 +131,14 @@ public:
      */
     virtual bool authenticateSurfaceTexture(
             const sp<ISurfaceTexture>& surface) const = 0;
-    
+
 #ifdef QCOM_HDMI_OUT
     //HDMI SPecific functions
     virtual void enableHDMIOutput(int enable) = 0;
     virtual void setActionSafeWidthRatio(float asWidthRatio) = 0;
     virtual void setActionSafeHeightRatio(float asHeightRatio) = 0;
 #endif
-    
+
 };
 
 // ----------------------------------------------------------------------------

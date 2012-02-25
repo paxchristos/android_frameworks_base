@@ -326,17 +326,16 @@ int SurfaceTextureClient::perform(int operation, va_list args)
         res = dispatchDisconnect(args);
         break;
     default:
-        res = NAME_NOT_FOUND;
 #ifdef QCOM_HARDWARE
         res = dispatchPerformQcomOperation(operation, args);
 #else
-        res = NAME_NOT_FOUND;
+	res = NAME_NOT_FOUND;
 #endif
         break;
     }
     return res;
 }
-    
+
 #ifdef QCOM_HARDWARE
 int SurfaceTextureClient::dispatchPerformQcomOperation(int operation,
                                                        va_list args) {

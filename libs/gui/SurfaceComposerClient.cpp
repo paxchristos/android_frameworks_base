@@ -279,7 +279,7 @@ status_t Composer::setFreezeTint(const sp<SurfaceComposerClient>& client,
     s->tint = tint;
     return NO_ERROR;
 }
-    
+
 #ifdef QCOM_HDMI_OUT
 void SurfaceComposerClient::enableHDMIOutput(int enable)
 {

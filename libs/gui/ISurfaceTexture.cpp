@@ -219,7 +219,7 @@ public:
         result = reply.readInt32();
         return result;
     }
-    
+
 #ifdef QCOM_HARDWARE
     virtual status_t performQcomOperation(int operation, int arg1, int arg2, int arg3) {
         Parcel data, reply;
