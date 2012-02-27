@@ -2196,7 +2196,7 @@ public final class Settings {
          * 
          * @hide
          */
-        public static final String LOCKSCREEN_ENABLE_MENU_KEY = "lockscreen_enable_menu_key";
+        public static final String MENU_UNLOCK_SCREEN = "menu_unlock_screen";
 
         /**
          *
