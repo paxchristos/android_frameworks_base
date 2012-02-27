@@ -465,7 +465,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mPowerKeyTriggered;
     private long mPowerKeyTime;
 
-    private boolean mVolumeWakeScreen;
     boolean mVolBtnMusicControls;
     boolean mIsLongPress;
 
@@ -509,8 +508,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.POINTER_LOCATION), false, this);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.DEFAULT_INPUT_METHOD), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.VOLUME_WAKE_SCREEN), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_MUSIC_CONTROLS), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -1070,8 +1067,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 updateOrientationListenerLp();
             }
 
-            mVolumeWakeScreen = (Settings.System.getInt(resolver,
-                    Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
             mVolBtnMusicControls = (Settings.System.getInt(resolver,
                     Settings.System.VOLUME_MUSIC_CONTROLS, 0) == 1);
 
@@ -2920,9 +2915,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             result = 0;
 
             final boolean isWakeKey = (policyFlags
-                    & (WindowManagerPolicy.FLAG_WAKE | WindowManagerPolicy.FLAG_WAKE_DROPPED)) != 0 ||
-                             ((keyCode == KeyEvent.KEYCODE_VOLUME_UP) && mVolumeWakeScreen) ||
-                             ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) && mVolumeWakeScreen);
+                    & (WindowManagerPolicy.FLAG_WAKE | WindowManagerPolicy.FLAG_WAKE_DROPPED)) != 0;
             if (down && isWakeKey) {
                 if (keyguardActive) {
                     // If the keyguard is showing, let it decide what to do with the wake key.

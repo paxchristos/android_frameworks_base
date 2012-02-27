@@ -2223,13 +2223,6 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_DISABLE_CAMERA = "lockscreen_disable_camera";
-
-        /**
-         * whether volume keys wake the screen. boolean value
-         * 
-         * @hide
-         */
-        public static final String VOLUME_WAKE_SCREEN = "volume_wake_screen";
         
         /**
          * launch a custom app for sms
