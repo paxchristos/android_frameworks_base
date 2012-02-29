@@ -305,6 +305,9 @@
 
     <!-- label for item that screenshots in phone options dialog -->
     <string name="global_action_screenshot">Screenshot</string>
+    
+    <!-- label for item that shows no options are enabled -->
+    <string name="global_action_nooptionsenabled">add more menu options interface -----> general</string>
 
     <!-- Button to reboot the phone, within the Reboot Options dialog -->
     <string name="reboot_reboot">Reboot</string>
@@ -390,10 +393,19 @@
     <string name="global_actions_toggle_torch">Torch flashlight</string>
     
     <!-- status message in phone options dialog for when torch is on -->
-    <string name="global_actions_torch_on_status">Torch is ON</string>
+    <string name="global_actions_torch_on_status">Torch Flashlight is ON</string>
     
     <!-- status message in phone options dialog for when torch is off -->
-    <string name="global_actions_torch_off_status">Torch is OFF</string>
+    <string name="global_actions_torch_off_status">Torch Flashlight is OFF</string>
+    
+    <!-- label for item that toggles NavBar Hide -->
+    <string name="global_actions_toggle_navbar_hide">Navigation Bar</string>
+
+    <!-- status message in phone options dialog for when navbar hide is on -->
+    <string name="global_actions_navbar_hide_on">Navigation Bar hidden</string>
+
+    <!-- status message in phone options dialog for when navbar hide is off -->
+    <string name="global_actions_navbar_hide_off">Navigation Bar shown</string>
 
     <!-- Text to use when the number in a notification info is too large
          (greater than status_bar_notification_info_maxnum, defined in

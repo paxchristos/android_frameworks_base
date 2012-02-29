@@ -2098,15 +2098,15 @@ public final class Settings {
         public static final String NAV_BUTTONS = "nav_buttons";
 
         /**
-        * Notification Power Widget - Custom Brightness Mode
-        * @hide
-        */
+         * Notification Power Widget - Custom Brightness Mode
+         * @hide
+         */
         public static final String EXPANDED_BRIGHTNESS_MODE = "expanded_brightness_mode";
 
         /**
-        * Notification Power Widget - Custom Network Mode
-        * @hide
-        */
+         * Notification Power Widget - Custom Network Mode
+         * @hide
+         */
         public static final String EXPANDED_NETWORK_MODE = "expanded_network_mode";
 
         /**
@@ -2117,37 +2117,39 @@ public final class Settings {
          public static final String LTE_MODE = "lte_mode";
 
         /**
-        * Notification Power Widget - Custom Screen Timeout
-        * @hide
-        */
+         * Notification Power Widget - Custom Screen Timeout
+         * @hide
+         */
         public static final String EXPANDED_SCREENTIMEOUT_MODE = "expanded_screentimeout_mode";
 
         /**
-        * Notification Power Widget - Custom Ring Mode
-        * @hide
-        */
+         * Notification Power Widget - Custom Ring Mode
+         * @hide
+         */
         public static final String EXPANDED_RING_MODE = "expanded_ring_mode";
 
         /**
-        * Notification Power Widget - Custom Torch Mode
-        * @hide
-        */
+         * Notification Power Widget - Custom Torch Mode
+         * @hide
+         */
         public static final String EXPANDED_FLASH_MODE = "expanded_flash_mode";
-        
+
         /**
          * Notification Power Widget - Torch State
          * @hide
          */
         public static final String TORCH_STATE = "torch_state";
-        
+
         /**
          * Whether to enable torch by long pressing power from a screen-off state
-         * 	
+         * 
          * @hide
          */
         public static final String ENABLE_FAST_TORCH = "enable_fast_torch";
 
         /**
+         * 
+         * @hide
          */
         public static final String COMBINED_BAR_AUTO_HIDE = "combined_bar_auto_hide";
 
@@ -2156,7 +2158,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_SHOW_ALARM = "statusbar_show_alarm";
-        
+
         /**
          * Setting to always show the menu button in navigation bar
          * @hide
@@ -2203,7 +2205,7 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_LAYOUT = "lockscreen_layout";
-        
+
         /**
          *
          * @hide
@@ -2223,73 +2225,73 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_DISABLE_CAMERA = "lockscreen_disable_camera";
-        
+
         /**
          * launch a custom app for sms
          * 
          * @hide
          */
         public static final String LOCKSCREEN_CUSTOM_SMS_INTENT = "lockscreen_custom_sms_intent";
-        
+
         /**
          * launch a custom app for upper right target
          * 
          * @hide
          */
         public static final String LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT = "lockscreen_custom_upper_right_intent";
-        
+
         /**
          * launch a custom app for upper left target
          * 
          * @hide
          */
         public static final String LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT = "lockscreen_custom_upper_left_intent";
-        
+
         /**
          * launch a custom app for lower right target
          * 
          * @hide
          */
         public static final String LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT = "lockscreen_custom_lower_right_intent";
-        
+
         /**
          * launch a custom app for lower left target
          * 
          * @hide
          */
         public static final String LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT = "lockscreen_custom_lower_left_intent";
-        
+
         /**
          * Whether volume up/down can be long pressed to skip tracks
          * @hide
          */
         public static final String VOLUME_MUSIC_CONTROLS = "volume_music_controls";
-        
+
         /**
          * Setting to allow % on lockscreen always showing.
          * @hide
          */
         public static final String LOCKSCREEN_BATTERY = "lockscreen_battery";
-        
+
         /**
          * @hide
          */
         public static final String NOTIFICATION_LIGHT_COLOR = "notification_light_color";
-        
+
         /**
          * How long to keep the notification LED on (in milliseconds)
          * 
          * @hide
          */
         public static final String NOTIFICATION_LIGHT_ON = "notification_light_on";
-        
+
         /**
          * How long to keep the notification LED off (in milliseconds)
          * 
          * @hide
          */
         public static final String NOTIFICATION_LIGHT_OFF = "notification_light_off";
-        
+
         /**
          * Whether to show the battery bar
          * 
@@ -2303,18 +2305,18 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_BATTERY_ICON = "statusbar_battery_icon";
-        
+
         /**
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_COLOR = "statusbar_battery_bar_color";
-        
+
         /**
          * Last state of the quick toggles, to restore on boot
          * @hide
          */
         public static final String STATUSBAR_TOGGLES_VISIBILITY = "statusbar_toggles_visibility";
-        
+
         /**
          * thickness of the batteyr bar (in dp)
          * 
@@ -2329,7 +2331,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_STYLE = "statusbar_battery_bar_style";	
-	
+
         /**
          * whether to show charging animation
          * 
@@ -2365,7 +2367,7 @@ public final class Settings {
          * @hide
          */
         public static final String SWITCH_WITH_SEARCH = "switch_with_search";
-        
+
         /**
          *
          * @hide
@@ -2428,30 +2430,57 @@ public final class Settings {
         public static final String QUIET_HOURS_DIM = "quiet_hours_dim";
 
         /**
+         *
+         * @hide
+         */
+        public static final String POWER_DIALOG_SHOW_POWER_MENU = "power_dialog_power_menu";
+
+        /**
+         *
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_REBOOT_MENU = "power_dialog_reboot_menu";
-        
-        /**
-         * @hide
-         */
-        public static final String POWER_DIALOG_SHOW_TORCH_TOGGLE = "power_dialog_show_torch_toggle";
 
         /**
+         *
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_SCREENSHOT = "power_dialog_show_screenshot";
 
         /**
+         *
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_AIRPLANE_MODE = "power_dialog_show_airplane_mode";
 
         /**
+         *
+         * @hide
+         */
+        public static final String POWER_DIALOG_SHOW_TORCH_TOGGLE = "power_dialog_show_torch_toggle";
+
+        /**
+         *
+         * @hide
+         */
+        public static final String POWER_DIALOG_NAVBAR_TOGGLE = "power_dialog_show_navbar_toggle";
+
+        /**
+         *
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_SILENT_TOGGLE = "power_dialog_show_silent_toggle";
-        
+
+        /**
+         *
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_HIDE = "navigation_bar_hide";
+
+        /**
+         *
+         * @hide
+         */
         public static final String  WM_LEGAL_ROTATION = "wm_legal_rotation";
         public static final int     WM_LEGAL_ROTATION_FLAG_0DEG = 0x01;
         public static final int     WM_LEGAL_ROTATION_FLAG_90DEG = 0x02;

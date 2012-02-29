@@ -298,6 +298,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     final ArrayList<WindowState> mStatusBarPanels = new ArrayList<WindowState>();
     WindowState mNavigationBar = null;
     boolean mHasNavigationBar = false;
+    private boolean mNavBarFirstBootFlag = true;
     int mNavigationBarWidth = 0, mNavigationBarHeight = 0;
 
     WindowState mKeyguard = null;
@@ -529,6 +530,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             } // otherwise SCREEN_OFF_TIMEOUT will do nicely
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_WAKE_SCREEN), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_HIDE), false, this);
             updateSettings();
         }
 
@@ -1016,8 +1019,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 ? com.android.internal.R.dimen.status_bar_height
                 : com.android.internal.R.dimen.system_bar_height);
 
-        mHasNavigationBar = mContext.getResources().getBoolean(
+
+        if (mNavBarFirstBootFlag){
+            mHasNavigationBar = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_showNavigationBar);
+          // I also want to clear out any stale Navigation Hide settings
+          Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.NAVIGATION_BAR_HIDE,
+                mHasNavigationBar ? 0 : 1);
+            mNavBarFirstBootFlag = false;
+        } else {
+            mHasNavigationBar = Settings.System.getInt(mContext.getContentResolver(), 	
+                Settings.System.NAVIGATION_BAR_HIDE, 0) == 0;
+        }
         // Allow a system property to override this. Used by the emulator.
         // See also hasNavigationBar().
         String navBarOverride = SystemProperties.get("qemu.hw.mainkeys");
@@ -1067,7 +1081,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.System.USER_ROTATION,
                     Surface.ROTATION_0);
             mEnableQuickTorch = Settings.System.getInt(resolver, Settings.System.ENABLE_FAST_TORCH,
-                    0) == 1;
+                            0) == 1;
+            boolean hasNavBarChanged = Settings.System.getInt(resolver, Settings.System.NAVIGATION_BAR_HIDE,
+                            0) == 0;
+            if (mHasNavigationBar != hasNavBarChanged) {
+                mHasNavigationBar = hasNavBarChanged;
+                setInitialDisplaySize(mUnrestrictedScreenWidth,mUnrestrictedScreenHeight);
+            }
 
             if (mAccelerometerDefault != accelerometerDefault) {
                 mAccelerometerDefault = accelerometerDefault;
