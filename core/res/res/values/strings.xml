@@ -305,7 +305,7 @@
 
     <!-- label for item that screenshots in phone options dialog -->
     <string name="global_action_screenshot">Screenshot</string>
-    
+
     <!-- label for item that shows no options are enabled -->
     <string name="global_action_nooptionsenabled">add more menu options interface -----> general</string>
 
@@ -397,7 +397,7 @@
     
     <!-- status message in phone options dialog for when torch is off -->
     <string name="global_actions_torch_off_status">Torch Flashlight is OFF</string>
-    
+
     <!-- label for item that toggles NavBar Hide -->
     <string name="global_actions_toggle_navbar_hide">Navigation Bar</string>
 

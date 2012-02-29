@@ -1029,7 +1029,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mHasNavigationBar ? 0 : 1);
             mNavBarFirstBootFlag = false;
         } else {
-            mHasNavigationBar = Settings.System.getInt(mContext.getContentResolver(), 	
+            mHasNavigationBar = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.NAVIGATION_BAR_HIDE, 0) == 0;
         }
         // Allow a system property to override this. Used by the emulator.

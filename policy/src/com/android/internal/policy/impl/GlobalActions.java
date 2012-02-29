@@ -170,10 +170,10 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
         mEnableSilentToggle = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.POWER_DIALOG_SHOW_SILENT_TOGGLE, 1) == 1;
-        
+
         mNavBarHideOn = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.NAVIGATION_BAR_HIDE, 0) == 1;
-        
+
         mEnableErrorMessage = !mEnablePowerMenu && !mEnableRebootMenu && !mEnableScreenshot && !mEnableAirplaneMode &&
                 !mEnableTorchToggle && !mEnableNavBarHideToggle && !mEnableSilentToggle;
 
@@ -183,7 +183,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 R.string.global_actions_toggle_airplane_mode,
                 R.string.global_actions_airplane_mode_on_status,
                 R.string.global_actions_airplane_mode_off_status) {
-            
+
             void onToggle(boolean on) {
                 if (Boolean.parseBoolean(
                         SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE))) {
@@ -197,7 +197,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     changeAirplaneModeSystemSetting(on);
                 }
             }
-            
+
             @Override
             protected void changeStateFromPress(boolean buttonOn) {
                 // In ECM mode airplane state cannot be changed
@@ -207,11 +207,11 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     mAirplaneState = mState;
                 }
             }
-            
+
             public boolean showDuringKeyguard() {
                 return true;
             }
-            
+
             public boolean showBeforeProvisioning() {
                 return false;
             }
@@ -363,11 +363,11 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 public void onPress() {
                     addtoPowermenu();
                 }
-                
+
                 public boolean showDuringKeyguard() {
                     return true;
                 }
-                
+
                 public boolean showBeforeProvisioning() {
                     return true;
                 }
@@ -917,7 +917,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
               mHandler.sendEmptyMessage(MESSAGE_DISMISS);
               break;
 
-            case 2:      
+            case 2:
               injectKeyDelayed(KeyEvent.KEYCODE_APP_SWITCH);
               mHandler.sendEmptyMessage(MESSAGE_DISMISS);
               break;

@@ -2142,13 +2142,13 @@ public final class Settings {
 
         /**
          * Whether to enable torch by long pressing power from a screen-off state
-         * 
+         *
          * @hide
          */
         public static final String ENABLE_FAST_TORCH = "enable_fast_torch";
 
         /**
-         * 
+         *
          * @hide
          */
         public static final String COMBINED_BAR_AUTO_HIDE = "combined_bar_auto_hide";
