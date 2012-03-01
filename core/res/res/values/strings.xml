@@ -307,7 +307,7 @@
     <string name="global_action_screenshot">Screenshot</string>
 
     <!-- label for item that shows no options are enabled -->
-    <string name="global_action_nooptionsenabled">add more menu options interface -----> general</string>
+    <string name="global_action_nooptionsenabled">add more menu options</string>
 
     <!-- Button to reboot the phone, within the Reboot Options dialog -->
     <string name="reboot_reboot">Reboot</string>
