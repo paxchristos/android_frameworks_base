@@ -333,6 +333,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     int mUserRotationMode = WindowManagerPolicy.USER_ROTATION_FREE;
     int mUserRotation = Surface.ROTATION_0;
+    int mUserRotationAngles = -1;
 
     int mAllowAllRotations = -1;
     boolean mCarDockEnablesAccelerometer;
@@ -347,7 +348,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int DEFAULT_ACCELEROMETER_ROTATION = 0;
     int mAccelerometerDefault = DEFAULT_ACCELEROMETER_ROTATION;
     boolean mHasSoftInput = false;
-    int mUserDefinedLegalRotation = 0;
     
     int mPointerLocationMode = 0;
     PointerLocationView mPointerLocationView = null;
@@ -520,14 +520,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     "fancy_rotation_anim"), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ENABLE_FAST_TORCH), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.WM_LEGAL_ROTATION), false, this);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SCREENSAVER_ENABLED), false, this);
             if (SEPARATE_TIMEOUT_FOR_SCREEN_SAVER) {
                 resolver.registerContentObserver(Settings.Secure.getUriFor(
                         "screensaver_timeout"), false, this);
             } // otherwise SCREEN_OFF_TIMEOUT will do nicely
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ACCELEROMETER_ROTATION_ANGLES), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_WAKE_SCREEN), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -1088,6 +1088,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mHasNavigationBar = hasNavBarChanged;
                 setInitialDisplaySize(mUnrestrictedScreenWidth,mUnrestrictedScreenHeight);
             }
+            mUserRotationAngles = Settings.System.getInt(resolver,
+                    Settings.System.ACCELEROMETER_ROTATION_ANGLES, -1);
 
             if (mAccelerometerDefault != accelerometerDefault) {
                 mAccelerometerDefault = accelerometerDefault;
@@ -1145,9 +1147,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
             }
             updateScreenSaverTimeoutLocked();
-
-            mUserDefinedLegalRotation = Settings.System.getInt(resolver,
-                    Settings.System.WM_LEGAL_ROTATION, 0);
         }
         if (updateRotation) {
             updateRotation(true);
@@ -3438,7 +3437,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 sensorRotation = lastRotation;
             }
 
-            int preferredRotation;
+            final int preferredRotation;
             if (mLidOpen == LID_OPEN && mLidOpenRotation >= 0) {
                 // Ignore sensor when lid switch is open and rotation is forced.
                 preferredRotation = mLidOpenRotation;
@@ -3478,9 +3477,30 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mAllowAllRotations = mContext.getResources().getBoolean(
                             com.android.internal.R.bool.config_allowAllRotations) ? 1 : 0;
                 }
-                if (sensorRotation != Surface.ROTATION_180
-                        || mAllowAllRotations == 1
-                        || orientation == ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR) {
+                // Rotation setting bitmask
+                // 1=0 2=90 4=180 8=270
+                boolean allowed = true;
+                if (mUserRotationAngles < 0) {
+                    // Not set by user so use these defaults
+                    mUserRotationAngles = mAllowAllRotations == 1 ?
+                        (1 | 2 | 4 | 8) : // All angles
+                        (1 | 2 | 8); // All except 180
+                }
+                switch (sensorRotation) {
+                    case Surface.ROTATION_0:
+                      allowed = (mUserRotationAngles & 1) != 0;
+                      break;
+                    case Surface.ROTATION_90:
+                      allowed = (mUserRotationAngles & 2) != 0;
+                      break;
+                    case Surface.ROTATION_180:
+                      allowed = (mUserRotationAngles & 4) != 0;
+                      break;
+                    case Surface.ROTATION_270:
+                      allowed = (mUserRotationAngles & 8) != 0;
+                      break;
+                }
+                if (allowed) {
                     preferredRotation = sensorRotation;
                 } else {
                     preferredRotation = lastRotation;
@@ -3492,43 +3512,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // No overriding preference.
                 // We will do exactly what the application asked us to do.
                 preferredRotation = -1;
-            }
-
-            if (mUserDefinedLegalRotation != 0){
-                switch (preferredRotation) {
-                    case Surface.ROTATION_0:
-                        if ((mUserDefinedLegalRotation
-                                & Settings.System.WM_LEGAL_ROTATION_FLAG_0DEG)
-                                == Settings.System.WM_LEGAL_ROTATION_FLAG_0DEG) {
-                            break;
-                        }
-                        preferredRotation = lastRotation;
-                        break;
-                    case Surface.ROTATION_90:
-                        if ((mUserDefinedLegalRotation
-                                & Settings.System.WM_LEGAL_ROTATION_FLAG_90DEG)
-                                == Settings.System.WM_LEGAL_ROTATION_FLAG_90DEG) {
-                            break;
-                        }
-                        preferredRotation = lastRotation;
-                        break;
-                    case Surface.ROTATION_180:
-                        if ((mUserDefinedLegalRotation
-                                & Settings.System.WM_LEGAL_ROTATION_FLAG_180DEG)
-                                == Settings.System.WM_LEGAL_ROTATION_FLAG_180DEG) {
-                            break;
-                        }
-                        preferredRotation = lastRotation;
-                        break;
-                    case Surface.ROTATION_270:
-                        if ((mUserDefinedLegalRotation
-                                & Settings.System.WM_LEGAL_ROTATION_FLAG_270DEG)
-                                == Settings.System.WM_LEGAL_ROTATION_FLAG_270DEG) {
-                            break;
-                        }
-                        preferredRotation = lastRotation;
-                        break;
-                }
             }
 
             switch (orientation) {
