@@ -937,7 +937,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         final LayoutInflater inflater = LayoutInflater.from(context);
         if (DBG) Log.v(TAG, "Creation orientation = " + mCreationOrientation);
 
-        boolean landscape = mCreationOrientation == Configuration.ORIENTATION_LANDSCAPE && mIsScreenLarge;
+        boolean landscape = mCreationOrientation == Configuration.ORIENTATION_LANDSCAPE;
         
         switch (mLockscreenTargets) {
             case STOCK_TARGETS:
