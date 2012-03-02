@@ -331,7 +331,7 @@ public class NavigationBarView extends LinearLayout {
         final View navButtons = mCurrentView.findViewById(R.id.nav_buttons);
         final View lowLights = mCurrentView.findViewById(R.id.lights_out);
 
-        lowLights.findViewById(R.id.extraDot).setVisibility(mNavButtons == STOCK_NAV_BUTTONS ? View.GONE : View.VISIBLE);
+        lowLights.findViewById(R.id.extraDot).setVisibility(mNavButtons == STOCK_NAV_BUTTONS || mNavButtons == RECENTS_FOR_SEARCH ? View.GONE : View.VISIBLE);
 
         // ok, everyone, stop it right there
         navButtons.animate().cancel();
