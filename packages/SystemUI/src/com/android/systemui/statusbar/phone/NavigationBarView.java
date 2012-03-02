@@ -70,19 +70,19 @@ public class NavigationBarView extends LinearLayout {
 
     boolean mHidden, mLowProfile, mShowMenu;
     int mDisabledFlags = 0;
-    
+
     public final static int SHOW_LEFT_MENU = 1;
     public final static int SHOW_RIGHT_MENU = 0;
     public final static int SHOW_BOTH_MENU = 2;
-        
+
     public final static int VISIBILITY_SYSTEM = 0;
     public final static int VISIBILITY_NEVER = 1;
     public final static int VISIBILITY_ALWAYS = 2;
-    
+
     public final static int STOCK_NAV_BUTTONS = 3;
     public final static int RECENTS_FOR_SEARCH = 4;
     public final static int ADD_SEARCH_TO_NAV = 5;
-    
+
     private int mNavButtons = STOCK_NAV_BUTTONS;
 
     public void updateButtons() {
@@ -96,10 +96,10 @@ public class NavigationBarView extends LinearLayout {
         if (!isPortrait) {
             Collections.reverse(ids);
         }
-        
+
         SettingsObserver settingsObserver = new SettingsObserver(new Handler());
         settingsObserver.observe();
-        
+
         int cc =0;
         //Reset all paddings to invisible
         ViewGroup navPanel = ((ViewGroup) mCurrentView.findViewById(R.id.nav_buttons));
@@ -171,7 +171,7 @@ public class NavigationBarView extends LinearLayout {
     public View getRecentsButton() {
         return mCurrentView.findViewWithTag("recent");
     }
-    
+
     public View getLeftMenuButton() {
         return mCurrentView.findViewById(R.id.menu_left);
     }
@@ -299,7 +299,7 @@ public class NavigationBarView extends LinearLayout {
                 localShow = true;
                 break;
         }
-        
+
         switch (currentSetting) {
             case SHOW_BOTH_MENU:
                 getLeftMenuButton().setVisibility(localShow ? View.VISIBLE : View.INVISIBLE);
@@ -380,17 +380,17 @@ public class NavigationBarView extends LinearLayout {
     }
 
     public void onFinishInflate() {
-        mRotatedViews[Surface.ROTATION_0] = 
+        mRotatedViews[Surface.ROTATION_0] =
         mRotatedViews[Surface.ROTATION_180] = findViewById(R.id.rot0);
 
         mRotatedViews[Surface.ROTATION_90] = findViewById(R.id.rot90);
-        
+
         mRotatedViews[Surface.ROTATION_270] = NAVBAR_ALWAYS_AT_RIGHT
                                             ? findViewById(R.id.rot90)
                                             : findViewById(R.id.rot270);
 
         for (View v : mRotatedViews) {
-            // this helps avoid drawing artifacts with glowing navigation keys 
+            // this helps avoid drawing artifacts with glowing navigation keys
             ViewGroup group = (ViewGroup) v.findViewById(R.id.nav_buttons);
             group.setMotionEventSplittingEnabled(false);
         }
@@ -500,7 +500,7 @@ public class NavigationBarView extends LinearLayout {
         SettingsObserver(Handler handler) {
             super(handler);
         }
-    
+
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
@@ -508,7 +508,7 @@ public class NavigationBarView extends LinearLayout {
                     this);
             updateSettings();
         }
-    
+
         public void onChange(boolean selfChange) {
             updateSettings();
         }
