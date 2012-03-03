@@ -20,10 +20,12 @@ package com.android.internal.policy.impl;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Message;
@@ -99,6 +101,11 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mReceiverRegistered = false;
     public boolean mNavBarHideOn;
     public boolean mEnableErrorMessage;
+
+    public static final int NAV_BOTTOM = 0;
+    public static final int NAV_TOP = 1;
+
+    private int mNavActionsLayout = NAV_BOTTOM;
 
     public static final String INTENT_TORCH_ON = "com.android.systemui.INTENT_TORCH_ON";
     public static final String INTENT_TORCH_OFF = "com.android.systemui.INTENT_TORCH_OFF";
@@ -176,6 +183,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
         mEnableErrorMessage = !mEnablePowerMenu && !mEnableRebootMenu && !mEnableScreenshot && !mEnableAirplaneMode &&
                 !mEnableTorchToggle && !mEnableNavBarHideToggle && !mEnableSilentToggle;
+
+        SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+        settingsObserver.observe();
 
         mAirplaneModeOn = new ToggleAction(
                 R.drawable.ic_lock_airplane_mode,
@@ -275,7 +285,14 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
         mItems = new ArrayList<Action>();
 
-        // first: power off
+        // first: NavBar Actions
+        if((mNavActionsLayout == NAV_TOP) && mNavBarHideOn && !mKeyguardShowing) {
+            mItems.add(mNavBarActions);
+        } else if (mKeyguardShowing) {
+            Slog.e(TAG, "dont add nav actions");
+        }
+
+        // next: power off
         if (mEnablePowerMenu) {
             mItems.add(
                 new SinglePressAction(com.android.internal.R.drawable.ic_lock_power_off, R.string.global_action_power_off) {
@@ -350,7 +367,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             mItems.add(mSilentModeAction);
         } else if (mEnableSilentToggle && mKeyguardShowing) {
             mItems.add(mSilentModeAction);
-        } else if (mEnableSilentToggle && mNavBarHideOn) {
+        } else if ((mNavActionsLayout == NAV_TOP) && mEnableSilentToggle && mNavBarHideOn) {
+            mItems.add(mSilentModeAction);
+        } else if ((mNavActionsLayout == NAV_BOTTOM) && mEnableSilentToggle && mNavBarHideOn) {
             Slog.e(TAG, "disabling silent toggle");
         } else {
             Slog.e(TAG, "dont add silent toggle");
@@ -359,23 +378,23 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         // last: really??!!
         if (mEnableErrorMessage) {
             mItems.add(
-                       new SinglePressAction(com.android.internal.R.drawable.ic_lock_add, R.string.global_action_nooptionsenabled) {
-                public void onPress() {
-                    addtoPowermenu();
-                }
+                new SinglePressAction(com.android.internal.R.drawable.ic_lock_add, R.string.global_action_nooptionsenabled) {
+                    public void onPress() {
+                        addtoPowermenu();
+                    }
 
-                public boolean showDuringKeyguard() {
-                    return true;
-                }
+                    public boolean showDuringKeyguard() {
+                        return true;
+                    }
 
-                public boolean showBeforeProvisioning() {
-                    return true;
-                }
-            });
+                    public boolean showBeforeProvisioning() {
+                        return true;
+                    }
+                });
         }
 
         // next: NavBar Actions
-        if(mNavBarHideOn && !mKeyguardShowing) {
+        if((mNavActionsLayout == NAV_BOTTOM) && mNavBarHideOn && !mKeyguardShowing) {
             mItems.add(mNavBarActions);
         } else if (mKeyguardShowing) {
             Slog.e(TAG, "dont add nav actions");
@@ -1016,4 +1035,31 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         intent.putExtra("state", on);
         mContext.sendBroadcast(intent);
     }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+    
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NAVACTIONS_LAYOUT), false,
+                    this);
+            updateSettings();
+        }
+    
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+
+    protected void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+
+        mNavActionsLayout = Settings.System.getInt(resolver,
+        Settings.System.NAVACTIONS_LAYOUT, NAV_BOTTOM);
+
+    }
+
 }
