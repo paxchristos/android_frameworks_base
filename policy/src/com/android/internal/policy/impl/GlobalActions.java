@@ -851,7 +851,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
     private static class NavBarAction implements Action, View.OnClickListener {
 
-        private final int[] ITEM_IDS = { R.id.back, R.id.home, R.id.recents };
+        private final int[] ITEM_IDS = { R.id.back, R.id.home, R.id.recents, R.id.menu };
 
         public Context mContext;
         public boolean mNavBarHideOn;
@@ -872,7 +872,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
             View v = inflater.inflate(R.layout.global_actions_navbar, parent, false);
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 View itemView = v.findViewById(ITEM_IDS[i]);
                 itemView.setSelected((i==0)&&(!mNavBarHideOn));  // set selected on item 0 if NavBarHideOn is off
                 // Set up click handler
@@ -919,6 +919,11 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
             case 2:
               injectKeyDelayed(KeyEvent.KEYCODE_APP_SWITCH);
+              mHandler.sendEmptyMessage(MESSAGE_DISMISS);
+              break;
+
+            case 3:
+              injectKeyDelayed(KeyEvent.KEYCODE_MENU);
               mHandler.sendEmptyMessage(MESSAGE_DISMISS);
               break;
             }
