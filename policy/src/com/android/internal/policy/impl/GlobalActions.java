@@ -1040,7 +1040,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         SettingsObserver(Handler handler) {
             super(handler);
         }
-    
+
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
@@ -1048,7 +1048,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     this);
             updateSettings();
         }
-    
+
         public void onChange(boolean selfChange) {
             updateSettings();
         }
