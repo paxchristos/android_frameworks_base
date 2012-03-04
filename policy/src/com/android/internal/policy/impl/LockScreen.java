@@ -364,7 +364,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     }
                 } else if (target == 2) { // left Action = Mms
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
+
                     if(intentUri == null) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -417,7 +417,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     }
                 } else if (target == 1) { // upper left Action = Mms
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
+
                     if(intentUri == null) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -459,7 +459,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 3) { // upper left Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -486,7 +486,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     }
                 } else if (target == 1) { // upper right Action = Unlock
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -501,7 +501,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 4) { // left Action = Mms
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
+
                     if(intentUri == null) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -544,7 +544,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 3) { // upper left Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -571,7 +571,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     }
                 } else if (target == 1) { // upper right Action = Unlock
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -586,7 +586,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 2) { // left Action = Mms
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
+
                     if(intentUri == null) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -613,7 +613,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
             if (mLockscreenTargets == EIGHT_TARGETS) {
                 if (target == 5) { // lower left Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT);
-                            
+
                     if(intentUri == null) {
                         mCallback.goToUnlockScreen();
                     } else {
@@ -644,7 +644,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 3) { // upper left Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -671,7 +671,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     }
                 } else if (target == 1) { // upper right Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -686,7 +686,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 4) { // left Action = Mms
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
+
                     if(intentUri == null) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -707,7 +707,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 7) { // lower right Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -727,7 +727,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
             if (mLockscreenTargets == EIGHT_TARGETS_UNLOCK_RIGHT) {
                 if (target == 5) { // lower left Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT);
-                            
+
                     if(intentUri == null) {
                         mCallback.goToUnlockScreen();
                     } else {
@@ -758,7 +758,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 3) { // upper left Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -785,7 +785,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     }
                 } else if (target == 1) { // upper right Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
@@ -800,7 +800,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 2) { // left Action = Mms
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
+
                     if(intentUri == null) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -821,7 +821,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     mCallback.goToUnlockScreen();
                 } else if (target == 7) { // lower right Action = Custom
                     String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT);
-                            
+
                     if(intentUri == null) {
                     } else {
                         Intent intent;
