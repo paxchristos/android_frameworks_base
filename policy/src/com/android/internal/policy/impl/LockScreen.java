@@ -56,7 +56,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     private static final String ENABLE_MENU_KEY_FILE = "/data/local/enable_menu_key";
     private static final int WAIT_FOR_ANIMATION_TIMEOUT = 0;
     private static final int STAY_ON_WHILE_GRABBED_TIMEOUT = 30000;
-    
+
     public static final int STOCK_TARGETS = 0;
     public static final int FOUR_TARGETS = 1;
     public static final int FOUR_TARGETS_UNLOCK_RIGHT = 2;
@@ -64,18 +64,18 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     public static final int SIX_TARGETS_UNLOCK_RIGHT = 4;
     public static final int EIGHT_TARGETS = 5;
     public static final int EIGHT_TARGETS_UNLOCK_RIGHT = 6;
-    
+
     public static final int STOCK_LAYOUT = 7;
     public static final int STOCK_LAYOUT_CENTERED_RING = 8;
     public static final int BIG_CLOCK_LAYOUT = 9;
     public static final int BIG_CLOCK_LAYOUT_CENTERED_RING = 10;
-    
+
     private int mLockscreenTargets = STOCK_TARGETS;
     private int mLockscreenLayout = STOCK_LAYOUT;
-    
+
     final int mScreenSize = getResources().getConfiguration().screenLayout &
     Configuration.SCREENLAYOUT_SIZE_MASK;
-    
+
     private boolean mIsScreenLarge = mScreenSize == Configuration.SCREENLAYOUT_SIZE_LARGE ||
     mScreenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE;
 
@@ -211,7 +211,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         private final MultiWaveView mMultiWaveView;
         private boolean mCameraDisabled = (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_DISABLE_CAMERA, 0) == 1); 
+                Settings.System.LOCKSCREEN_DISABLE_CAMERA, 0) == 1);
 
         MultiWaveViewMethods(MultiWaveView multiWaveView) {
             mMultiWaveView = multiWaveView;
@@ -235,7 +235,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         : R.array.silent_quad_lockscreen_targets;
                 } else if (mIsScreenLarge) {
                     resId = R.array.quad_lockscreen_nophone_targets;
-                } else { 
+                } else {
                     resId = R.array.quad_lockscreen_targets;
                 }
             } else if (mLockscreenTargets == FOUR_TARGETS_UNLOCK_RIGHT) {
@@ -247,7 +247,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         : R.array.silent_quad_unlockright_lockscreen_targets;
                 } else if (mIsScreenLarge) {
                     resId = R.array.quad_unlockright_lockscreen_nophone_targets;
-                } else { 
+                } else {
                     resId = R.array.quad_unlockright_lockscreen_targets;
                 }
             } else if (mLockscreenTargets == SIX_TARGETS) {
@@ -259,7 +259,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         : R.array.silent_six_lockscreen_targets;
                 } else if (mIsScreenLarge) {
                     resId = R.array.six_lockscreen_nophone_targets;
-                } else { 
+                } else {
                     resId = R.array.six_lockscreen_targets;
                 }
             } else if (mLockscreenTargets == SIX_TARGETS_UNLOCK_RIGHT) {
@@ -271,7 +271,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         : R.array.silent_six_unlockright_lockscreen_targets;
                 } else if (mIsScreenLarge) {
                     resId = R.array.six_unlockright_lockscreen_nophone_targets;
-                } else { 
+                } else {
                     resId = R.array.six_unlockright_lockscreen_targets;
                 }
             } else if (mLockscreenTargets == EIGHT_TARGETS) {
@@ -283,7 +283,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         : R.array.silent_eight_lockscreen_targets;
                 } else if (mIsScreenLarge) {
                     resId = R.array.eight_lockscreen_nophone_targets;
-                } else { 
+                } else {
                     resId = R.array.eight_lockscreen_targets;
                 }
             } else if (mLockscreenTargets == EIGHT_TARGETS_UNLOCK_RIGHT) {
@@ -295,7 +295,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                         : R.array.silent_eight_unlockright_lockscreen_targets;
                 } else if (mIsScreenLarge) {
                     resId = R.array.eight_unlockright_lockscreen_nophone_targets;
-                } else { 
+                } else {
                     resId = R.array.eight_unlockright_lockscreen_targets;
                 }
             } else if (mCameraDisabled) {
@@ -316,529 +316,529 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         }
 
-                public void onTrigger(View v, int target) {
-                    if (mLockscreenTargets == STOCK_TARGETS) {
-                        if (target == 0 || target == 1) { // 0 = unlock/portrait, 1 = unlock/landscape
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 2 || target == 3) { // 2 = alt/portrait, 3 = alt/landscape
-                            if (mCameraDisabled) {
-                                toggleRingMode();
-                                mUnlockWidgetMethods.updateResources();
-                                mCallback.pokeWakelock();
-                            } else {
-                                // Start the Camera
-                                Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(intent);
-                                mCallback.goToUnlockScreen();
-                            }
-                        }
-                    }
-                    if (mLockscreenTargets == FOUR_TARGETS) {
-                        if (target == 0) { // upper left Action = Phone/Browser
-                            if (mIsScreenLarge) {
-                                Intent browserIntent = new Intent(Intent.ACTION_MAIN);
-                                browserIntent.setClassName("com.android.browser",
-                                                           "com.android.browser.BrowserActivity");
-                                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(browserIntent);
-                            } else {
-                                Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
-                                phoneIntent.setClassName("com.android.contacts",
-                                                         "com.android.contacts.activities.DialtactsActivity");
-                                phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(phoneIntent);
-                            }
-                                mCallback.goToUnlockScreen();
-                        } else if (target == 1) { // top Action == Camera/Ring Toggle
-                            if (mCameraDisabled) {
-                                toggleRingMode();
-                                mUnlockWidgetMethods.updateResources();
-                                mCallback.pokeWakelock();
-                            } else {
-                                // Start the Camera
-                                Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(intent);
-                                mCallback.goToUnlockScreen();
-                            }
-                        } else if (target == 2) { // left Action = Mms
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
-                            if(intentUri == null) {
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
-                                mContext.startActivity(intent);
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 3) { // left Action = Hidden Unlock
-                            mCallback.goToUnlockScreen();
-                        }
-                    }
-                    if (mLockscreenTargets == FOUR_TARGETS_UNLOCK_RIGHT) {
-                        if (target == 2) { // upper right Action = Phone/Browser
-                            if (mIsScreenLarge) {
-                                Intent browserIntent = new Intent(Intent.ACTION_MAIN);
-                                browserIntent.setClassName("com.android.browser",
-                                                           "com.android.browser.BrowserActivity");
-                                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(browserIntent);
-                            } else {
-                                Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
-                                phoneIntent.setClassName("com.android.contacts",
-                                                         "com.android.contacts.activities.DialtactsActivity");
-                                phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(phoneIntent);
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 3) { // left Action == Camera/Ring Toggle
-                            if (mCameraDisabled) {
-                                toggleRingMode();
-                                mUnlockWidgetMethods.updateResources();
-                                mCallback.pokeWakelock();
-                            } else {
-                                // Start the Camera
-                                Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(intent);
-                                mCallback.goToUnlockScreen();
-                            }
-                        } else if (target == 1) { // upper left Action = Mms
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
-                            if(intentUri == null) {
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
-                                mContext.startActivity(intent);
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 0) { // right Action = Hidden Unlock
-                            mCallback.goToUnlockScreen();
-                        }
-                    }
-                    if (mLockscreenTargets == SIX_TARGETS) {
-                        if (target == 5) { // lower left Action = Empty
-                        } else if (target == 0) { // right Action = Phone/Browser
-                            if (mIsScreenLarge) {
-                                Intent browserIntent = new Intent(Intent.ACTION_MAIN);
-                                browserIntent.setClassName("com.android.browser",
-                                                           "com.android.browser.BrowserActivity");
-                                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(browserIntent);
-                            } else {
-                                Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
-                                phoneIntent.setClassName("com.android.contacts",
-                                                         "com.android.contacts.activities.DialtactsActivity");
-                                phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(phoneIntent);
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 3) { // upper left Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 2) { // top Action == Camera/Ring Toggle
-                            if (mCameraDisabled) {
-                                toggleRingMode();
-                                mUnlockWidgetMethods.updateResources();
-                                mCallback.pokeWakelock();
-                            } else {
-                                // Start the Camera
-                                Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(intent);
-                                mCallback.goToUnlockScreen();
-                            }
-                        } else if (target == 1) { // upper right Action = Unlock
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 4) { // left Action = Mms
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
-                            if(intentUri == null) {
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
-                                mContext.startActivity(intent);
-                            } else {
-                                Intent mmsIntent;
-                                try {
-                                    mmsIntent = Intent.parseUri(intentUri, 0);
-                                    mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                       | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(mmsIntent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 7) { // lower right Action = Empty
-                        } else if (target == 6) { // bottom Action = Hidden Unlock
-                            mCallback.goToUnlockScreen();
-                        }
-                    }
-                    if (mLockscreenTargets == SIX_TARGETS_UNLOCK_RIGHT) {
-                        if (target == 5) { // lower left Action = Empty
-                        } else if (target == 6) { // bottom Action = Phone/Browser
-                            if (mIsScreenLarge) {
-                                Intent browserIntent = new Intent(Intent.ACTION_MAIN);
-                                browserIntent.setClassName("com.android.browser",
-                                                           "com.android.browser.BrowserActivity");
-                                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(browserIntent);
-                            } else {
-                                Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
-                                phoneIntent.setClassName("com.android.contacts",
-                                                         "com.android.contacts.activities.DialtactsActivity");
-                                phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(phoneIntent);
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 3) { // upper left Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 4) { // left Action == Camera/Ring Toggle
-                            if (mCameraDisabled) {
-                                toggleRingMode();
-                                mUnlockWidgetMethods.updateResources();
-                                mCallback.pokeWakelock();
-                            } else {
-                                // Start the Camera
-                                Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(intent);
-                                mCallback.goToUnlockScreen();
-                            }
-                        } else if (target == 1) { // upper right Action = Unlock
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 2) { // left Action = Mms
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
-                            if(intentUri == null) {
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
-                                mContext.startActivity(intent);
-                            } else {
-                                Intent mmsIntent;
-                                try {
-                                    mmsIntent = Intent.parseUri(intentUri, 0);
-                                    mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                       | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(mmsIntent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 7) { // lower right Action = Empty
-                        } else if (target == 0) { // right Action = Unlock
-                            mCallback.goToUnlockScreen();
-                        }
-                    }
-                    if (mLockscreenTargets == EIGHT_TARGETS) {
-                        if (target == 5) { // lower left Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT);
-                            
-                            if(intentUri == null) {
-                                mCallback.goToUnlockScreen();
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 0) { // upper left Action = Phone/Browser
-                            if (mIsScreenLarge) {
-                                Intent browserIntent = new Intent(Intent.ACTION_MAIN);
-                                browserIntent.setClassName("com.android.browser",
-                                                           "com.android.browser.BrowserActivity");
-                                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(browserIntent);
-                            } else {
-                                Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
-                                phoneIntent.setClassName("com.android.contacts",
-                                                         "com.android.contacts.activities.DialtactsActivity");
-                                phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(phoneIntent);
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 3) { // upper left Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 2) { // top Action == Camera/Ring Toggle
-                            if (mCameraDisabled) {
-                                toggleRingMode();
-                                mUnlockWidgetMethods.updateResources();
-                                mCallback.pokeWakelock();
-                            } else {
-                                // Start the Camera
-                                Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(intent);
-                                mCallback.goToUnlockScreen();
-                            }
-                        } else if (target == 1) { // upper right Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 4) { // left Action = Mms
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
-                            if(intentUri == null) {
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
-                                mContext.startActivity(intent);
-                            } else {
-                                Intent mmsIntent;
-                                try {
-                                    mmsIntent = Intent.parseUri(intentUri, 0);
-                                    mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                       | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(mmsIntent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 7) { // lower right Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 6) { // bottom Action = Hidden Unlock
-                            mCallback.goToUnlockScreen();
-                        }
-                    }
-                    if (mLockscreenTargets == EIGHT_TARGETS_UNLOCK_RIGHT) {
-                        if (target == 5) { // lower left Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT);
-                            
-                            if(intentUri == null) {
-                                mCallback.goToUnlockScreen();
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 6) { // bottom Action = Phone/Browser
-                            if (mIsScreenLarge) {
-                                Intent browserIntent = new Intent(Intent.ACTION_MAIN);
-                                browserIntent.setClassName("com.android.browser",
-                                                           "com.android.browser.BrowserActivity");
-                                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(browserIntent);
-                            } else {
-                                Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
-                                phoneIntent.setClassName("com.android.contacts",
-                                                         "com.android.contacts.activities.DialtactsActivity");
-                                phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(phoneIntent);
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 3) { // upper left Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 4) { // left Action == Camera/Ring Toggle
-                            if (mCameraDisabled) {
-                                toggleRingMode();
-                                mUnlockWidgetMethods.updateResources();
-                                mCallback.pokeWakelock();
-                            } else {
-                                // Start the Camera
-                                Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                mContext.startActivity(intent);
-                                mCallback.goToUnlockScreen();
-                            }
-                        } else if (target == 1) { // upper right Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 2) { // left Action = Mms
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
-                            
-                            if(intentUri == null) {
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
-                                mContext.startActivity(intent);
-                            } else {
-                                Intent mmsIntent;
-                                try {
-                                    mmsIntent = Intent.parseUri(intentUri, 0);
-                                    mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                       | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(mmsIntent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 7) { // lower right Action = Custom
-                            String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT);
-                            
-                            if(intentUri == null) {
-                            } else {
-                                Intent intent;
-                                try {
-                                    intent = Intent.parseUri(intentUri, 0);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                                    mContext.startActivity(intent);
-                                } catch (URISyntaxException e) {
-                                }
-                            }
-                            mCallback.goToUnlockScreen();
-                        } else if (target == 0) { // right Action = Hidden Unlock
-                            mCallback.goToUnlockScreen();
-                        }
+        public void onTrigger(View v, int target) {
+            if (mLockscreenTargets == STOCK_TARGETS) {
+                if (target == 0 || target == 1) { // 0 = unlock/portrait, 1 = unlock/landscape
+                    mCallback.goToUnlockScreen();
+                } else if (target == 2 || target == 3) { // 2 = alt/portrait, 3 = alt/landscape
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
+                        // Start the Camera
+                        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        mCallback.goToUnlockScreen();
                     }
                 }
+            }
+            if (mLockscreenTargets == FOUR_TARGETS) {
+                if (target == 0) { // upper left Action = Phone/Browser
+                    if (mIsScreenLarge) {
+                        Intent browserIntent = new Intent(Intent.ACTION_MAIN);
+                        browserIntent.setClassName("com.android.browser",
+                                                   "com.android.browser.BrowserActivity");
+                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(browserIntent);
+                    } else {
+                        Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
+                        phoneIntent.setClassName("com.android.contacts",
+                                                 "com.android.contacts.activities.DialtactsActivity");
+                        phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(phoneIntent);
+                    }
+                        mCallback.goToUnlockScreen();
+                } else if (target == 1) { // top Action == Camera/Ring Toggle
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
+                        // Start the Camera
+                        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        mCallback.goToUnlockScreen();
+                    }
+                } else if (target == 2) { // left Action = Mms
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
+                            
+                    if(intentUri == null) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 3) { // left Action = Hidden Unlock
+                    mCallback.goToUnlockScreen();
+                }
+            }
+            if (mLockscreenTargets == FOUR_TARGETS_UNLOCK_RIGHT) {
+                if (target == 2) { // upper right Action = Phone/Browser
+                    if (mIsScreenLarge) {
+                        Intent browserIntent = new Intent(Intent.ACTION_MAIN);
+                        browserIntent.setClassName("com.android.browser",
+                                                   "com.android.browser.BrowserActivity");
+                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(browserIntent);
+                    } else {
+                        Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
+                        phoneIntent.setClassName("com.android.contacts",
+                                                 "com.android.contacts.activities.DialtactsActivity");
+                        phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(phoneIntent);
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 3) { // left Action == Camera/Ring Toggle
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
+                        // Start the Camera
+                        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        mCallback.goToUnlockScreen();
+                    }
+                } else if (target == 1) { // upper left Action = Mms
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
+                            
+                    if(intentUri == null) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 0) { // right Action = Hidden Unlock
+                    mCallback.goToUnlockScreen();
+                }
+            }
+            if (mLockscreenTargets == SIX_TARGETS) {
+                if (target == 5) { // lower left Action = Empty
+                } else if (target == 0) { // right Action = Phone/Browser
+                    if (mIsScreenLarge) {
+                        Intent browserIntent = new Intent(Intent.ACTION_MAIN);
+                        browserIntent.setClassName("com.android.browser",
+                                                   "com.android.browser.BrowserActivity");
+                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(browserIntent);
+                    } else {
+                        Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
+                        phoneIntent.setClassName("com.android.contacts",
+                                                 "com.android.contacts.activities.DialtactsActivity");
+                        phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(phoneIntent);
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 3) { // upper left Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 2) { // top Action == Camera/Ring Toggle
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
+                        // Start the Camera
+                        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        mCallback.goToUnlockScreen();
+                    }
+                } else if (target == 1) { // upper right Action = Unlock
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 4) { // left Action = Mms
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
+                            
+                    if(intentUri == null) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent mmsIntent;
+                        try {
+                            mmsIntent = Intent.parseUri(intentUri, 0);
+                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(mmsIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 7) { // lower right Action = Empty
+                } else if (target == 6) { // bottom Action = Hidden Unlock
+                    mCallback.goToUnlockScreen();
+                }
+            }
+            if (mLockscreenTargets == SIX_TARGETS_UNLOCK_RIGHT) {
+                if (target == 5) { // lower left Action = Empty
+                } else if (target == 6) { // bottom Action = Phone/Browser
+                    if (mIsScreenLarge) {
+                        Intent browserIntent = new Intent(Intent.ACTION_MAIN);
+                        browserIntent.setClassName("com.android.browser",
+                                                   "com.android.browser.BrowserActivity");
+                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(browserIntent);
+                    } else {
+                        Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
+                        phoneIntent.setClassName("com.android.contacts",
+                                                 "com.android.contacts.activities.DialtactsActivity");
+                        phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(phoneIntent);
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 3) { // upper left Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 4) { // left Action == Camera/Ring Toggle
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
+                        // Start the Camera
+                        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        mCallback.goToUnlockScreen();
+                    }
+                } else if (target == 1) { // upper right Action = Unlock
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 2) { // left Action = Mms
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
+                            
+                    if(intentUri == null) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent mmsIntent;
+                        try {
+                            mmsIntent = Intent.parseUri(intentUri, 0);
+                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(mmsIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 7) { // lower right Action = Empty
+                } else if (target == 0) { // right Action = Unlock
+                            mCallback.goToUnlockScreen();
+                }
+            }
+            if (mLockscreenTargets == EIGHT_TARGETS) {
+                if (target == 5) { // lower left Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT);
+                            
+                    if(intentUri == null) {
+                        mCallback.goToUnlockScreen();
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 0) { // upper left Action = Phone/Browser
+                    if (mIsScreenLarge) {
+                        Intent browserIntent = new Intent(Intent.ACTION_MAIN);
+                        browserIntent.setClassName("com.android.browser",
+                                                   "com.android.browser.BrowserActivity");
+                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(browserIntent);
+                    } else {
+                        Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
+                        phoneIntent.setClassName("com.android.contacts",
+                                                 "com.android.contacts.activities.DialtactsActivity");
+                        phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(phoneIntent);
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 3) { // upper left Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 2) { // top Action == Camera/Ring Toggle
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
+                        // Start the Camera
+                        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        mCallback.goToUnlockScreen();
+                    }
+                } else if (target == 1) { // upper right Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 4) { // left Action = Mms
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
+                            
+                    if(intentUri == null) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent mmsIntent;
+                        try {
+                            mmsIntent = Intent.parseUri(intentUri, 0);
+                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(mmsIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 7) { // lower right Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 6) { // bottom Action = Hidden Unlock
+                    mCallback.goToUnlockScreen();
+                }
+            }
+            if (mLockscreenTargets == EIGHT_TARGETS_UNLOCK_RIGHT) {
+                if (target == 5) { // lower left Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_LEFT_INTENT);
+                            
+                    if(intentUri == null) {
+                        mCallback.goToUnlockScreen();
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 6) { // bottom Action = Phone/Browser
+                    if (mIsScreenLarge) {
+                                Intent browserIntent = new Intent(Intent.ACTION_MAIN);
+                        browserIntent.setClassName("com.android.browser",
+                                                   "com.android.browser.BrowserActivity");
+                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(browserIntent);
+                    } else {
+                        Intent phoneIntent = new Intent(Intent.ACTION_MAIN);
+                        phoneIntent.setClassName("com.android.contacts",
+                                                 "com.android.contacts.activities.DialtactsActivity");
+                        phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(phoneIntent);
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 3) { // upper left Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_LEFT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 4) { // left Action == Camera/Ring Toggle
+                    if (mCameraDisabled) {
+                        toggleRingMode();
+                        mUnlockWidgetMethods.updateResources();
+                        mCallback.pokeWakelock();
+                    } else {
+                        // Start the Camera
+                        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(intent);
+                        mCallback.goToUnlockScreen();
+                    }
+                } else if (target == 1) { // upper right Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_UPPER_RIGHT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 2) { // left Action = Mms
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_SMS_INTENT);
+                            
+                    if(intentUri == null) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        intent.setClassName("com.android.mms", "com.android.mms.ui.ConversationList");
+                        mContext.startActivity(intent);
+                    } else {
+                        Intent mmsIntent;
+                        try {
+                            mmsIntent = Intent.parseUri(intentUri, 0);
+                            mmsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(mmsIntent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 7) { // lower right Action = Custom
+                    String intentUri = Settings.System.getString(mContext.getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_LOWER_RIGHT_INTENT);
+                            
+                    if(intentUri == null) {
+                    } else {
+                        Intent intent;
+                        try {
+                            intent = Intent.parseUri(intentUri, 0);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            mContext.startActivity(intent);
+                        } catch (URISyntaxException e) {
+                        }
+                    }
+                    mCallback.goToUnlockScreen();
+                } else if (target == 0) { // right Action = Hidden Unlock
+                    mCallback.goToUnlockScreen();
+                }
+            }
+        }
 
         public void onGrabbedStateChange(View v, int handle) {
             // Don't poke the wake lock when returning to a state where the handle is
@@ -1130,7 +1130,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         SettingsObserver(Handler handler) {
             super(handler);
         }
-    
+
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
@@ -1152,10 +1152,8 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         mLockscreenTargets = Settings.System.getInt(resolver,
         Settings.System.LOCKSCREEN_TARGETS, STOCK_TARGETS);
-        
+
         mLockscreenLayout = Settings.System.getInt(resolver,
         Settings.System.LOCKSCREEN_LAYOUT, STOCK_LAYOUT);
-    
     }
-
 }
