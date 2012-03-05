@@ -2387,6 +2387,12 @@ public final class Settings {
          *
          * @hide
          */
+        public static final String LOCKSCREEN_BEFORE_UNLOCK = "lockscreen_before_unlock";
+
+        /**
+         *
+         * @hide
+         */
         public static final String SWITCH_WITH_SEARCH = "switch_with_search";
 
         /**
