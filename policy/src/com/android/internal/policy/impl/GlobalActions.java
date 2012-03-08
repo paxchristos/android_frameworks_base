@@ -192,7 +192,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         mNavBarHideOn = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.NAVIGATION_BAR_HIDE, 0) == 1;
 
-        mEnableErrorMessage = !mEnablePowerMenu && !mEnableRebootMenu && !mEnableScreenshot && !mEnableAirplaneMode &&
+        mEnableErrorMessage = !mEnablePowerMenu && !mEnableRebootMenu && !mEnableProfiles && !mEnableScreenshot && !mEnableAirplaneMode &&
                 !mEnableTorchToggle && !mEnableNavBarHideToggle && !mEnableSilentToggle;
 
         SettingsObserver settingsObserver = new SettingsObserver(new Handler());
