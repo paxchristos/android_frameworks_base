@@ -478,8 +478,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     public static final String INTENT_TORCH_ON = "com.android.systemui.INTENT_TORCH_ON";
     public static final String INTENT_TORCH_OFF = "com.android.systemui.INTENT_TORCH_OFF";
-    boolean mFastTorchOn; // local state of torch
-    boolean mEnableQuickTorch; // System.Setting
 
     final KeyCharacterMap.FallbackAction mFallbackAction = new KeyCharacterMap.FallbackAction();
 
@@ -519,8 +517,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Secure.DEFAULT_INPUT_METHOD), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     "fancy_rotation_anim"), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.ENABLE_FAST_TORCH), false, this);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SCREENSAVER_ENABLED), false, this);
             if (SEPARATE_TIMEOUT_FOR_SCREEN_SAVER) {
@@ -661,17 +657,15 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             i.setAction(INTENT_TORCH_ON);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(i);
-            mFastTorchOn = true;
         };
     };
-    
+
     Runnable mTorchOff = new Runnable() {
         public void run() {
             Intent i = new Intent(INTENT_TORCH_OFF);
             i.setAction(INTENT_TORCH_OFF);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(i);
-            mFastTorchOn = false;
         };
     };
 
@@ -1098,8 +1092,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mUserRotation = Settings.System.getInt(resolver,
                     Settings.System.USER_ROTATION,
                     Surface.ROTATION_0);
-            mEnableQuickTorch = Settings.System.getInt(resolver, Settings.System.ENABLE_FAST_TORCH,
-                            0) == 1;
             boolean hasNavBarChanged = Settings.System.getInt(resolver, Settings.System.NAVIGATION_BAR_HIDE,
                             0) == 0;
             if (mHasNavigationBar != hasNavBarChanged) {
@@ -3099,9 +3091,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 result &= ~ACTION_PASS_TO_USER;
                 if (down) {
-                    if(!isScreenOn && mEnableQuickTorch) {
-                        handleChangeTorchState(true);
-                    }
                     if (isScreenOn && !mPowerKeyTriggered
                             && (event.getFlags() & KeyEvent.FLAG_FALLBACK) == 0) {
                         mPowerKeyTriggered = true;
