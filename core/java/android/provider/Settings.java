@@ -2472,6 +2472,12 @@ public final class Settings {
          *
          * @hide
          */
+        public static final String POWER_DIALOG_SHOW_PROFILES_MENU = "power_dialog_profiles_menu";
+
+        /**
+         *
+         * @hide
+         */
         public static final String POWER_DIALOG_SHOW_SCREENSHOT = "power_dialog_show_screenshot";
 
         /**

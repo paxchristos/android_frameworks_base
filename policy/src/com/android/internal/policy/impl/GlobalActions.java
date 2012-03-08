@@ -98,6 +98,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private boolean mIsWaitingForEcmExit = false;
     private boolean mEnablePowerMenu = true;
     private boolean mEnableRebootMenu = false;
+    private boolean mEnableProfiles = false;
     private boolean mEnableScreenshot = false;
     private boolean mEnableAirplaneMode = true;
     private boolean mEnableTorchToggle = false;
@@ -169,6 +170,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
         mEnableRebootMenu = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.POWER_DIALOG_SHOW_REBOOT_MENU, 0) == 1;
+        
+        mEnableProfiles = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.POWER_DIALOG_SHOW_PROFILES_MENU, 0) == 1;
 
         mEnableScreenshot = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.POWER_DIALOG_SHOW_SCREENSHOT, 0) == 1;
@@ -337,20 +341,22 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
 
         // next: profile
-        mItems.add(
-            new ProfileChooseAction() {
-                public void onPress() {
-                    createProfileDialog();
-                }
+        if (mEnableProfiles) {
+            mItems.add(
+                new ProfileChooseAction() {
+                    public void onPress() {
+                        createProfileDialog();
+                    }
 
-                public boolean showDuringKeyguard() {
-                    return false;
-                }
+                    public boolean showDuringKeyguard() {
+                        return false;
+                    }
 
-                public boolean showBeforeProvisioning() {
-                    return false;
-                }
-            });
+                    public boolean showBeforeProvisioning() {
+                        return false;
+                    }
+                });
+        }
 
         // next: screenshot
         if (mEnableScreenshot) {
@@ -769,9 +775,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
 
         public View create(
                 Context context, View convertView, ViewGroup parent, LayoutInflater inflater) {
-            View v = (convertView != null) ?
-                    convertView :
-                    inflater.inflate(R.layout.global_actions_item, parent, false);
+            View v = inflater.inflate(R.layout.global_actions_item, parent, false);
 
             ImageView icon = (ImageView) v.findViewById(R.id.icon);
             TextView messageView = (TextView) v.findViewById(R.id.message);
