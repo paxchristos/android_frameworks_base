@@ -2193,6 +2193,13 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
 
         /**
+         * Setting for custom statusbar signal text
+         * 
+         * @hide
+         */
+        public static final String STATUS_BAR_SIGNAL_TEXT = "status_bar_signal";
+
+        /**
          * Setting for statusbar clock layout (hide)
          * 
          * @hide
