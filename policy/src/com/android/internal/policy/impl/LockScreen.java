@@ -1044,6 +1044,8 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         // Update widget with initial ring state
         mUnlockWidgetMethods.updateResources();
+        // Update the settings everytime we draw lockscreen
+        updateSettings();
 
         if (DBG) Log.v(TAG, "*** LockScreen accel is "
                 + (mUnlockWidget.isHardwareAccelerated() ? "on":"off"));
@@ -1083,6 +1085,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     + ", new config=" + getResources().getConfiguration());
         }
         updateConfiguration();
+        updateSettings();
     }
 
     /** {@inheritDoc} */
@@ -1106,9 +1109,6 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     public void onPause() {
         mStatusViewManager.onPause();
         mUnlockWidgetMethods.reset(false);
-        // update the settings when we pause
-        if (DEBUG) Log.d(TAG, "We are pausing and want to update settings");
-        updateSettings();
     }
 
     private final Runnable mOnResumePing = new Runnable() {
@@ -1170,7 +1170,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         }
     }
 
-    protected void updateSettings() {
+    private void updateSettings() {
         if (DEBUG) Log.d(TAG, "Settings for lockscreen have changed lets update");
         ContentResolver resolver = mContext.getContentResolver();
 
@@ -1183,7 +1183,6 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         int mLockscreenColor = Settings.System.getInt(resolver,
                 Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, COLOR_WHITE);
 
-        // XXX: UPDATE COLORS each could throw a null pointer so watch your ass
         // digital clock first (see @link com.android.internal.widget.DigitalClock.updateTime())
         try {
             mDigitalClock.updateTime();
@@ -1193,7 +1192,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         // then the rest (see @link com.android.internal.policy.impl.KeyguardStatusViewManager.updateColors())
         try {
-            mStatusViewManager.updateColors(); 
+            mStatusViewManager.updateColors();
         } catch (NullPointerException npe) {
             if (DEBUG) Log.d(TAG, "KeyguardStatusViewManager.updateColors() failed: NullPointerException");
         }
