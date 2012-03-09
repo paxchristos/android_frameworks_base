@@ -487,9 +487,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                             }
                 }).create();
         dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
-        if (!mContext.getResources().getBoolean(com.android.internal.R.bool.config_sf_slowBlur)) {
-            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-        }
         dialog.show();
     }
 
