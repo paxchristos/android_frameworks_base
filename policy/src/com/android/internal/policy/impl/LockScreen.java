@@ -17,6 +17,7 @@
 package com.android.internal.policy.impl;
 
 import com.android.internal.R;
+import com.android.internal.widget.DigitalClock;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.SlidingTab;
 import com.android.internal.widget.WaveView;
@@ -39,6 +40,9 @@ import android.util.Log;
 import android.media.AudioManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -52,6 +56,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
     private static final int ON_RESUME_PING_DELAY = 500; // delay first ping until the screen is on
     private static final boolean DBG = false;
+    private static final boolean DEBUG = DBG;
     private static final String TAG = "LockScreen";
     private static final String ENABLE_MENU_KEY_FILE = "/data/local/enable_menu_key";
     private static final int WAIT_FOR_ANIMATION_TIMEOUT = 0;
@@ -79,6 +84,8 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     private boolean mIsScreenLarge = mScreenSize == Configuration.SCREENLAYOUT_SIZE_LARGE ||
     mScreenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE;
 
+    private static final int COLOR_WHITE = 0xFFFFFFFF;
+
     private LockPatternUtils mLockPatternUtils;
     private KeyguardUpdateMonitor mUpdateMonitor;
     private KeyguardScreenCallback mCallback;
@@ -94,6 +101,10 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     private KeyguardStatusViewManager mStatusViewManager;
     private UnlockWidgetCommonMethods mUnlockWidgetMethods;
     private View mUnlockWidget;
+
+    // to allow coloring of lockscreen texts
+    private TextView mCarrier;
+    private DigitalClock mDigitalClock;
 
     private interface UnlockWidgetCommonMethods {
         // Update resources based on phone state
@@ -1001,6 +1012,9 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mSilentMode = isSilentMode();
 
+        mDigitalClock = (DigitalClock) findViewById(R.id.time);
+        mCarrier = (TextView) findViewById(R.id.carrier);
+
         mUnlockWidget = findViewById(R.id.unlock_widget);
         if (mUnlockWidget instanceof SlidingTab) {
             SlidingTab slidingTabView = (SlidingTab) mUnlockWidget;
@@ -1092,6 +1106,9 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     public void onPause() {
         mStatusViewManager.onPause();
         mUnlockWidgetMethods.reset(false);
+        // update the settings when we pause
+        if (DEBUG) Log.d(TAG, "We are pausing and want to update settings");
+        updateSettings();
     }
 
     private final Runnable mOnResumePing = new Runnable() {
@@ -1104,6 +1121,9 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     public void onResume() {
         mStatusViewManager.onResume();
         postDelayed(mOnResumePing, ON_RESUME_PING_DELAY);
+        // update the settings when we resume
+        if (DEBUG) Log.d(TAG, "We are resuming and want to update settings");
+        updateSettings();
     }
 
     /** {@inheritDoc} */
@@ -1134,11 +1154,14 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.LOCKSCREEN_TARGETS), false,
-                    this);
+                    Settings.System.getUriFor(Settings.System.LOCKSCREEN_TARGETS),
+                    false, this);
             resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.LOCKSCREEN_LAYOUT), false,
-                    this);
+                    Settings.System.getUriFor(Settings.System.LOCKSCREEN_LAYOUT),
+                    false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR),
+                    false, this);
             updateSettings();
         }
 
@@ -1148,6 +1171,7 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
     }
 
     protected void updateSettings() {
+        if (DEBUG) Log.d(TAG, "Settings for lockscreen have changed lets update");
         ContentResolver resolver = mContext.getContentResolver();
 
         mLockscreenTargets = Settings.System.getInt(resolver,
@@ -1155,5 +1179,23 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         mLockscreenLayout = Settings.System.getInt(resolver,
         Settings.System.LOCKSCREEN_LAYOUT, STOCK_LAYOUT);
+
+        int mLockscreenColor = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, COLOR_WHITE);
+
+        // XXX: UPDATE COLORS each could throw a null pointer so watch your ass
+        // digital clock first (see @link com.android.internal.widget.DigitalClock.updateTime())
+        try {
+            mDigitalClock.updateTime();
+        } catch (NullPointerException npe) {
+            if (DEBUG) Log.d(TAG, "date update time failed: NullPointerException");
+        }
+
+        // then the rest (see @link com.android.internal.policy.impl.KeyguardStatusViewManager.updateColors())
+        try {
+            mStatusViewManager.updateColors(); 
+        } catch (NullPointerException npe) {
+            if (DEBUG) Log.d(TAG, "KeyguardStatusViewManager.updateColors() failed: NullPointerException");
+        }
     }
 }

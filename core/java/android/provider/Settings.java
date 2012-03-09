@@ -2390,6 +2390,12 @@ public final class Settings {
         public static final String LOCKSCREEN_BEFORE_UNLOCK = "lockscreen_before_unlock";
 
         /**
+         * custom lockscreen text color
+         * @hide
+         */
+        public static final String LOCKSCREEN_CUSTOM_TEXT_COLOR = "lockscreen_custom_text_color";
+
+        /**
          *
          * @hide
          */
