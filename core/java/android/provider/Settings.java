@@ -2419,6 +2419,18 @@ public final class Settings {
         public static final String NAVIGATION_BAR_HIDE = "navigation_bar_hide";
 
         /**
+         * 
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
+
+        /**
+         * 
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_WIDTH = "navigation_bar_width";
+
+        /**
          * Setting for custom nav bar tint
          * 
          * @hide
