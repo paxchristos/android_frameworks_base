@@ -2207,6 +2207,12 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_LOCKSCREEN_HIDE = "statusbar_clock_lockscreen_hide";
 
         /**
+         * 
+         * @hide
+         */
+        public static final String STATUS_BAR_TRANSPARENCY = "status_bar_transparency";
+
+        /**
          * Setting to enable/disable menu unlock on the lockscreen
          * 
          * @hide
