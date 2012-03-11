@@ -2061,55 +2061,62 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_LOCKSCREEN_HIDE = "statusbar_clock_lockscreen_hide";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_POWER_MENU = "power_dialog_power_menu";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_REBOOT_MENU = "power_dialog_reboot_menu";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_PROFILES_MENU = "power_dialog_profiles_menu";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_SCREENSHOT = "power_dialog_show_screenshot";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_AIRPLANE_MODE = "power_dialog_show_airplane_mode";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_TORCH_TOGGLE = "power_dialog_show_torch_toggle";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String POWER_DIALOG_NAVBAR_TOGGLE = "power_dialog_show_navbar_toggle";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String POWER_DIALOG_SHOW_SILENT_TOGGLE = "power_dialog_show_silent_toggle";
 
         /**
-         *
+         * Navigation controls to Use
+         * 
+         * @hide
+         */
+        public static final String NAV_BUTTONS = "nav_buttons";
+
+        /**
+         * 
          * @hide
          */
         public static final String NAVACTIONS_LAYOUT = "navactions_layout";
@@ -2296,13 +2303,13 @@ public final class Settings {
         public static final String STATUS_BAR_SIGNAL_TEXT = "status_bar_signal";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String LOCKSCREEN_LAYOUT = "lockscreen_layout";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String LOCKSCREEN_TARGETS = "lockscreen_targets";
@@ -2357,19 +2364,19 @@ public final class Settings {
 
         /**
          * Whether to allow the device to use landscape lockscreen layouts
-         *
+         * 
          * @hide
          */
         public static final String LOCKSCREEN_LANDSCAPE = "lockscreen_landscape";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String LOCKSCREEN_BEFORE_UNLOCK = "lockscreen_before_unlock";
@@ -2400,20 +2407,13 @@ public final class Settings {
         public static final String VOLUME_WAKE_SCREEN = "volume_wake_screen";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String NAV_BUTTON_CONFIG = "nav_button_config";
 
         /**
-         * Navigation controls to Use
-         *
-         * @hide
-         */
-        public static final String NAV_BUTTONS = "nav_buttons";
-
-        /**
-         *
+         * 
          * @hide
          */
         public static final String NAVIGATION_BAR_HIDE = "navigation_bar_hide";
@@ -2437,13 +2437,13 @@ public final class Settings {
         };
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String MENU_VISIBILITY = "menu_visibility";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String SWITCH_WITH_SEARCH = "switch_with_search";
@@ -2469,13 +2469,13 @@ public final class Settings {
         public static final String NOTIFICATION_LIGHT_OFF = "notification_light_off";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String COMBINED_BAR_AUTO_HIDE = "combined_bar_auto_hide";
 
         /**
-         *
+         * 
          * @hide
          */
         public static final String HORIZONTAL_RECENTS_TASK_PANEL = "horizontal_recents_task_panel";
