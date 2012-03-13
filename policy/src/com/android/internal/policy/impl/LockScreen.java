@@ -72,8 +72,10 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
     public static final int STOCK_LAYOUT = 7;
     public static final int STOCK_LAYOUT_CENTERED_RING = 8;
-    public static final int BIG_CLOCK_LAYOUT = 9;
-    public static final int BIG_CLOCK_LAYOUT_CENTERED_RING = 10;
+    public static final int CENTER_LAYOUT = 9;
+    public static final int CENTER_LAYOUT_CENTERED_RING = 10;
+    public static final int BIG_CLOCK_LAYOUT = 11;
+    public static final int BIG_CLOCK_LAYOUT_CENTERED_RING = 12;
 
     private int mLockscreenTargets = STOCK_TARGETS;
     private int mLockscreenLayout = STOCK_LAYOUT;
@@ -968,6 +970,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                     } else if (mLockscreenLayout == STOCK_LAYOUT_CENTERED_RING) {
                         inflater.inflate(R.layout.keyguard_screen_tab_center_unlock_right, this,
                                          true);
+                    } else if (mLockscreenLayout == CENTER_LAYOUT) {
+                        inflater.inflate(R.layout.keyguard_center_screen_tab_unlock, this,
+                                         true);
+                    } else if (mLockscreenLayout == CENTER_LAYOUT_CENTERED_RING) {
+                        inflater.inflate(R.layout.keyguard_center_screen_tab_center_unlock_right, this,
+                                         true);
                     } else if (mLockscreenLayout == BIG_CLOCK_LAYOUT) {
                         inflater.inflate(R.layout.keyguard_screen_tab_bigclock_unlock_right, this,
                                          true);
@@ -991,6 +999,12 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
                                          true);
                     } else if (mLockscreenLayout == STOCK_LAYOUT_CENTERED_RING) {
                         inflater.inflate(R.layout.keyguard_screen_tab_center_unlock_down, this,
+                                         true);
+                    } else if (mLockscreenLayout == CENTER_LAYOUT) {
+                        inflater.inflate(R.layout.keyguard_center_screen_tab_unlock_down, this,
+                                         true);
+                    } else if (mLockscreenLayout == CENTER_LAYOUT_CENTERED_RING) {
+                        inflater.inflate(R.layout.keyguard_center_screen_tab_center_unlock_down, this,
                                          true);
                     } else if (mLockscreenLayout == BIG_CLOCK_LAYOUT) {
                         inflater.inflate(R.layout.keyguard_screen_tab_bigclock_unlock_down, this,
