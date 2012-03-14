@@ -49,34 +49,6 @@
         android:visibility="invisible"/>
 
     <LinearLayout
-        android:id="@+id/back"
-        android:layout_width="64dp"
-        android:layout_height="match_parent"
-        android:background="?android:attr/actionBarItemBackground"
-        android:focusable="true"
-        >
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:src="@drawable/ic_lock_back"
-            android:scaleType="center"
-            android:duplicateParentState="true"
-            android:background="@drawable/silent_mode_indicator"
-            />
-    </LinearLayout>
-
-    <!-- Spacer -->
-    <View android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:visibility="invisible"/>
-
-    <LinearLayout
         android:id="@+id/home"
         android:layout_width="64dp"
         android:layout_height="match_parent"
@@ -92,6 +64,34 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:src="@drawable/ic_lock_home"
+            android:scaleType="center"
+            android:duplicateParentState="true"
+            android:background="@drawable/silent_mode_indicator"
+            />
+    </LinearLayout>
+
+    <!-- Spacer -->
+    <View android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/actionBarItemBackground"
+        android:focusable="true"
+        >
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:src="@drawable/ic_lock_back"
             android:scaleType="center"
             android:duplicateParentState="true"
             android:background="@drawable/silent_mode_indicator"
