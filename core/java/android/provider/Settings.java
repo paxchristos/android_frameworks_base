@@ -2455,6 +2455,12 @@ public final class Settings {
         public static final String SWITCH_WITH_SEARCH = "switch_with_search";
 
         /**
+         * Whether or not volume button music controls should be enabled to seek media tracks
+         * @hide
+         */
+        public static final String VOLBTN_MUSIC_CONTROLS = "volbtn_music_controls";
+
+        /**
          * Whether national data roaming should be used.
          * @hide
          */
