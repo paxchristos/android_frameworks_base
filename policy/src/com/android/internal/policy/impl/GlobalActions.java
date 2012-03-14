@@ -297,7 +297,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         mItems = new ArrayList<Action>();
 
         // first: NavBar Actions
-        if((mNavActionsLayout == NAV_TOP) && mNavBarHideOn && !mKeyguardShowing) {
+        if((mNavActionsLayout == NAV_TOP) && mEnableNavBarHideToggle && !mKeyguardShowing) {
             mItems.add(mNavBarActions);
         } else if (mKeyguardShowing) {
             Slog.e(TAG, "dont add nav actions");
@@ -392,13 +392,13 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
 
         // next: silent mode
-        if (mEnableSilentToggle && !mNavBarHideOn) {
+        if (mEnableSilentToggle && !mEnableNavBarHideToggle) {
             mItems.add(mSilentModeAction);
         } else if (mEnableSilentToggle && mKeyguardShowing) {
             mItems.add(mSilentModeAction);
-        } else if ((mNavActionsLayout == NAV_TOP) && mEnableSilentToggle && mNavBarHideOn) {
+        } else if ((mNavActionsLayout == NAV_TOP) && mEnableSilentToggle && mEnableNavBarHideToggle) {
             mItems.add(mSilentModeAction);
-        } else if ((mNavActionsLayout == NAV_BOTTOM) && mEnableSilentToggle && mNavBarHideOn) {
+        } else if ((mNavActionsLayout == NAV_BOTTOM) && mEnableSilentToggle && mEnableNavBarHideToggle) {
             Slog.e(TAG, "disabling silent toggle");
         } else {
             Slog.e(TAG, "dont add silent toggle");
@@ -423,7 +423,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
 
         // next: NavBar Actions
-        if((mNavActionsLayout == NAV_BOTTOM) && mNavBarHideOn && !mKeyguardShowing) {
+        if((mNavActionsLayout == NAV_BOTTOM) && mEnableNavBarHideToggle && !mKeyguardShowing) {
             mItems.add(mNavBarActions);
         } else if (mKeyguardShowing) {
             Slog.e(TAG, "dont add nav actions");
