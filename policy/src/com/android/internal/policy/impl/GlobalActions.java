@@ -111,7 +111,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     public static final int NAV_BOTTOM = 0;
     public static final int NAV_TOP = 1;
 
-    private int mNavActionsLayout = NAV_BOTTOM;
+    private int mNavActionsLayout = NAV_TOP;
 
     public static final String INTENT_TORCH_ON = "com.android.systemui.INTENT_TORCH_ON";
     public static final String INTENT_TORCH_OFF = "com.android.systemui.INTENT_TORCH_OFF";
