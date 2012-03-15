@@ -2296,6 +2296,13 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
 
         /**
+         * Setting to enable volume options.
+         * 
+         * @hide
+         */
+        public static final String ENABLE_VOLUME_OPTIONS = "enable_volume_options";
+
+        /**
          * Setting for custom statusbar signal text
          * 
          * @hide
@@ -4538,13 +4545,12 @@ public final class Settings {
         public static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
 
         /**
-         * The {@link ComponentName} string of the service to be used as the voice recognition
-         * service.
-         *
+         * The {@link ComponentName} string of the service to be used as the
+         * voice recognition service.
+         * 
          * @hide
          */
         public static final String VOICE_RECOGNITION_SERVICE = "voice_recognition_service";
-
 
         /**
          * The {@link ComponentName} string of the selected spell checker service which is
