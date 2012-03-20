@@ -938,7 +938,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mDeskDockRotation = readRotation(
                 com.android.internal.R.integer.config_deskDockRotation);
         mKeyboardDockRotation = readRotation(
-                com.android.internal.R.integer.config_keyboardDockRotation);
+		com.android.internal.R.integer.config_keyboardDockRotation);
         mCarDockEnablesAccelerometer = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_carDockEnablesAccelerometer);
         mDeskDockEnablesAccelerometer = mContext.getResources().getBoolean(
@@ -2767,7 +2767,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
-boolean readLidStateByHardwareFeature()
+	    boolean readLidStateByHardwareFeature()
 	    {
 	        boolean flag = true;
 	        if (!mHallSensorFeature)

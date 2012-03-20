@@ -2309,7 +2309,7 @@ public class Intent implements Parcelable, Cloneable {
      * information, see {@link android.app.UiModeManager}.
      */
     @SdkConstant(SdkConstantType.INTENT_CATEGORY)
-    public static final String CATEGORY_EOS_KB_DOCK = "android.intent.category.TF101_KB_DOCK";
+    public static final String CATEGORY_TF101_KB_DOCK = "android.intent.category.TF101_KB_DOCK";
     
     /**
      * Used to indicate that the activity can be used in a car environment.
