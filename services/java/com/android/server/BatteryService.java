@@ -103,6 +103,10 @@ class BatteryService extends Binder {
     private boolean mBatteryLevelCritical;
     private int mInvalidCharger;
 
+    private int mDockBatteryStatus;
+    private int mDockBatteryLevel;
+    private String mDockBatteryPresent;
+
     private int mLastBatteryStatus;
     private int mLastBatteryHealth;
     private boolean mLastBatteryPresent;
@@ -114,6 +118,8 @@ class BatteryService extends Binder {
 
     private int mLowBatteryWarningLevel;
     private int mLowBatteryCloseWarningLevel;
+
+    private boolean mHasAsusDock;
 
     private int mPlugType;
     private int mLastPlugType = -1; // Extra state so we can detect first run
@@ -137,6 +143,7 @@ class BatteryService extends Binder {
         mLowBatteryCloseWarningLevel = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_lowBatteryCloseWarningLevel);
 
+	mHasAsusDock = mContext.getResources().getBoolean(com.android.internal.R.bool.config_batteryHasAsusDock);
         mPowerSupplyObserver.startObserving("SUBSYSTEM=power_supply");
 
         // watch for invalid charger messages if the invalid_charger switch exists
@@ -389,6 +396,12 @@ class BatteryService extends Binder {
         intent.putExtra(BatteryManager.EXTRA_TEMPERATURE, mBatteryTemperature);
         intent.putExtra(BatteryManager.EXTRA_TECHNOLOGY, mBatteryTechnology);
         intent.putExtra(BatteryManager.EXTRA_INVALID_CHARGER, mInvalidCharger);
+
+        if (mHasAsusDock){
+            intent.putExtra(BatteryManager.EXTRA_DOCK_STATUS, mDockBatteryStatus);
+            intent.putExtra(BatteryManager.EXTRA_DOCK_LEVEL, mDockBatteryLevel);
+            intent.putExtra("dock_ac_online", false);
+        }
 
         if (false) {
             Slog.d(TAG, "level:" + mBatteryLevel +

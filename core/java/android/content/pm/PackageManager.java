@@ -763,14 +763,14 @@ public abstract class PackageManager {
      * Feature for {@link #getSystemAvailableFeatures} and
      * {@link #hasSystemFeature}: The device has a keyboard dock.
      */
-    public static final String FEATURE_EOS_KB_DOCK = "cna.hardware.dock";
+    public static final String FEATURE_TF101_KB_DOCK = "cna.hardware.dock";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
      * {@link #hasSystemFeature}: The device uses a hall effect
      * sensor to change the value of the lid switch.
      */
-    public static final String FEATURE_EOS_HALL_SENSOR = "cna.hardware.hall_sensor";
+    public static final String FEATURE_TF101_HALL_SENSOR = "cna.hardware.hall_sensor";
 	
     /**
      * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device's
