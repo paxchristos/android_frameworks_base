@@ -398,8 +398,7 @@ int register_android_server_BatteryService(JNIEnv* env)
 #ifdef HAS_ASUS_DOCK
     gFieldIds.mDockBatteryStatus = env->GetFieldID(clazz, "mDockBatteryStatus", "I");
     gFieldIds.mDockBatteryLevel = env->GetFieldID(clazz, "mDockBatteryLevel", "I");
-    gFieldIds.mDockBatteryPresent = env->GetFieldID(clazz, "mDockBatteryPresent", "Ljava/lang/String
-;");
+    gFieldIds.mDockBatteryPresent = env->GetFieldID(clazz, "mDockBatteryPresent", "Ljava/lang/String;");
 #endif
 
     LOG_FATAL_IF(gFieldIds.mAcOnline == NULL, "Unable to find BatteryService.AC_ONLINE_PATH");
