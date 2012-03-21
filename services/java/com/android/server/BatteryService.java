@@ -144,6 +144,7 @@ class BatteryService extends Binder {
                 com.android.internal.R.integer.config_lowBatteryCloseWarningLevel);
 
 	mHasAsusDock = mContext.getResources().getBoolean(com.android.internal.R.bool.config_batteryHasAsusDock);
+
         mPowerSupplyObserver.startObserving("SUBSYSTEM=power_supply");
 
         // watch for invalid charger messages if the invalid_charger switch exists
@@ -400,7 +401,7 @@ class BatteryService extends Binder {
         if (mHasAsusDock){
             intent.putExtra(BatteryManager.EXTRA_DOCK_STATUS, mDockBatteryStatus);
             intent.putExtra(BatteryManager.EXTRA_DOCK_LEVEL, mDockBatteryLevel);
-            intent.putExtra("dock_ac_online", false);
+            intent.putExtra(BatteryManager.EXTRA_DOCK_AC_ONLINE, false);
         }
 
         if (false) {

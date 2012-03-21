@@ -50,6 +50,10 @@ public class BatteryManager {
     
 	/** @hide */
 	public static final String EXTRA_DOCK_LEVEL = "dock_level";
+
+	/** @hide */
+	public static final String EXTRA_DOCK_AC_ONLINE = "dock_ac_online";
+
     /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
      * integer containing the maximum battery level.
