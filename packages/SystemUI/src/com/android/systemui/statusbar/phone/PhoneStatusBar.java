@@ -57,12 +57,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManagerImpl;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -342,7 +346,7 @@ public class PhoneStatusBar extends StatusBar {
         mSettingsButton = expanded.findViewById(R.id.settings_button);
         mSettingsButton.setOnClickListener(mSettingsButtonListener);
         mScrollView = (ScrollView)expanded.findViewById(R.id.scroll);
-
+        mSettingsButton.setOnLongClickListener(mSettingsLongClickListener);
 
         mPowerWidget = (PowerWidget)expanded.findViewById(R.id.exp_power_stat);
         mPowerWidget.setupSettingsObserver(mHandler);
@@ -401,7 +405,11 @@ public class PhoneStatusBar extends StatusBar {
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         context.registerReceiver(mBroadcastReceiver, filter);
 
-	mPowerWidget.setupWidget();
+        //check for view when not pressed on settings button
+        boolean whatIsIt = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.EXPANDED_VIEW_WIDGET, 1) == 1);
+        mPowerWidget.setVisibility(whatIsIt ? View.VISIBLE : View.GONE);
+        mPowerWidget.setupWidget();
 
         return sb;
     }
@@ -424,6 +432,9 @@ public class PhoneStatusBar extends StatusBar {
                             false, this);
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.MENU_VISIBILITY), 
+                            false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.EXPANDED_VIEW_WIDGET),
                             false, this);
             onChange(true);
         }
@@ -2274,6 +2285,56 @@ public class PhoneStatusBar extends StatusBar {
             v.getContext().startActivity(new Intent(Settings.ACTION_SETTINGS)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             animateCollapse();
+        }
+    };
+    
+    private View.OnLongClickListener mSettingsLongClickListener = new View.OnLongClickListener() {
+    	@Override
+        public boolean onLongClick(View v) {
+        	if (mPowerWidget.getVisibility() == View.GONE) {
+        		int height = mPowerWidget.getHeight();
+        		Animation anim = AnimationUtils.makeInAnimation(mContext, true);
+        		anim.setDuration(500);
+        		anim.setAnimationListener(new AnimationListener() {
+        			@Override
+        			public void onAnimationStart(Animation animation) {
+        				mPowerWidget.setVisibility(View.VISIBLE);
+        				Settings.System.putInt(mContext.getContentResolver(), Settings.System.EXPANDED_VIEW_WIDGET, 1);
+        			}
+        			//stupid android wont compile empty methods so I have to override them to work.... better make them public too!
+        			@Override
+        			public void onAnimationEnd(Animation animation) {
+        				
+        			}
+        			@Override
+        			public void onAnimationRepeat(Animation animation) {
+        				
+        			}
+        		});
+        		mPowerWidget.startAnimation(anim);
+        	} else {
+        		int height = mPowerWidget.getHeight();
+        		Animation anim = AnimationUtils.makeOutAnimation(mContext, false);
+        		anim.setDuration(500);
+        		anim.setAnimationListener(new AnimationListener() {
+        			@Override
+        			public void onAnimationEnd(Animation animation) {
+        				mPowerWidget.setVisibility(View.GONE);
+        				Settings.System.putInt(mContext.getContentResolver(), Settings.System.EXPANDED_VIEW_WIDGET, 0);
+        			}
+        			//stupid android wont compile empty methods so I have to override them to work....
+        			@Override
+        			public void onAnimationStart(Animation animation) {
+        				
+        			}
+        			@Override
+        			public void onAnimationRepeat(Animation animation) {
+        				
+        			}
+        		});
+        		mPowerWidget.startAnimation(anim);
+        	}
+        	return true;
         }
     };
 
