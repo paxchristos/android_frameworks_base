@@ -3027,8 +3027,50 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             }
+
+            case KeyEvent.KEYCODE_EXPLORER:
+            case KeyEvent.KEYCODE_SETTINGS:
+            case KeyEvent.KEYCODE_WIRELESS:
+            case KeyEvent.KEYCODE_BLUETOOTH:
+            case KeyEvent.KEYCODE_TOUCHPAD: {
+                if (!isDeviceProvisioned())
+                  return 0;
+                handleFunctionKey(event);
+                result &= ~ACTION_PASS_TO_USER;
+                break;
+            }
+
+            case KeyEvent.KEYCODE_BRIGHTNESS_UP:
+            case KeyEvent.KEYCODE_BRIGHTNESS_DOWN:
+            case KeyEvent.KEYCODE_BRIGHTNESS_AUTO: {
+                if (!down || keyguardActive)
+                  return 0;
+                handleFunctionKey(event);
+                result &= ~ACTION_PASS_TO_USER;
+                break;
+            }
+
+            case KeyEvent.KEYCODE_CAPTURE: {
+                if (!down)
+                  return 0;
+                mHandler.post(mScreenshotChordLongPress);
+                result &= ~ACTION_PASS_TO_USER;
+                break;
+            }
+
+            case KeyEvent.KEYCODE_SLEEP: {
+                if (isScreenOn && down && (!keyguardActive || isKeyguardSecure()))
+                    result = (result & ~ACTION_POKE_USER_ACTIVITY) | ACTION_GO_TO_SLEEP;
+                result &= ~ACTION_PASS_TO_USER;
+                break;
+            }
         }
         return result;
+    }
+	
+     void handleFunctionKey(KeyEvent event) {
+        mBroadcastWakeLock.acquire();
+        mHandler.post(new PassFunctionKey(new KeyEvent(event)));
     }
 
     /** {@inheritDoc} */
@@ -3063,6 +3105,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 intent.putExtra(Intent.EXTRA_KEY_EVENT, mKeyEvent);
                 mContext.sendOrderedBroadcast(intent, null, mBroadcastDone,
                         mHandler, Activity.RESULT_OK, null, null);
+            }
+        }
+    }
+
+    class PassFunctionKey implements Runnable {
+        KeyEvent mKeyEvent;
+
+        PassFunctionKey(KeyEvent keyEvent) {
+            mKeyEvent = keyEvent;
+        }
+
+        public void run() {
+            if (ActivityManagerNative.isSystemReady()) {
+                Intent intent = new Intent("com.asus.keyboard.action.FUNCTION_KEY", null);
+                intent.addFlags(32);
+                intent.putExtra("android.intent.extra.KEY_EVENT", mKeyEvent);
+                mContext.sendOrderedBroadcast(intent, null, mBroadcastDone,
+                         mHandler, Activity.RESULT_OK, null, null);
             }
         }
     }
