@@ -1342,6 +1342,39 @@ public class TextUtils {
     }
 
     /**
+     * Google fixed this in 3.2 and then broke it again in 4.x
+     * @param s
+     * @return
+     */
+    public static String htmlEncodeForEmail(String s) {
+        StringBuilder sb = new StringBuilder();
+        char c;
+        for (int i = 0; i < s.length(); i++) {
+            c = s.charAt(i);
+            switch (c) {
+            case '<':
+                sb.append("&#60;"); //$NON-NLS-1$
+                break;
+            case '>':
+                sb.append("&#62;"); //$NON-NLS-1$
+                break;
+            case '&':
+                sb.append("&#38;"); //$NON-NLS-1$
+                break;
+            case '\'':
+                sb.append("&#39;"); //$NON-NLS-1$
+                break;
+            case '"':
+                sb.append("&#34;"); //$NON-NLS-1$
+                break;
+            default:
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
      * Returns a CharSequence concatenating the specified CharSequences,
      * retaining their spans if any.
      */
