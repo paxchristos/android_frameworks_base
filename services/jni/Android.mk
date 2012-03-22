@@ -41,7 +41,7 @@ ifeq ($(WITH_MALLOC_LEAK_CHECK),true)
     LOCAL_CFLAGS += -DMALLOC_LEAK_CHECK
 endif
 
-iifeq ($(TARGET_HAS_ASUS_DOCK),true)
+ifeq ($(TARGET_HAS_ASUS_DOCK),true)
     LOCAL_CFLAGS += -DHAS_ASUS_DOCK
 endif
 
