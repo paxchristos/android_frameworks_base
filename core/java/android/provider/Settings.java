@@ -2432,6 +2432,13 @@ public final class Settings {
         public static final String NAVIGATION_BAR_WIDTH = "navigation_bar_width";
 
         /**
+         * Setting for custom nav bar button alpha
+         * 
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_BUTTON_ALPHA = "navigation_bar_button_alpha";
+
+        /**
          * Setting for custom nav bar tint
          * 
          * @hide
