@@ -25,7 +25,7 @@
         android:focusable="true"
         android:background="@drawable/powerwidget_bg">
     <ImageView android:id="@+id/power_widget_button_image"
-           android:layout_width="match_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:paddingTop="5dp"
@@ -33,6 +33,6 @@
             android:scaleType="center" />
     <ImageView android:id="@+id/power_widget_button_indic"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="5dp"
             android:scaleType="fitXY" />
 </LinearLayout>
