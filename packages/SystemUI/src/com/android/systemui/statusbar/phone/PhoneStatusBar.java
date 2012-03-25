@@ -407,7 +407,7 @@ public class PhoneStatusBar extends StatusBar {
 
         //check for view when not pressed on settings button
         boolean whatIsIt = (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.EXPANDED_VIEW_WIDGET, 1) == 1);
+                Settings.System.EXPANDED_VIEW_WIDGET, 0) == 1);
         mPowerWidget.setVisibility(whatIsIt ? View.VISIBLE : View.GONE);
         mPowerWidget.setupWidget();
 
