@@ -181,7 +181,6 @@ public abstract class PowerButton {
 
     private void updateImageView(int id, Drawable resDraw) {
         ImageView imageIcon = (ImageView)mView.findViewById(id);
-        imageIcon.setImageResource(R.drawable.stat_bgon_custom);
         imageIcon.setImageDrawable(resDraw);
     }
 
