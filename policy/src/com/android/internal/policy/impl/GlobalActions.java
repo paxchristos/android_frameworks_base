@@ -396,9 +396,9 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
             mItems.add(mSilentModeAction);
         } else if (mEnableSilentToggle && mKeyguardShowing) {
             mItems.add(mSilentModeAction);
-        } else if ((mNavActionsLayout == NAV_TOP) && mEnableSilentToggle && mEnableNavBarHideToggle) {
+        } else if ((mNavActionsLayout == NAV_TOP) && mEnableSilentToggle && mEnableNavBarHideToggle && mNavBarHideOn) {
             mItems.add(mSilentModeAction);
-        } else if ((mNavActionsLayout == NAV_BOTTOM) && mEnableSilentToggle && mEnableNavBarHideToggle) {
+        } else if ((mNavActionsLayout == NAV_BOTTOM) && mEnableSilentToggle && mEnableNavBarHideToggle && mNavBarHideOn) {
             Slog.e(TAG, "disabling silent toggle");
         } else {
             Slog.e(TAG, "dont add silent toggle");
