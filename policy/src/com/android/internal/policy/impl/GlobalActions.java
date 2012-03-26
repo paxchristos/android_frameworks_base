@@ -297,7 +297,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         mItems = new ArrayList<Action>();
 
         // first: NavBar Actions
-        if((mNavActionsLayout == NAV_TOP) && mEnableNavBarHideToggle && !mKeyguardShowing) {
+        if((mNavActionsLayout == NAV_TOP) && mEnableNavBarHideToggle && mNavBarHideOn && !mKeyguardShowing) {
             mItems.add(mNavBarActions);
         } else if (mKeyguardShowing) {
             Slog.e(TAG, "dont add nav actions");
@@ -423,7 +423,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
 
         // next: NavBar Actions
-        if((mNavActionsLayout == NAV_BOTTOM) && mEnableNavBarHideToggle && !mKeyguardShowing) {
+        if((mNavActionsLayout == NAV_BOTTOM) && mEnableNavBarHideToggle && mNavBarHideOn && !mKeyguardShowing) {
             mItems.add(mNavBarActions);
         } else if (mKeyguardShowing) {
             Slog.e(TAG, "dont add nav actions");
