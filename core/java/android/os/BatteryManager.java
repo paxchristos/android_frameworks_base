@@ -27,8 +27,8 @@ public class BatteryManager {
      */
     public static final String EXTRA_STATUS = "status";
     
-	/** @hide */
-	public static final String EXTRA_DOCK_STATUS = "dock_status";
+    /** @hide */
+    public static final String EXTRA_DOCK_STATUS = "dock_status";
     /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
      * integer containing the current health constant.
@@ -48,8 +48,8 @@ public class BatteryManager {
      */
     public static final String EXTRA_LEVEL = "level";
     
-	/** @hide */
-	public static final String EXTRA_DOCK_LEVEL = "dock_level";
+    /** @hide */
+    public static final String EXTRA_DOCK_LEVEL = "dock_level";
 
 	/** @hide */
 	public static final String EXTRA_DOCK_AC_ONLINE = "dock_ac_online";
@@ -117,7 +117,7 @@ public class BatteryManager {
     public static final int BATTERY_HEALTH_UNSPECIFIED_FAILURE = 6;
     public static final int BATTERY_HEALTH_COLD = 7;
 
-	/** @hide */
+    /** @hide */
     public static final int DOCK_STATE_UNKNOWN = 0;
 
     /** @hide */
@@ -131,8 +131,8 @@ public class BatteryManager {
 
     /** @hide */
     public static final int DOCK_STATE_DISCHARGING = 4;
-  
-	// values of the "plugged" field in the ACTION_BATTERY_CHANGED intent.
+
+    // values of the "plugged" field in the ACTION_BATTERY_CHANGED intent.
     // These must be powers of 2.
     /** Power source is an AC charger. */
     public static final int BATTERY_PLUGGED_AC = 1;

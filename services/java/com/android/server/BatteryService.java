@@ -143,8 +143,7 @@ class BatteryService extends Binder {
         mLowBatteryCloseWarningLevel = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_lowBatteryCloseWarningLevel);
 
-	mHasAsusDock = mContext.getResources().getBoolean(com.android.internal.R.bool.config_batteryHasAsusDock);
-
+        mHasAsusDock = mContext.getResources().getBoolean(com.android.internal.R.bool.config_batteryHasAsusDock);
         mPowerSupplyObserver.startObserving("SUBSYSTEM=power_supply");
 
         // watch for invalid charger messages if the invalid_charger switch exists
