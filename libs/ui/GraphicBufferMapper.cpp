@@ -70,10 +70,23 @@ status_t GraphicBufferMapper::lock(buffer_handle_t handle,
         int usage, const Rect& bounds, void** vaddr)
 {
     status_t err;
+#ifdef MISSING_GRALLOC_BUFFERS
+    int tries=5;
+#endif
 
     err = mAllocMod->lock(mAllocMod, handle, usage,
             bounds.left, bounds.top, bounds.width(), bounds.height(),
             vaddr);
+#ifdef MISSING_GRALLOC_BUFFERS
+    while (err && tries) {
+	usleep(1000);
+        err = mAllocMod->unlock(mAllocMod, handle);
+        err = mAllocMod->lock(mAllocMod, handle, usage,
+            bounds.left, bounds.top, bounds.width(), bounds.height(),
+            vaddr);
+	tries--;
+    }
+#endif
 
     LOGW_IF(err, "lock(...) failed %d (%s)", err, strerror(-err));
     return err;
@@ -90,7 +103,7 @@ status_t GraphicBufferMapper::unlock(buffer_handle_t handle)
 }
 
 #ifdef EXYNOS4210_ENHANCEMENTS
-status_t GraphicBufferMapper::getphys(buffer_handle_t handle, int *paddr)
+status_t GraphicBufferMapper::getphys(buffer_handle_t handle, void** paddr)
 {
     status_t err;
 
