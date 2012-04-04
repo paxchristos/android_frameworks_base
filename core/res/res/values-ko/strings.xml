@@ -35,6 +35,16 @@
     <string name="defaultVoiceMailAlphaTag" msgid="2660020990097733077">"음성메일"</string>
     <string name="defaultMsisdnAlphaTag" msgid="2850889754919584674">"MSISDN1"</string>
     <string name="mmiError" msgid="5154499457739052907">"연결에 문제가 있거나 MMI 코드가 잘못되었습니다."</string>
+    <string name="profileNameDefault">기본</string>
+    <string name="profileNameWork">작업</string>
+    <string name="profileNameHome">홈</string>
+    <string name="profileNameSilent">조용한</string>
+    <string name="profileNameNight">밤</string>
+    <string name="profileGroupPhone">전화</string>
+    <string name="profileGroupCalendar">달력</string>
+    <string name="profileGroupGmail">Gmail</string>
+    <string name="profileGroupEmail">이메일</string>
+    <string name="profileGroupSMS">SMS</string>
     <string name="mmiFdnError" msgid="5224398216385316471">"발신 허용 번호에서만 수행할 수 있는 작업입니다."</string>
     <string name="serviceEnabled" msgid="8147278346414714315">"서비스를 사용하도록 설정했습니다."</string>
     <string name="serviceEnabledFor" msgid="6856228140453471041">"사용 설정된 서비스 목록:"</string>
@@ -140,6 +150,21 @@
     <string name="silent_mode_silent" msgid="319298163018473078">"벨소리가 무음입니다."</string>
     <string name="silent_mode_vibrate" msgid="7072043388581551395">"벨소리가 진동입니다."</string>
     <string name="silent_mode_ring" msgid="8592241816194074353">"벨소리가 켜져 있습니다."</string>
+    <string name="restart_progress">다시 시작\u2026</string>
+    <string name="restart_title" product="tablet">당신의 위패가 다시 시작됩니다.</string>
+    <string name="restart_title" product="default">전화가 다시 시작됩니다.</string>
+    <string name="reboot_system">재부팅 전화</string>
+    <string name="global_action_screenshot">스크린샷</string>
+    <string name="global_action_nooptionsenabled">더 많은 메뉴 옵션을 추가</string>
+    <string name="reboot_reboot">재부 팅합니다</string>
+    <string name="reboot_restart">다시 시작</string>
+    <string name="reboot_recovery">회복</string>
+    <string name="reboot_bootloader">부트 로더</string>
+    <string name="reboot_bootmenu">Bootmenu</string>
+    <string name="reboot_fastboot">Fastboot</string>
+    <string name="reboot_download">다운로드</string>
+    <string name="reboot_progress">재부팅\u2026</string>
+    <string name="reboot_confirm">전화가 재부 팅됩니다.</string>
     <string name="shutdown_progress" msgid="2281079257329981203">"종료 중..."</string>
     <string name="shutdown_confirm" product="tablet" msgid="3385745179555731470">"태블릿이 종료됩니다."</string>
     <string name="shutdown_confirm" product="default" msgid="649792175242821353">"휴대전화가 종료됩니다."</string>
@@ -150,12 +175,20 @@
     <string name="global_actions" product="default" msgid="2406416831541615258">"휴대전화 옵션"</string>
     <string name="global_action_lock" msgid="2844945191792119712">"화면 잠금"</string>
     <string name="global_action_power_off" msgid="4471879440839879722">"종료"</string>
+    <string name="global_action_reboot">재부 팅합니다</string>
+    <string name="global_action_choose_profile">프로필</string>
     <string name="global_action_toggle_silent_mode" msgid="8219525344246810925">"무음 모드"</string>
     <string name="global_action_silent_mode_on_status" msgid="3289841937003758806">"소리 꺼짐"</string>
     <string name="global_action_silent_mode_off_status" msgid="1506046579177066419">"소리 켜짐"</string>
     <string name="global_actions_toggle_airplane_mode" msgid="5884330306926307456">"비행기 모드"</string>
     <string name="global_actions_airplane_mode_on_status" msgid="2719557982608919750">"비행기 모드 사용중"</string>
     <string name="global_actions_airplane_mode_off_status" msgid="5075070442854490296">"비행기 모드 사용중이 아님"</string>
+    <string name="global_actions_toggle_torch">토치 손전등</string>
+    <string name="global_actions_torch_on_status">토치 손전등은 계속된다</string>
+    <string name="global_actions_torch_off_status">토치 손전등은 꺼짐입니다</string>
+    <string name="global_actions_toggle_navbar_hide">네비게이션 바</string>
+    <string name="global_actions_navbar_hide_on">탐색 표시줄 숨김</string>
+    <string name="global_actions_navbar_hide_off">탐색 바가 나타</string>
     <string name="status_bar_notification_info_overflow" msgid="5301981741705354993">"999+"</string>
     <string name="safeMode" msgid="2788228061547930246">"안전 모드"</string>
     <string name="android_system_label" msgid="6577375335728551336">"Android 시스템"</string>

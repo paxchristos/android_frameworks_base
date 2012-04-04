@@ -51,6 +51,7 @@ class KeyguardStatusViewManager implements OnClickListener {
     public static final int ALARM_ICON = R.drawable.ic_lock_idle_alarm;
     public static final int CHARGING_ICON = 0; //R.drawable.ic_lock_idle_charging;
     public static final int BATTERY_LOW_ICON = 0; //R.drawable.ic_lock_idle_low_battery;
+    public static final int BATTERY_ICON = 0; //insert a R.drawable icon if you want it to show up
     private static final long INSTRUCTION_RESET_DELAY = 2000; // time until instruction text resets
 
     private static final int INSTRUCTION_TEXT = 10;
@@ -59,6 +60,7 @@ class KeyguardStatusViewManager implements OnClickListener {
     private static final int HELP_MESSAGE_TEXT = 13;
     private static final int OWNER_INFO = 14;
     private static final int BATTERY_INFO = 15;
+    private static final int COLOR_WHITE = 0xFFFFFFFF;
 
     private StatusMode mStatus;
     private String mDateFormatString;
@@ -78,6 +80,8 @@ class KeyguardStatusViewManager implements OnClickListener {
 
     // are we showing battery information?
     private boolean mShowingBatteryInfo = false;
+    
+    private boolean mLockAlwaysBattery;
 
     // last known plugged in state
     private boolean mPluggedIn = false;
@@ -201,6 +205,7 @@ class KeyguardStatusViewManager implements OnClickListener {
         resetStatusInfo();
         refreshDate();
         updateOwnerInfo();
+        updateColors();
 
         // Required to get Marquee to work.
         final View scrollableViews[] = { mCarrierView, mDateView, mStatus1View, mOwnerInfoView,
@@ -358,10 +363,14 @@ class KeyguardStatusViewManager implements OnClickListener {
     }
 
     private CharSequence getAltTextMessage(MutableInt icon) {
-        // If we have replaced the status area with a single widget, then this code
-        // prioritizes what to show in that space when all transient messages are gone.
+        // If we have replaced the status area with a single widget, then this
+        // code
+        // prioritizes what to show in that space when all transient messages
+        // are gone.
         CharSequence string = null;
-        if (mShowingBatteryInfo) {
+        mLockAlwaysBattery = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_BATTERY, 0) == 1;
+        if (mShowingBatteryInfo || mLockAlwaysBattery) {
             // Battery status
             if (mPluggedIn) {
                 // Charging or charged
@@ -370,11 +379,18 @@ class KeyguardStatusViewManager implements OnClickListener {
                 } else {
                     string = getContext().getString(R.string.lockscreen_plugged_in, mBatteryLevel);
                 }
-                icon.value = CHARGING_ICON;
-            } else if (mBatteryLevel < KeyguardUpdateMonitor.LOW_BATTERY_THRESHOLD) {
-                // Battery is low
-                string = getContext().getString(R.string.lockscreen_low_battery);
-                icon.value = BATTERY_LOW_ICON;
+                icon.value = CHARGING_ICON;                
+            } else {
+                if (mBatteryLevel < KeyguardUpdateMonitor.LOW_BATTERY_THRESHOLD) {
+                    // Battery is low
+                    string = getContext().getString(R.string.lockscreen_low_battery);
+                    icon.value = BATTERY_LOW_ICON;
+                } else {
+                    // Always show battery
+                    string = getContext().getString(R.string.lockscreen_always_battery,
+                             mBatteryLevel);
+                    icon.value = BATTERY_ICON;
+                }
             }
         } else {
             string = mCarrierText;
@@ -384,11 +400,13 @@ class KeyguardStatusViewManager implements OnClickListener {
 
     private CharSequence getPriorityTextMessage(MutableInt icon) {
         CharSequence string = null;
+        mLockAlwaysBattery = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_BATTERY, 0) == 1;
         if (!TextUtils.isEmpty(mInstructionText)) {
             // Instructions only
             string = mInstructionText;
             icon.value = LOCK_ICON;
-        } else if (mShowingBatteryInfo) {
+        } else if (mShowingBatteryInfo || mLockAlwaysBattery) {
             // Battery status
             if (mPluggedIn) {
                 // Charging or charged
@@ -398,10 +416,17 @@ class KeyguardStatusViewManager implements OnClickListener {
                     string = getContext().getString(R.string.lockscreen_plugged_in, mBatteryLevel);
                 }
                 icon.value = CHARGING_ICON;
-            } else if (mBatteryLevel < KeyguardUpdateMonitor.LOW_BATTERY_THRESHOLD) {
-                // Battery is low
-                string = getContext().getString(R.string.lockscreen_low_battery);
-                icon.value = BATTERY_LOW_ICON;
+            } else {
+                if (mBatteryLevel < KeyguardUpdateMonitor.LOW_BATTERY_THRESHOLD) {
+                    // Battery is low
+                    string = getContext().getString(R.string.lockscreen_low_battery);
+                    icon.value = BATTERY_LOW_ICON;
+                } else {
+                    // Always show battery
+                    string = getContext().getString(R.string.lockscreen_always_battery,
+                            mBatteryLevel);
+                    icon.value = BATTERY_ICON;
+                }
             }
         } else if (!inWidgetMode() && mOwnerInfoView == null && mOwnerInfoText != null) {
             // OwnerInfo shows in status if we don't have a dedicated widget
@@ -524,7 +549,15 @@ class KeyguardStatusViewManager implements OnClickListener {
                 break;
         }
 
-        setCarrierText(carrierText);
+        String customLabel = null;
+        customLabel = Settings.System.getString(getContext().getContentResolver(),
+                Settings.System.CUSTOM_CARRIER_LABEL);
+        
+        if(customLabel == null)        
+            setCarrierText(carrierText);
+        else
+            setCarrierText(customLabel);
+        
         setCarrierHelpText(carrierHelpTextId);
         updateEmergencyCallButtonState(mPhoneState);
     }
@@ -683,6 +716,53 @@ class KeyguardStatusViewManager implements OnClickListener {
             return spn;
         } else {
             return "";
+        }
+    }
+
+    public void updateColors() {
+        if (DEBUG) Log.d(TAG, "Lets update the colors");
+        ContentResolver resolver = getContext().getContentResolver();
+        int color = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, COLOR_WHITE);
+ 
+        // carrier view
+        try {
+            mCarrierView.setTextColor(color);
+            if (DEBUG) Log.d(TAG, String.format("Setting mCarrierView text color to %d", color));
+        } catch (NullPointerException ne) {
+            if (DEBUG) ne.printStackTrace();
+        }
+
+        // date view
+        try {
+            mDateView.setTextColor(color);
+            if (DEBUG) Log.d(TAG, String.format("Setting mDateView DATE text color to %d", color));
+        } catch (NullPointerException ne) {
+            if (DEBUG) ne.printStackTrace();
+        }
+
+        // status view
+        try {
+            mStatus1View.setTextColor(color);
+            if (DEBUG) Log.d(TAG, String.format("Setting mStatus1View DATE text color to %d", color));
+        } catch (NullPointerException ne) {
+            if (DEBUG) ne.printStackTrace();
+        }
+
+        // owner info view
+        try {
+            mOwnerInfoView.setTextColor(color);
+            if (DEBUG) Log.d(TAG, String.format("Setting mOwnerInfoView DATE text color to %d", color));
+        } catch (NullPointerException ne) {
+            if (DEBUG) ne.printStackTrace();
+        }
+
+        // alarm status view
+        try {
+            mAlarmStatusView.setTextColor(color);
+            if (DEBUG) Log.d(TAG, String.format("Setting mAlarmStatusView DATE text color to %d", color));
+        } catch (NullPointerException ne) {
+            if (DEBUG) ne.printStackTrace();
         }
     }
 }

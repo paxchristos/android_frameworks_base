@@ -156,15 +156,24 @@
 
     <!-- Size of clock font in LockScreen on Unsecure unlock screen. -->
     <dimen name="keyguard_lockscreen_clock_font_size">80dip</dimen>
+    
+    <!-- Size of clock font in LockScreen on Unsecure unlock screen. - bigclock -->
+    <dimen name="keyguard_lockscreen_clock_font_size_bigclock">100dip</dimen>
 
     <!-- Size of status line font on Unsecure unlock LockScreen. -->
     <dimen name="keyguard_lockscreen_status_line_font_size">14dip</dimen>
+    
+    <!-- Size of status line font on Unsecure unlock LockScreen. - bigclock -->
+    <dimen name="keyguard_lockscreen_status_line_font_size_bigclock">14dip</dimen>
 
     <!-- Size of right margin on Unsecure unlock LockScreen -->
     <dimen name="keyguard_lockscreen_status_line_font_right_margin">42dip</dimen>
 
     <!-- Size of top margin on Clock font to edge on unlock LockScreen -->
     <dimen name="keyguard_lockscreen_status_line_clockfont_top_margin">22dip</dimen>
+    
+    <!-- Size of top margin on Clock font to edge on unlock LockScreen - bigclock -->
+    <dimen name="keyguard_lockscreen_status_line_clockfont_top_margin_bigclock">33dip</dimen>
 
     <!-- Size of top margin on Clock font to edge on unlock LockScreen -->
     <dimen name="keyguard_lockscreen_status_line_clockfont_bottom_margin">12dip</dimen>

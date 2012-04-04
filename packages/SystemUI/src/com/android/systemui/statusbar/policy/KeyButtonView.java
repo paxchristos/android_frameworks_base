@@ -18,13 +18,18 @@ package com.android.systemui.statusbar.policy;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.os.ServiceManager;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
@@ -40,12 +45,13 @@ import android.view.ViewConfiguration;
 import android.widget.ImageView;
 
 import com.android.systemui.R;
+import com.android.systemui.statusbar.policy.Clock.SettingsObserver;
 
 public class KeyButtonView extends ImageView {
-    private static final String TAG = "StatusBar.KeyButtonView";
+    protected static final String TAG = "StatusBar.KeyButtonView";
 
     final float GLOW_MAX_SCALE_FACTOR = 1.8f;
-    final float BUTTON_QUIESCENT_ALPHA = 0.6f;
+    float BUTTON_QUIESCENT_ALPHA = 1f;
 
     IWindowManager mWindowManager;
     long mDownTime;
@@ -55,6 +61,9 @@ public class KeyButtonView extends ImageView {
     float mGlowAlpha = 0f, mGlowScale = 1f, mDrawingAlpha = 1f;
     boolean mSupportsLongpress = true;
     RectF mRect = new RectF(0f,0f,0f,0f);
+    
+    int durationSpeedOn = 200;
+    int durationSpeedOff = 20;
 
     Runnable mCheckLongPress = new Runnable() {
         public void run() {
@@ -97,6 +106,8 @@ public class KeyButtonView extends ImageView {
 
         setClickable(true);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        SettingsObserver settingsObserver = new SettingsObserver(new Handler());
+        settingsObserver.observe();
     }
 
     @Override
@@ -120,6 +131,13 @@ public class KeyButtonView extends ImageView {
         }
     }
 
+    public void setGlowBackground(int id) {
+        mGlowBG = getResources().getDrawable(id);
+        if (mGlowBG != null) {
+            mDrawingAlpha = BUTTON_QUIESCENT_ALPHA;
+        }
+    }
+
     public float getDrawingAlpha() {
         if (mGlowBG == null) return 0;
         return mDrawingAlpha;
@@ -129,6 +147,10 @@ public class KeyButtonView extends ImageView {
         if (mGlowBG == null) return;
         mDrawingAlpha = x;
         invalidate();
+    }
+
+    public void setMCode(int x) {
+        mCode = x;
     }
 
     public float getGlowAlpha() {
@@ -180,19 +202,19 @@ public class KeyButtonView extends ImageView {
                         mGlowScale = GLOW_MAX_SCALE_FACTOR;
                     if (mGlowAlpha < BUTTON_QUIESCENT_ALPHA)
                         mGlowAlpha = BUTTON_QUIESCENT_ALPHA;
-                    setDrawingAlpha(1f);
+                    setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
                     as.playTogether(
                         ObjectAnimator.ofFloat(this, "glowAlpha", 1f),
                         ObjectAnimator.ofFloat(this, "glowScale", GLOW_MAX_SCALE_FACTOR)
                     );
-                    as.setDuration(50);
+                    as.setDuration(durationSpeedOff);
                 } else {
                     as.playTogether(
                         ObjectAnimator.ofFloat(this, "glowAlpha", 0f),
                         ObjectAnimator.ofFloat(this, "glowScale", 1f),
                         ObjectAnimator.ofFloat(this, "drawingAlpha", BUTTON_QUIESCENT_ALPHA)
                     );
-                    as.setDuration(500);
+                    as.setDuration(durationSpeedOn);
                 }
                 as.start();
             }
@@ -279,6 +301,60 @@ public class KeyButtonView extends ImageView {
         } catch (RemoteException ex) {
             // System process is dead
         }
+    }
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_TINT), false,
+                    this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_GLOW_DURATION[1]), false,
+                    this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_GLOW_DURATION[0]), false,
+                    this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.NAVIGATION_BAR_BUTTON_ALPHA), false,
+                    this);
+            updateSettings();
+        }	
+    
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+
+    protected void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+
+        durationSpeedOff = Settings.System.getInt(resolver,
+                Settings.System.NAVIGATION_BAR_GLOW_DURATION[0], 20);
+        durationSpeedOn = Settings.System.getInt(resolver,
+                Settings.System.NAVIGATION_BAR_GLOW_DURATION[1], 200);
+        BUTTON_QUIESCENT_ALPHA = Settings.System.getFloat(resolver,
+                Settings.System.NAVIGATION_BAR_BUTTON_ALPHA, 0.6f);
+        setDrawingAlpha(BUTTON_QUIESCENT_ALPHA);
+        invalidate();
+
+        try {
+            int color = Settings.System.getInt(resolver, Settings.System.NAVIGATION_BAR_TINT);
+
+            if (color == Integer.MIN_VALUE) {
+                setColorFilter(null);
+            } else {
+                setColorFilter(null);
+                setColorFilter(Settings.System
+                        .getInt(resolver, Settings.System.NAVIGATION_BAR_TINT));
+            }
+        } catch (SettingNotFoundException e) {
+        }
+
     }
 }
 

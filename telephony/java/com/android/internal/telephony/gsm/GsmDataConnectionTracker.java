@@ -95,6 +95,7 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
     //***** Instance Variables
 
     private boolean mReregisterOnReconnectFailure = false;
+    private boolean mUtmsEverestRadio = false;
     private ContentResolver mResolver;
 
     // Recovery action taken in case of data stall
@@ -198,6 +199,8 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
 
         mDataConnectionTracker = this;
         mResolver = mPhone.getContext().getContentResolver();
+        mUtmsEverestRadio = p.getContext().getResources()
+                .getBoolean(com.android.internal.R.bool.config_utmsEverestRadio);
 
         mApnObserver = new ApnChangeObserver();
         p.getContext().getContentResolver().registerContentObserver(
@@ -488,6 +491,12 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
             if (DBG) log("enableApnType: return APN_ALREADY_ACTIVE");
             return Phone.APN_ALREADY_ACTIVE;
         }
+        if (mPhone.mCM.needsOldRilFeature("singlepdp") && !Phone.APN_TYPE_DEFAULT.equals(apnType)) {
+            ApnContext defContext = mApnContexts.get(Phone.APN_TYPE_DEFAULT);
+            if (defContext.isEnabled()) {
+                setEnabled(apnTypeToId(Phone.APN_TYPE_DEFAULT), false);
+            }
+        }
         setEnabled(apnTypeToId(apnType), true);
         if (DBG) {
             log("enableApnType: new apn request for type " + apnType +
@@ -522,6 +531,9 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
 
         if (apnContext != null) {
             setEnabled(apnTypeToId(type), false);
+            if (mPhone.mCM.needsOldRilFeature("singlepdp") && !Phone.APN_TYPE_DEFAULT.equals(type)) {
+                setEnabled(apnTypeToId(Phone.APN_TYPE_DEFAULT), true);
+            }
             if (apnContext.getState() != State.IDLE && apnContext.getState() != State.FAILED) {
                 if (DBG) log("diableApnType: return APN_REQUEST_STARTED");
                 return Phone.APN_REQUEST_STARTED;
@@ -1227,7 +1239,8 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
                     // Its active so update the DataConnections link properties
                     UpdateLinkPropertyResult result =
                         dcac.updateLinkPropertiesDataCallStateSync(newState);
-                    if (result.oldLp.equals(result.newLp)) {
+                    if ((mUtmsEverestRadio && newState.active == 2)
+                            || result.oldLp.equals(result.newLp)) {
                         if (DBG) log("onDataStateChanged(ar): no change");
                     } else {
                         if (result.oldLp.isIdenticalInterfaceName(result.newLp)) {
@@ -2547,4 +2560,5 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
     protected void loge(String s) {
         Log.e(LOG_TAG, "[GsmDCT] " + s);
     }
+
 }

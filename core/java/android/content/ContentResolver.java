@@ -183,6 +183,11 @@ public abstract class ContentResolver {
     public ContentResolver(Context context) {
         mContext = context;
     }
+    
+    /** @hide */
+    public final Context getContext() {
+        return mContext;
+    }
 
     /** @hide */
     protected abstract IContentProvider acquireProvider(Context c, String name);

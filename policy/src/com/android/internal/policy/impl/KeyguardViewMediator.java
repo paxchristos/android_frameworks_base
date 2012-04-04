@@ -24,6 +24,8 @@ import com.android.internal.widget.LockPatternUtils;
 import android.app.ActivityManagerNative;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.Profile;
+import android.app.ProfileManager;
 import android.app.StatusBarManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -265,6 +267,8 @@ public class KeyguardViewMediator implements KeyguardViewCallback,
     private int mLockSoundStreamId;
     private int mMasterStreamMaxVolume;
 
+    private ProfileManager mProfileManager;
+
     public KeyguardViewMediator(Context context, PhoneWindowManager callback,
             LocalPowerManager powerManager) {
         mContext = context;
@@ -282,6 +286,8 @@ public class KeyguardViewMediator implements KeyguardViewCallback,
                 PowerManager.PARTIAL_WAKE_LOCK,
                 "keyguardWakeAndHandOff");
         mWakeAndHandOff.setReferenceCounted(false);
+
+        mProfileManager = (ProfileManager) context.getSystemService(Context.PROFILE_SERVICE);
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(DELAYED_KEYGUARD_ACTION);
@@ -415,7 +421,55 @@ public class KeyguardViewMediator implements KeyguardViewCallback,
             } else if (why == WindowManagerPolicy.OFF_BECAUSE_OF_PROX_SENSOR) {
                 // Do not enable the keyguard if the prox sensor forced the screen off.
             } else {
-                doKeyguardLocked();
+                final ContentResolver cr = mContext.getContentResolver();
+                // user turned the screen off likely
+                // we wanna check if the user wants to use the timeout setting here too
+                boolean userOverride = Settings.Secure.getInt(cr,
+                        Settings.Secure.LOCK_SCREEN_LOCK_USER_OVERRIDE, 0) == 1;
+
+                if (userOverride) {
+
+                    // From DisplaySettings
+                    long displayTimeout = Settings.System.getInt(cr, SCREEN_OFF_TIMEOUT,
+                            KEYGUARD_DISPLAY_TIMEOUT_DELAY_DEFAULT);
+
+                    // From SecuritySettings
+                    final long lockAfterTimeout = Settings.Secure.getInt(cr,
+                            Settings.Secure.LOCK_SCREEN_LOCK_AFTER_TIMEOUT,
+                            KEYGUARD_LOCK_AFTER_DELAY_DEFAULT);
+
+                    // From DevicePolicyAdmin
+                    final long policyTimeout = mLockPatternUtils.getDevicePolicyManager()
+                            .getMaximumTimeToLock(null);
+
+                    long timeout;
+                    if (policyTimeout > 0) {
+                        // policy in effect. Make sure we don't go beyond policy limit.
+                        displayTimeout = Math.max(displayTimeout, 0); // ignore negative values
+                        timeout = Math.min(policyTimeout - displayTimeout, lockAfterTimeout);
+                    } else {
+                        timeout = lockAfterTimeout;
+                    }
+
+                    if (timeout <= 0) {
+                        // Lock now
+                        mSuppressNextLockSound = true;
+                        doKeyguardLocked();
+                    } else {
+                        // Lock in the future
+                        long when = SystemClock.elapsedRealtime() + timeout;
+                        Intent intent = new Intent(DELAYED_KEYGUARD_ACTION);
+                        intent.putExtra("seq", mDelayedShowingSequence);
+                        PendingIntent sender = PendingIntent.getBroadcast(mContext,
+                                0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                        mAlarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, when,
+                                sender);
+                        if (DEBUG) Log.d(TAG, "setting alarm to turn off keyguard, seq = "
+                                         + mDelayedShowingSequence);
+                    }
+
+                } else 
+                    doKeyguardLocked();
             }
         }
     }
@@ -634,6 +688,13 @@ public class KeyguardViewMediator implements KeyguardViewCallback,
 
         if (mLockPatternUtils.isLockScreenDisabled() && !lockedOrMissing) {
             if (DEBUG) Log.d(TAG, "doKeyguard: not showing because lockscreen is off");
+            return;
+        }
+
+        // if the current profile has disabled us, don't show
+        if (!lockedOrMissing
+                && mProfileManager.getActiveProfile().getScreenLockMode() == Profile.LockMode.DISABLE) {
+            if (DEBUG) Log.d(TAG, "doKeyguard: not showing because of profile override");
             return;
         }
 

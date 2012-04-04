@@ -68,6 +68,23 @@
          could not be performed because FDN is enabled. This will be displayed in a toast. -->
     <string name="mmiFdnError">Operation is restricted to fixed dialing numbers only.</string>
 
+    <!-- Names of default profiles. -->
+    <string name="profileNameDefault">Default</string>
+    <string name="profileNameWork">Work</string>
+    <string name="profileNameHome">Home</string>
+    <string name="profileNameSilent">Silent</string>
+    <string name="profileNameNight">Night</string>
+
+    <!-- Names of application groups. -->
+    <string name="profileGroupPhone">Phone</string>
+    <string name="profileGroupCalendar">Calendar</string>
+    <string name="profileGroupGmail">Gmail</string>
+    <string name="profileGroupEmail">Email</string>
+    <string name="profileGroupSMS">SMS</string>
+
+    <!-- Name of wildcard profile. -->
+    <string name="wildcardProfile">Other</string>
+
     <!-- Displayed when a phone feature such as call barring was activated. -->
     <string name="serviceEnabled">Service was enabled.</string>
     <!-- Displayed in front of the list of a set of service classes
@@ -292,6 +309,43 @@
     <string name="silent_mode_vibrate">Ringer vibrate</string>
     <!-- Spoken description for ringer normal option. [CHAR LIMIT=NONE] -->
     <string name="silent_mode_ring">Ringer on</string>
+    
+    <!-- Restart Progress Dialog message. Shown if the user chooses to restart option -->
+    <string name="restart_progress">Restarting\u2026</string>
+    <!-- Restart Progress Dialog title. Shown if the user chooses to restart the tablet -->
+    <string name="restart_title" product="tablet">Your tablet will restart.</string>
+    <!-- Restart Progress Dialog title. Shown if the user chooses to restart the phone -->
+    <string name="restart_title" product="default">Your phone will restart.</string>
+    
+    <!-- Button to reboot the phone, within the Phone Options dialog -->
+    <string name="reboot_system">Reboot phone</string>
+
+    <!-- label for item that screenshots in phone options dialog -->
+    <string name="global_action_screenshot">Screenshot</string>
+
+    <!-- label for item that shows no options are enabled -->
+    <string name="global_action_nooptionsenabled">add more menu options</string>
+
+    <!-- Button to reboot the phone, within the Reboot Options dialog -->
+    <string name="reboot_reboot">Reboot</string>
+    <!-- Button to restart the phone very quickly, within the Reboot Options dialog -->
+    <string name="reboot_restart">Restart</string>
+    <!-- Button to reboot the phone into recovery, within the Reboot Options dialog -->
+    <string name="reboot_recovery">Recovery</string>
+    <!-- Button to reboot the phone into bootloader, within the Reboot Options dialog -->
+    <string name="reboot_bootloader">Bootloader</string>
+    <!-- Button to reboot the phone into bootmenu, within the Reboot Options dialog -->
+    <string name="reboot_bootmenu">Bootmenu</string>
+    <!-- Button to reboot the phone into fastboot, within the Reboot Options dialog -->
+    <string name="reboot_fastboot">Fastboot</string>
+    <!-- Button to reboot the phone into download, within the Reboot Options dialog -->
+    <string name="reboot_download">Download</string>
+
+    <!-- Reboot Progress Dialog. This is shown if the user chooses to reboot the phone. -->
+    <string name="reboot_progress">Rebooting\u2026</string>
+    <!-- Reboot Confirmation Dialog.  When the user chooses to reboot the phone, there will be a confirmation dialog.  This is the message. -->
+    <string name="reboot_confirm">Your phone will reboot.</string>
+
 
     <!-- Shutdown Progress Dialog. This is shown if the user chooses to power off the phone. -->
     <string name="shutdown_progress">Shutting down\u2026</string>
@@ -331,6 +385,12 @@
     <!-- label for item that turns off power in phone options dialog -->
     <string name="global_action_power_off">Power off</string>
 
+    <!-- label for item that reboots the phone in phone options dialog -->
+    <string name="global_action_reboot">Reboot</string>
+
+    <!-- label for item that lets you choose profiles from the options dialog -->
+    <string name="global_action_choose_profile">Profile</string>
+
     <!-- label for item that enables silent mode in phone options dialog -->
     <string name="global_action_toggle_silent_mode">Silent mode</string>
 
@@ -348,6 +408,24 @@
 
     <!-- status message in phone options dialog for when airplane mode is off -->
     <string name="global_actions_airplane_mode_off_status">Airplane mode is OFF</string>
+    
+    <!-- label for item that toggles torch -->
+    <string name="global_actions_toggle_torch">Torch flashlight</string>
+    
+    <!-- status message in phone options dialog for when torch is on -->
+    <string name="global_actions_torch_on_status">Torch Flashlight is ON</string>
+    
+    <!-- status message in phone options dialog for when torch is off -->
+    <string name="global_actions_torch_off_status">Torch Flashlight is OFF</string>
+
+    <!-- label for item that toggles NavBar Hide -->
+    <string name="global_actions_toggle_navbar_hide">Navigation Bar</string>
+
+    <!-- status message in phone options dialog for when navbar hide is on -->
+    <string name="global_actions_navbar_hide_on">Navigation Bar hidden</string>
+
+    <!-- status message in phone options dialog for when navbar hide is off -->
+    <string name="global_actions_navbar_hide_off">Navigation Bar shown</string>
 
     <!-- Text to use when the number in a notification info is too large
          (greater than status_bar_notification_info_maxnum, defined in
@@ -822,6 +900,11 @@
     <string name="permlab_movePackage">Move application resources</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_movePackage">Allows an application to move application resources from internal to external media and vice versa.</string>
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_preventpower">prevent power key</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_preventpower">Allows an application to override the power key</string>
 
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_readLogs">read sensitive log data</string>
@@ -1834,6 +1917,8 @@
     <!-- When the lock screen is showing and the battery is low, warn user to plug
          in the phone soon. -->
     <string name="lockscreen_low_battery">Connect your charger.</string>
+    <!-- Showing the Battery % while not plugged in. -->
+    <string name="lockscreen_always_battery">Battery, <xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
 
     <!-- Shown in the lock screen when there is no SIM card. -->
     <string name="lockscreen_missing_sim_message_short">No SIM card.</string>
@@ -2874,9 +2959,9 @@
     <string name="extmedia_format_button_format">Format</string>
 
     <!-- Title of notification shown when ADB is actively connected to the phone. -->
-    <string name="adb_active_notification_title">USB debugging connected</string>
+    <string name="adb_active_notification_title">Android debugging enabled</string>
     <!-- Message of notification shown when ADB is actively connected to the phone. -->
-    <string name="adb_active_notification_message">Select to disable USB debugging.</string>
+    <string name="adb_active_notification_message">Select to disable debugging.</string>
 
     <!-- Used to replace %s in urls retreived from the signin server with locales.  For Some        -->
     <!-- devices we don't support all the locales we ship to and need to replace the '%s' with a    -->
@@ -3269,9 +3354,17 @@
     <string name="description_target_camera">Camera</string>
     <!-- Description of the silent target in the Slide unlock screen. [CHAR LIMIT=NONE] -->
     <string name="description_target_silent">Silent</string>
+    <!-- Description of the mms target in the Slide unlock screen. [CHAR_LIMIT=NONE] -->
+    <string name="description_target_sms">MMS</string>
+    <!-- Description of the phone target in the Slide unlock screen. [CHAR_LIMIT=NONE] -->
+    <string name="description_target_phone">Phone</string>
+    <!-- Description of the browser target in the Slide unlock screen. [CHAR LIMIT=NONE] -->
+    <string name="description_target_browser">Browser</string>
     <!-- Description of the sound on target in the Slide unlock screen. [CHAR LIMIT=NONE] -->
     <string name="description_target_soundon">Sound on</string>
-
+    <!-- Description of the custom target in the Slide unlock screen. [CHAR LIMIT=NONE] -->
+    <string name="description_target_custom">Custom</string>
+    
     <!-- Description of the unlock handle in the Slide unlock screen for tablets. [CHAR LIMIT=NONE] -->
     <string name="description_target_unlock_tablet">Swipe to unlock.</string>
 
@@ -3385,5 +3478,8 @@
 
     <!-- STK setup Call -->
     <string name="SetupCallDefault">Accept Call?</string>
+
+    <!--Application killed toast -->
+    <string name="app_killed_message">Application killed</string>
 
 </resources>

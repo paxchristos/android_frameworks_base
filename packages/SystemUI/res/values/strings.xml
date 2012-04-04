@@ -200,6 +200,7 @@
     <string name="accessibility_menu">Menu</string>
     <!-- Content description of the recents button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_recent">Recent apps</string>
+    <string name="accessibility_search">Search</string>
 
     <!-- Content description of the switch input method button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_ime_switch_button">Switch input method button.</string>
@@ -362,4 +363,8 @@
 
     <!-- Content description of the clear button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_clear_all">Clear all notifications.</string>
+
+    <!-- Description of the desk dock action that invokes the Android Dreams screen saver feature -->
+    <string name="dreams_dock_launcher">Activate screen saver</string>
+    <string name="battery_test">99</string>
 </resources>
