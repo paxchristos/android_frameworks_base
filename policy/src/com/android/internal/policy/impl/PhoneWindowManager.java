@@ -747,20 +747,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mHandler.removeCallbacks(mScreenshotChordLongPress);
     }
 
-    private void interceptRingerChord() {
-        if (mVolumeDownKeyTriggered && !mPowerKeyTriggered && mVolumeUpKeyTriggered) {
-            final long now = SystemClock.uptimeMillis();
-            if (now <= mVolumeDownKeyTime + ACTION_CHORD_DEBOUNCE_DELAY_MILLIS
-                    && now <= mVolumeUpKeyTime + ACTION_CHORD_DEBOUNCE_DELAY_MILLIS) {
-                mVolumeDownKeyConsumedByChord = true;
-                mVolumeUpKeyConsumedByChord = true;
-
-                mHandler.postDelayed(mRingerChordLongPress,
-                        ViewConfiguration.getGlobalActionKeyTimeout());
-            }
-        }
-    }
-
+    
     private void cancelPendingRingerChordAction() {
         mHandler.removeCallbacks(mRingerChordLongPress);
     }
@@ -3123,7 +3110,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                 && (event.getFlags() & KeyEvent.FLAG_FALLBACK) == 0) {
                             mVolumeDownKeyTriggered = true;
                             mVolumeDownKeyTime = event.getDownTime();
-                            mVolumeDownKeyConsumedByChord = false;
+			    mVolumeDownKeyConsumedByScreenshotChord = false;
                             cancelPendingPowerKeyAction();
                             interceptScreenshotChord();
                             interceptRingerChord();
@@ -3131,7 +3118,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     } else {
                         mVolumeDownKeyTriggered = false;
                         cancelPendingScreenshotChordAction();
-                        cancelPendingRingerChordAction();
                     }
                 } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
                     if (down) {
