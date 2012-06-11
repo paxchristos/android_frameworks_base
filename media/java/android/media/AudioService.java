@@ -101,6 +101,8 @@ public class AudioService extends IAudioService.Stub {
 
     /** The UI */
     private VolumePanel mVolumePanel;
+    private Context mUiContext;
+    private Handler mHandler;
 
     // sendMsg() flags
     /** Used when a message should be shared across all stream types. */
