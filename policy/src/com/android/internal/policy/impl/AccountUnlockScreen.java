@@ -17,6 +17,7 @@
 package com.android.internal.policy.impl;
 
 import com.android.internal.R;
+import com.android.internal.app.ThemeUtils;
 import com.android.internal.widget.LockPatternUtils;
 
 import android.accounts.Account;
@@ -74,8 +75,17 @@ public class AccountUnlockScreen extends RelativeLayout implements KeyguardScree
     /**
      * Shown while making asynchronous check of password.
      */
+    private Context mUiContext;
     private ProgressDialog mCheckingDialog;
     private KeyguardStatusViewManager mKeyguardStatusViewManager;
+
+    private BroadcastReceiver mThemeChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mUiContext = null;
+            mCheckingDialog = null;
+        }
+    };
 
     /**
      * AccountUnlockScreen constructor.
@@ -139,6 +149,7 @@ public class AccountUnlockScreen extends RelativeLayout implements KeyguardScree
 
     /** {@inheritDoc} */
     public void onPause() {
+        mContext.unregisterReceiver(mThemeChangeReceiver);
         mKeyguardStatusViewManager.onPause();
     }
 
@@ -148,6 +159,7 @@ public class AccountUnlockScreen extends RelativeLayout implements KeyguardScree
         mLogin.setText("");
         mPassword.setText("");
         mLogin.requestFocus();
+        ThemeUtils.registerThemeChangeReceiver(mContext, mThemeChangeReceiver);
         mKeyguardStatusViewManager.onResume();
     }
 
@@ -303,8 +315,17 @@ public class AccountUnlockScreen extends RelativeLayout implements KeyguardScree
     }
 
     private Dialog getProgressDialog() {
+        if (mUiContext == null && mCheckingDialog != null) {
+            mCheckingDialog.dismiss();
+            mCheckingDialog = null;
+        }
+
         if (mCheckingDialog == null) {
-            mCheckingDialog = new ProgressDialog(mContext);
+            mUiContext = ThemeUtils.createUiContext(mContext);
+
+            final Context context = mUiContext != null ? mUiContext : mContext;
+
+            mCheckingDialog = new ProgressDialog(context);
             mCheckingDialog.setMessage(
                     mContext.getString(R.string.lockscreen_glogin_checking_password));
             mCheckingDialog.setIndeterminate(true);
