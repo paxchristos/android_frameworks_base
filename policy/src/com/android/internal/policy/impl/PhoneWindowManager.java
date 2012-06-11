@@ -139,8 +139,11 @@ import android.view.KeyCharacterMap.FallbackAction;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.VolumePanel;
+
 import android.widget.Toast;
 import android.media.IAudioService;
+import android.media.AudioService;
 import android.media.AudioManager;
 
 import java.io.File;
@@ -271,6 +274,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     final Object mLock = new Object();
 
     Context mContext;
+    Context mUiContext;
     IWindowManager mWindowManager;
     WindowManagerFuncs mWindowManagerFuncs;
     LocalPowerManager mPowerManager;
@@ -993,14 +997,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // Retrieve current sticky dock event broadcast.
             mDockMode = intent.getIntExtra(Intent.EXTRA_DOCK_STATE,
                     Intent.EXTRA_DOCK_STATE_UNDOCKED);
-        }
-
-        // watch the plug to know whether to trigger the screen saver
-        filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        intent = context.registerReceiver(mPowerReceiver, filter);
-        if (intent != null) {
-            mPluggedIn = (0 != intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0));
         }
 
         mVibrator = new Vibrator();
@@ -3113,7 +3109,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 			    mVolumeDownKeyConsumedByScreenshotChord = false;
                             cancelPendingPowerKeyAction();
                             interceptScreenshotChord();
-                            interceptRingerChord();
                         }
                     } else {
                         mVolumeDownKeyTriggered = false;
@@ -3124,11 +3119,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         if (isScreenOn && !mVolumeUpKeyTriggered
                                 && (event.getFlags() & KeyEvent.FLAG_FALLBACK) == 0) {
                             mVolumeUpKeyTriggered = true;
-                            mVolumeUpKeyTime = event.getDownTime();
-                            mVolumeUpKeyConsumedByChord = false;
                             cancelPendingPowerKeyAction();
                             cancelPendingScreenshotChordAction();
-                            interceptRingerChord();
                         }
                     } else {
                         mVolumeUpKeyTriggered = false;

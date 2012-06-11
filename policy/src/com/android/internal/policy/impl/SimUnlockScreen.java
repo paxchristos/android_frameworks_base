@@ -20,6 +20,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -203,6 +204,11 @@ public class SimUnlockScreen extends LinearLayout implements KeyguardScreen, Vie
     }
 
     private Dialog getSimUnlockProgressDialog() {
+        if (mUiContext == null && mSimUnlockProgressDialog != null) {
+            mSimUnlockProgressDialog.dismiss();
+            mSimUnlockProgressDialog = null;
+        }
+
         if (mSimUnlockProgressDialog == null) {
             mUiContext = ThemeUtils.createUiContext(mContext);
             ThemeUtils.registerThemeChangeReceiver(mContext, mThemeChangeReceiver);
