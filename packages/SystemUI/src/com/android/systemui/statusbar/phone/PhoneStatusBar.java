@@ -33,6 +33,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.content.res.Configuration;
+import android.content.res.CustomTheme;
 import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -233,6 +234,11 @@ public class PhoneStatusBar extends StatusBar {
 
     LinearLayout mCenterClockLayout;
 
+	// last theme that was applied in order to detect theme change (as opposed
+    // to some other configuration change).
+    CustomTheme mCurrentTheme;
+    private boolean mRecreating = false;
+
     // for disabling the status bar
     int mDisabled = 0;
 
@@ -267,6 +273,11 @@ public class PhoneStatusBar extends StatusBar {
 
         mWindowManager = IWindowManager.Stub.asInterface(
                 ServiceManager.getService(Context.WINDOW_SERVICE));
+
+        CustomTheme currentTheme = mContext.getResources().getConfiguration().customTheme;
+        if (currentTheme != null) {
+            mCurrentTheme = (CustomTheme)currentTheme.clone();
+        }
 
         super.start(); // calls makeStatusBarView()
 
@@ -538,6 +549,12 @@ public class PhoneStatusBar extends StatusBar {
     private void repositionNavigationBar() {
         if (mNavigationBarView == null) return;
 
+        CustomTheme newTheme = mContext.getResources().getConfiguration().customTheme;
+        if (newTheme != null &&
+                (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
+            // Nevermind, this will be re-created
+            return;
+        }
         prepareNavigationBarView();
 
         WindowManagerImpl.getDefault().updateViewLayout(
@@ -2374,12 +2391,21 @@ public class PhoneStatusBar extends StatusBar {
         final Context context = mContext;
         final Resources res = context.getResources();
 
-        if (mClearButton instanceof TextView) {
-            ((TextView)mClearButton).setText(context.getText(R.string.status_bar_clear_all_button));
-        }
-        mNoNotificationsTitle.setText(context.getText(R.string.status_bar_no_notifications_title));
+        // detect theme change.
+        CustomTheme newTheme = res.getConfiguration().customTheme;
+        if (newTheme != null &&
+                (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
+            mCurrentTheme = (CustomTheme)newTheme.clone();
+            recreateStatusBar();
+        } else {
 
-        loadDimens();
+            if (mClearButton instanceof TextView) {
+                ((TextView)mClearButton).setText(context.getText(R.string.status_bar_clear_all_button));
+            }
+            mNoNotificationsTitle.setText(context.getText(R.string.status_bar_no_notifications_title));
+
+            loadDimens();
+        }
     }
 
     protected void loadDimens() {
