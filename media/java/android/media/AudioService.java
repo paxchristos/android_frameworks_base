@@ -58,7 +58,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.VolumePanel;
 
-import com.android.internal.app.ThemeUtils;
 import com.android.internal.telephony.ITelephony;
 
 import java.io.FileDescriptor;
@@ -101,8 +100,6 @@ public class AudioService extends IAudioService.Stub {
 
     /** The UI */
     private VolumePanel mVolumePanel;
-    private Context mUiContext;
-    private Handler mHandler;
 
     // sendMsg() flags
     /** Used when a message should be shared across all stream types. */
@@ -334,7 +331,6 @@ public class AudioService extends IAudioService.Stub {
     public AudioService(Context context) {
         mContext = context;
         mContentResolver = context.getContentResolver();
-        mHandler = new Handler();
         mVoiceCapable = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_voice_capable);
 
@@ -385,13 +381,6 @@ public class AudioService extends IAudioService.Stub {
         pkgFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
         pkgFilter.addDataScheme("package");
         context.registerReceiver(mReceiver, pkgFilter);
-
-        ThemeUtils.registerThemeChangeReceiver(context, new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                mUiContext = null;
-            }
-        });
 
         // Register for media button intent broadcasts.
         intentFilter = new IntentFilter(Intent.ACTION_MEDIA_BUTTON);
@@ -2728,25 +2717,6 @@ public class AudioService extends IAudioService.Stub {
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
                 AudioSystem.setParameters("screen_state=off");
             }
-        }
-    }
-
-    private void showVolumeChangeUi(final int streamType, final int flags) {
-        if (mUiContext != null && mVolumePanel != null) {
-            mVolumePanel.postVolumeChanged(streamType, flags);
-        } else {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mUiContext == null) {
-                        mUiContext = ThemeUtils.createUiContext(mContext);
-                    }
-
-                    final Context context = mUiContext != null ? mUiContext : mContext;
-                    mVolumePanel = new VolumePanel(context, AudioService.this);
-                    mVolumePanel.postVolumeChanged(streamType, flags);
-                }
-            });
         }
     }
 

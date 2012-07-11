@@ -183,8 +183,8 @@ public abstract class ContentResolver {
     public ContentResolver(Context context) {
         mContext = context;
     }
-    
-    /** @hide */
+
+     /** @hide */
     public final Context getContext() {
         return mContext;
     }
